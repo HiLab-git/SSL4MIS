@@ -11,4 +11,5 @@ A collection of semi-supervised learning for medical image segmentation
 |2020-07|Y. Xia and H. Roth|Uncertainty-aware multi-view co-training for semi-supervised medical image segmentation and domain adaptation|None|[WACV2020](https://arxiv.org/abs/1811.12506),[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841520301304)|
 |2020-07|X. Li and P. Heng|Transformation-Consistent Self-Ensembling Model for Semisupervised Medical Image Segmentation|[TCSM](https://github.com/xmengli999/TCSM)|[TNNLS2020](https://ieeexplore.ieee.org/document/9104928)|
 |2019-10|L. Yu and P. Heng|Uncertainty-aware self-ensembling model for semi-supervised 3D left atrium segmentation|[UA-MT](https://github.com/yulequan/UA-MT)|[MICCAI2019](https://arxiv.org/pdf/1907.07034.pdf)|
+|2019-10|G. Bortsova and M. Bruijne|Semi-Supervised Medical Image Segmentation via Learning Consistency under Transformations|None|[MICCAI2019](https://arxiv.org/pdf/1911.01218.pdf)|
 > More papers and code repositories will be updated later.
