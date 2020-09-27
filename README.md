@@ -21,5 +21,6 @@ A collection of semi-supervised learning for medical image segmentation
 |2019-10|H. Kervade and I. Ayed|Curriculum semi-supervised segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.05236.pdf)|
 |2019-10|S. Chen and M. Bruijne|Multi-task Attention-based Semi-supervised Learning for Medical Image Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1907.12303.pdf)|
 |2019-10|Z. Xu and M. Niethammer|DeepAtlas: Joint Semi-Supervised Learning of Image Registration and Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.08465.pdf)|
+|2019-10|S. Sedai and R. Garnavi|Uncertainty Guided Semi-supervised Segmentation of Retinal Layers in OCT Images|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32239-7_32)|
 |2019-06|W. Cui and C. Ye|Semi-Supervised Brain Lesion Segmentation with an Adapted Mean Teacher Model|None|[IPMI2019](https://link.springer.com/chapter/10.1007/978-3-030-20351-1_43)|
 > More papers and code repositories will be updated later. In addition, we want to someone can build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in medical image segmentation community.
