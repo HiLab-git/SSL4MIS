@@ -12,4 +12,9 @@ A collection of semi-supervised learning for medical image segmentation
 |2020-07|X. Li and P. Heng|Transformation-Consistent Self-Ensembling Model for Semisupervised Medical Image Segmentation|[TCSM](https://github.com/xmengli999/TCSM)|[TNNLS2020](https://ieeexplore.ieee.org/document/9104928)|
 |2019-10|L. Yu and P. Heng|Uncertainty-aware self-ensembling model for semi-supervised 3D left atrium segmentation|[UA-MT](https://github.com/yulequan/UA-MT)|[MICCAI2019](https://arxiv.org/pdf/1907.07034.pdf)|
 |2019-10|G. Bortsova and M. Bruijne|Semi-Supervised Medical Image Segmentation via Learning Consistency under Transformations|None|[MICCAI2019](https://arxiv.org/pdf/1911.01218.pdf)|
+|2019-10|H. Zheng and X. Han|Semi-supervised Segmentation of Liver Using Adversarial Learning with Deep Atlas Prior|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_17)|
+|2019-10|Y. Zhao and C. Liu|Multi-view Semi-supervised 3D Whole Brain Segmentation with a Self-ensemble Network|None|[MICCAI2019](file:///C:/Users/luoxd/Downloads/Zhao2019_Chapter_Multi-viewSemi-supervised3DWho.pdf)|
+|2019-10|H. Kervade and I. Ayed|Curriculum semi-supervised segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.05236.pdf)|
+|2019-10|S. Chen and M. Bruijne|Multi-task Attention-based Semi-supervised Learning for Medical Image Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1907.12303.pdf)|
+|2019-10|Z. Xu and M. Niethammer|DeepAtlas: Joint Semi-Supervised Learning of Image Registration and Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.08465.pdf)|
 > More papers and code repositories will be updated later. In addition, we want to someone can build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in medical image segmentation community.
