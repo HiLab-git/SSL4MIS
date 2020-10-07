@@ -1,4 +1,4 @@
-# awesome-semi-supervised-learning-for-medical-image-segmentation
+# Semi-supervised-learning-for-medical-image-segmentation (SSL4MIS)
 A collection of semi-supervised learning for medical image segmentation
 
 |Date|First and Last Authors|Title|Code|Reference|
