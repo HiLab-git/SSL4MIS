@@ -1,7 +1,7 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
 
-* More papers and code repositories will be updated later. In addition, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
-## Literature reviews of semi-supervised learning approaches for medical image segmentation (**SSL4MIS**).
+* More papers and code repositories will be updated later. In addition, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
+## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
 |Date|First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
@@ -39,11 +39,11 @@
 |2017-09|S. Sedai and R. Garnavi|Semi-supervised Segmentation of Optic Cup in Retinal Fundus Images Using Variational Autoencoder|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_9)|
 |2017-09|W. Bai and D. Rueckert|Semi-supervised Learning for Network-Based Cardiac MR Image Segmentation|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_29)|
 
-## Code for semi-supervised whole tumor segmemtation from Flair image.
-Some implementations of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
+## Code for semi-supervised whole tumor segmentation from Flair image.
+Some implementations of semi-supervised learning methods can be found in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
 
 ## Citation
-This repository is part of the work of our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf) , if you find it is useful in your research, please consider to cite:
+This repository is part of our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf) , if you find it is useful in your research, please consider to cite:
 
 	@article{luo2020semi,
 	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
