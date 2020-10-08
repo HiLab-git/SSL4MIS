@@ -39,4 +39,4 @@
 > More papers and code repositories will be updated later. In addition, we want to someone can build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in medical image segmentation community.
 
 ## Code for semi-supervised whole tumor segmemtation from Flair image.
-Our implementations of some semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/master/code/)
+Some implementations of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
