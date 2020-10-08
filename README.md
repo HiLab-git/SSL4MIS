@@ -40,3 +40,13 @@
 
 ## Code for semi-supervised whole tumor segmemtation from Flair image.
 Some implementations of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
+
+## Citation
+This repository is part of the work of our previous work **DTC** , if you find it is useful in your research, please consider to cite:
+
+	@article{luo2020semi,
+	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
+	  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+	  journal={arXiv preprint arXiv:2009.04448},
+	  year={2020}
+	}
