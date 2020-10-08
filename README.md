@@ -40,7 +40,7 @@
 |2017-09|W. Bai and D. Rueckert|Semi-supervised Learning for Network-Based Cardiac MR Image Segmentation|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_29)|
 
 ## Code for semi-supervised whole tumor segmemtation from Flair image.
-Some implementations ([Mean Teacher](https://papers.nips.cc/paper/6719-mean-teachers-are-better-role-models-weight-averaged-consistency-targets-improve-semi-supervised-deep-learning-results.pdf); [Entropy Minimization](https://openaccess.thecvf.com/content_CVPR_2019/papers/Vu_ADVENT_Adversarial_Entropy_Minimization_for_Domain_Adaptation_in_Semantic_Segmentation_CVPR_2019_paper.pdf); [Deep Adversarial Networks](https://link.springer.com/chapter/10.1007/978-3-319-66179-7_47) and [Uncertainty Aware Mean Teacher](https://arxiv.org/pdf/1907.07034.pdf)) of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
+Some implementations of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
 
 ## Citation
 This repository is part of the work of our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf) , if you find it is useful in your research, please consider to cite:
