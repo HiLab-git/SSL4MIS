@@ -105,6 +105,6 @@ for p in all_flair:
     bboxs[bboxs > 0] = 1
     uid = p.split("/")[-1]
     sitk.WriteImage(sitk.GetImageFromArray(
-        img), "/media/xdluo/Data/previous-projects/bbox-seg/brats19/data/flair/{}".format(uid))
+        img), "/media/xdluo/Data/brats19/data/flair/{}".format(uid))
     sitk.WriteImage(sitk.GetImageFromArray(
-        bboxs), "/media/xdluo/Data/previous-projects/bbox-seg/brats19/data/label/{}".format(uid))
+        bboxs), "/media/xdluo/Data/brats19/data/label/{}".format(uid))
