@@ -1,3 +1,5 @@
+## Semi-supervised Learning for Medical Image Segmentation (**SSL4MIS**)
+
 ## Requirements
 Some important required packages include:
 * [Pytorch][torch_link] version >=0.4.1.
@@ -8,8 +10,6 @@ Some important required packages include:
 Follow official guidance to install [Pytorch][torch_link].
 
 [torch_link]:https://pytorch.org/
-
-## Semi-supervised Learning for Medical Image Segmentation (**SSL4MIS**)
 
 # Usage
 
