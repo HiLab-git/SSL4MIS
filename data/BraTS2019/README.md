@@ -1,0 +1,1 @@
+- Download the proporcessed BraTS2019 data (we just used flair image for whole tumor segmentation) from [BaiduDisk](https://pan.baidu.com/s/1CrMNP8hUExGuQNrHPuGb7w) and the password is *code*. 
