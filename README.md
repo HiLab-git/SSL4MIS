@@ -1,5 +1,5 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
-A collection of semi-supervised learning approaches for medical image segmentation (**SSL4MIS**).
+## Literature reviews of semi-supervised learning approaches for medical image segmentation (**SSL4MIS**).
 
 |Date|First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
