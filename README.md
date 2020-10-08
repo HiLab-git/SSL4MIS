@@ -42,7 +42,7 @@
 Some implementations of semi-supervised learning methods can be find in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
 
 ## Citation
-This repository is part of the work of our previous work **DTC** , if you find it is useful in your research, please consider to cite:
+This repository is part of the work of our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf) , if you find it is useful in your research, please consider to cite:
 
 	@article{luo2020semi,
 	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
