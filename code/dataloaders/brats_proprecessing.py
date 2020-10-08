@@ -99,12 +99,12 @@ all_flair = glob.glob("flair/*_flair.nii.gz")
 for p in all_flair:
     data = sitk.GetArrayFromImage(sitk.ReadImage(p))
     lab = sitk.GetArrayFromImage(sitk.ReadImage(p.replace("flair", "seg")))
-    img, bboxs = brain_bbox(data, lab)
+    img, lab = brain_bbox(data, lab)
     img = MedicalImageDeal(img, percent=0.999).valid_img
     img = itensity_normalize_one_volume(img)
-    bboxs[bboxs > 0] = 1
+    lab[lab > 0] = 1
     uid = p.split("/")[-1]
     sitk.WriteImage(sitk.GetImageFromArray(
         img), "/media/xdluo/Data/brats19/data/flair/{}".format(uid))
     sitk.WriteImage(sitk.GetImageFromArray(
-        bboxs), "/media/xdluo/Data/brats19/data/label/{}".format(uid))
+        lab), "/media/xdluo/Data/brats19/data/label/{}".format(uid))
