@@ -19,7 +19,7 @@ Follow official guidance to install [Pytorch][torch_link].
 git clone https://https://github.com/Luoxd1996/SSL4MIS.git 
 cd SSL4MIS
 ```
-2. Download the processed data and put the data in ../data/BraTS2019 or ../data/ACDC, please read and follow the [README](https://github.com/Luoxd1996/SSL4MIS/tree/master/data/).
+2. Download the processed data and put the data in `../data/BraTS2019` or `../data/ACDC`, please read and follow the [README](https://github.com/Luoxd1996/SSL4MIS/tree/master/data/).
 
 3. Train the model
 ```
