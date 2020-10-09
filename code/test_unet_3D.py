@@ -2,7 +2,7 @@ from glob import glob
 import os
 import argparse
 import torch
-from test_util import test_all_case
+from test_unet_3D_util import test_all_case
 from networks.unet_3D import unet_3D
 import shutil
 

@@ -24,7 +24,7 @@ from networks.unet_3D import unet_3D
 from dataloaders import utils
 from utils import ramps, losses, metrics
 from dataloaders.brats2019 import BraTS2019, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
-from val import test_all_case
+from val_unet_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
@@ -50,6 +50,7 @@ parser.add_argument('--labeled_bs', type=int, default=2,
                     help='labeled_batch_size per gpu')
 parser.add_argument('--labeled_num', type=int, default=25,
                     help='labeled data')
+
 # costs
 parser.add_argument('--ema_decay', type=float,  default=0.99, help='ema_decay')
 parser.add_argument('--consistency_type', type=str,

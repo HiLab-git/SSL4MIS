@@ -19,65 +19,63 @@ import torch.nn as nn
 from torch.nn import BCEWithLogitsLoss
 from torch.utils.data import DataLoader
 from torchvision.utils import make_grid
-from networks.unet_3D import unet_3D
+from networks.efficientunet import UNet
 
 from dataloaders import utils
 from utils import ramps, losses, metrics
-from dataloaders.brats2019 import BraTS2019, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
-from val_unet_3D_util import test_all_case
+from dataloaders.ACDC import ACDC, RandomGenerator
+from val_efficient_unet_2D_acdc import test_single_volume
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
-                    default='../data/BraTS2019', help='Name of Experiment')
+                    default='../data/ACDC', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='BraTs2019_Fully_Supervised', help='experiment_name')
+                    default='ACDC_Fully_Supervised', help='experiment_name')
 parser.add_argument('--model', type=str,
-                    default='unet_3D', help='model_name')
+                    default='efficient_unet_2D', help='model_name')
 parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
-parser.add_argument('--batch_size', type=int, default=2,
+parser.add_argument('--batch_size', type=int, default=24,
                     help='batch_size per gpu')
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.01,
                     help='segmentation network learning rate')
-parser.add_argument('--patch_size', type=list,  default=[128, 128, 128],
+parser.add_argument('--patch_size', type=list,  default=[256, 256],
                     help='patch size of network input')
 parser.add_argument('--seed', type=int,  default=1337, help='random seed')
-parser.add_argument('--labeled_num', type=int, default=25,
+parser.add_argument('--labeled_num', type=int, default=1000,
                     help='labeled data')
-
 args = parser.parse_args()
 
 
 def train(args, snapshot_path):
     base_lr = args.base_lr
-    train_data_path = args.root_path
+    num_classes = 4
     batch_size = args.batch_size
     max_iterations = args.max_iterations
 
-    model = unet_3D(n_classes=2, in_channels=1).cuda()
-    db_train = BraTS2019(base_dir=train_data_path,
-                         split='train',
-                         num=args.labeled_num,
-                         transform=transforms.Compose([
-                             RandomRotFlip(),
-                             RandomCrop(args.patch_size),
-                             ToTensor(),
-                         ]))
+    model = UNet('efficientnet-b3', encoder_weights='imagenet',
+                 in_channels=1, classes=num_classes).cuda()
+    db_train = ACDC(base_dir=args.root_path, split="train", num=args.labeled_num, transform=transforms.Compose([
+        RandomGenerator(args.patch_size)
+    ]))
+    db_val = ACDC(base_dir=args.root_path, split="val")
 
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)
 
     trainloader = DataLoader(db_train, batch_size=batch_size, shuffle=True,
                              num_workers=16, pin_memory=True, worker_init_fn=worker_init_fn)
+    valloader = DataLoader(db_val, batch_size=1, shuffle=False,
+                           num_workers=1)
 
     model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
     ce_loss = CrossEntropyLoss()
-    dice_loss = losses.DiceLoss(2)
+    dice_loss = losses.DiceLoss(num_classes)
 
     writer = SummaryWriter(snapshot_path + '/log')
     logging.info("{} iterations per epoch".format(len(trainloader)))
@@ -95,7 +93,7 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            loss_ce = ce_loss(outputs, label_batch[:])
+            loss_ce = ce_loss(outputs, label_batch[:].long())
             loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
             loss = 0.5 * (loss_dice + loss_ce)
             optimizer.zero_grad()
@@ -115,33 +113,53 @@ def train(args, snapshot_path):
             logging.info(
                 'iteration %d : loss : %f, loss_ce: %f, loss_dice: %f' %
                 (iter_num, loss.item(), loss_ce.item(), loss_dice.item()))
-            writer.add_scalar('loss/loss', loss, iter_num)
 
             if iter_num % 20 == 0:
-                image = volume_batch[0, 0:1, :, :, 20:61:10].permute(
-                    3, 0, 1, 2).repeat(1, 3, 1, 1)
-                grid_image = make_grid(image, 5, normalize=True)
-                writer.add_image('train/Image', grid_image, iter_num)
-
-                image = outputs_soft[0, 1:2, :, :, 20:61:10].permute(
-                    3, 0, 1, 2).repeat(1, 3, 1, 1)
-                grid_image = make_grid(image, 5, normalize=False)
-                writer.add_image('train/Predicted_label',
-                                 grid_image, iter_num)
-
-                image = label_batch[0, :, :, 20:61:10].unsqueeze(
-                    0).permute(3, 0, 1, 2).repeat(1, 3, 1, 1)
-                grid_image = make_grid(image, 5, normalize=False)
-                writer.add_image('train/Groundtruth_label',
-                                 grid_image, iter_num)
+                image = volume_batch[1, 0:1, :, :]
+                writer.add_image('train/Image', image, iter_num)
+                outputs = torch.argmax(torch.softmax(
+                    outputs, dim=1), dim=1, keepdim=True)
+                writer.add_image('train/Prediction',
+                                 outputs[1, ...] * 50, iter_num)
+                labs = label_batch[1, ...].unsqueeze(0) * 50
+                writer.add_image('train/GroundTruth', labs, iter_num)
 
             if iter_num > 0 and iter_num % 200 == 0:
                 model.eval()
-                avg_metric = test_all_case(
-                    model, args.root_path, test_list="val.txt", num_classes=2, patch_size=args.patch_size,
-                    stride_xy=64, stride_z=64)
-                if avg_metric[:, 0].mean() > best_performance:
-                    best_performance = avg_metric[:, 0].mean()
+                first_total, second_total, third_total = 0.0, 0.0, 0.0
+                for i_batch, sampled_batch in enumerate(valloader):
+                    first, second, third = test_single_volume(
+                        sampled_batch["image"], sampled_batch["label"], model)
+                    first_total += np.asarray(first)
+                    second_total += np.asarray(second)
+                    third_total += np.asarray(third)
+                first_total, second_total, third_total = first_total / \
+                    len(db_val), second_total / \
+                    len(db_val), third_total/len(db_val)
+                writer.add_scalar('info/val_one_dice',
+                                  first_total[0], iter_num)
+                writer.add_scalar('info/val_one_hd95',
+                                  first_total[1], iter_num)
+
+                writer.add_scalar('info/val_two_dice',
+                                  second_total[0], iter_num)
+                writer.add_scalar('info/val_two_hd95',
+                                  second_total[1], iter_num)
+
+                writer.add_scalar('info/val_three_dice',
+                                  third_total[0], iter_num)
+                writer.add_scalar('info/val_three_hd95',
+                                  third_total[1], iter_num)
+
+                performance = (first_total[0] +
+                               second_total[0] + third_total[0]) / 3
+                mean_hd95 = (first_total[1] +
+                             second_total[1] + third_total[1]) / 3
+                writer.add_scalar('info/val_mean_dice', performance, iter_num)
+                writer.add_scalar('info/val_mean_hd95', mean_hd95, iter_num)
+
+                if performance > best_performance:
+                    best_performance = performance
                     save_mode_path = os.path.join(snapshot_path,
                                                   'iter_{}_dice_{}.pth'.format(
                                                       iter_num, round(best_performance, 4)))
@@ -150,12 +168,8 @@ def train(args, snapshot_path):
                     torch.save(model.state_dict(), save_mode_path)
                     torch.save(model.state_dict(), save_best)
 
-                writer.add_scalar('info/val_dice_score',
-                                  avg_metric[0, 0], iter_num)
-                writer.add_scalar('info/val_hd95',
-                                  avg_metric[0, 1], iter_num)
                 logging.info(
-                    'iteration %d : dice_score : %f hd95 : %f' % (iter_num, avg_metric[0, 0].mean(), avg_metric[0, 1].mean()))
+                    'iteration %d : mean_dice : %f mean_hd95 : %f' % (iter_num, performance, mean_hd95))
                 model.train()
 
             if iter_num % 3000 == 0:

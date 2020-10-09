@@ -24,7 +24,7 @@ from networks.discriminator import FC3DDiscriminator
 from dataloaders import utils
 from utils import ramps, losses, metrics
 from dataloaders.brats2019 import BraTS2019, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
-from val import test_all_case
+from val_unet_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
