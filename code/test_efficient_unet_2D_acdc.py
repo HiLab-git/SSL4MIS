@@ -74,7 +74,7 @@ def Inference(FLAGS):
                          for item in image_list])
     snapshot_path = "../model/{}/{}".format(FLAGS.exp, FLAGS.model)
     test_save_path = "../model/{}/{}_Prediction/".format(FLAGS.exp,
-                                                        FLAGS.model)
+                                                         FLAGS.model)
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)

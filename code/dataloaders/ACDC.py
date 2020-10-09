@@ -48,6 +48,7 @@ class ACDC(Dataset):
         sample = {'image': image, 'label': label}
         if self.split == "train":
             sample = self.transform(sample)
+        sample["idx"] = idx
         return sample
 
 
