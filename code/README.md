@@ -23,14 +23,14 @@ cd SSL4MIS
 3. Train the model
 ```
 cd code
-python train_unet_3D_XXXXX.py
+python train_unet_3D_XXXXX.py or python train_efficient_unet_2D_XXXXX.py
 ```
 
 4. Test the model
 ```
-python test.py
+python test_XXXXX.py
 ```
 
 ## Acknowledgement
-* This code is adapted from [UA-MT](https://github.com/yulequan/UA-MT), [Attention-Gated-Networks](https://github.com/ozan-oktay/Attention-Gated-Networks). 
+* This code is adapted from [UA-MT](https://github.com/yulequan/UA-MT), [Attention-Gated-Networks](https://github.com/ozan-oktay/Attention-Gated-Networks) and [segmentatic_segmentation.pytorch](https://github.com/qubvel/segmentation_models.pytorch). 
 * More details can be found in: [Mean Teacher](https://papers.nips.cc/paper/6719-mean-teachers-are-better-role-models-weight-averaged-consistency-targets-improve-semi-supervised-deep-learning-results.pdf); [Entropy Minimization](https://openaccess.thecvf.com/content_CVPR_2019/papers/Vu_ADVENT_Adversarial_Entropy_Minimization_for_Domain_Adaptation_in_Semantic_Segmentation_CVPR_2019_paper.pdf); [Deep Adversarial Networks](https://link.springer.com/chapter/10.1007/978-3-319-66179-7_47) and [Uncertainty Aware Mean Teacher](https://arxiv.org/pdf/1907.07034.pdf).
