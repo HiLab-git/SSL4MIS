@@ -1,6 +1,6 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
 
-* More papers and code repositories will be updated later. In addition, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
+* More papers and code repositories will be updated later, unfortunately, there are very few codes and data is open available. For easy evaluation and fair comparison , we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
 |Date|The First and Last Authors|Title|Code|Reference|
