@@ -127,8 +127,8 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            loss_ce = ce_loss(outputs, label_batch[:])
-            loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
+            loss_ce = ce_loss(outputs[:args.labeled_bs], label_batch[:args.labeled_bs][:])
+            loss_dice = dice_loss(outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
 
             consistency_weight = get_current_consistency_weight(iter_num//150)

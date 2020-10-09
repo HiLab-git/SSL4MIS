@@ -159,8 +159,8 @@ def train(args, snapshot_path):
             uncertainty = -1.0 * \
                 torch.sum(preds*torch.log(preds + 1e-6), dim=1, keepdim=True)
 
-            loss_ce = ce_loss(outputs, label_batch[:].long())
-            loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
+            loss_ce = ce_loss(outputs[:args.labeled_bs], label_batch[:args.labeled_bs][:].long())
+            loss_dice = dice_loss(outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
             consistency_weight = get_current_consistency_weight(iter_num//150)
             consistency_dist = losses.softmax_mse_loss(
