@@ -3,7 +3,7 @@
 * More papers and code repositories will be updated later. In addition, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
-|Date|First and Last Authors|Title|Code|Reference|
+|Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2020-10|X. Cao and L. Cheng|Uncertainty Aware Temporal-Ensembling Model for Semi-supervised ABUS Mass Segmentation|None|[TMI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9214845)|
 |2020-09|Z. Zhang and W. Zhang|Semi-supervised Semantic Segmentation of Organs at Risk on 3D Pelvic CT Images|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2009/2009.09571.pdf)|
