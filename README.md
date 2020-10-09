@@ -10,6 +10,7 @@
 |2020-09|J. Wang and G. Xie|Semi-supervised Active Learning for Instance Segmentation via Scoring Predictions|None|[BMVC2020](http://scholar.google.com/scholar_url?url=https://www.bmvc2020-conference.com/assets/papers/0031.pdf&hl=zh-CN&sa=X&d=4465129548770333798&ei=u85pX6XsJNKsmwG4zr6YCw&scisig=AAGBfm1GGUNfq7zId6WBRyppRRjnPSpLsQ&nossl=1&oi=scholaralrt&html=&cited-by=)|
 |2020-09|X. Luo and S. Zhang|Semi-supervised Medical Image Segmentation through Dual-task Consistency|[DTC](https://github.com/Luoxd1996/DTC)|[Arxiv](https://arxiv.org/pdf/2009.04448.pdf)|
 |2020-08|X. Huo and Q. Tian|ATSO: Asynchronous Teacher-Student Optimization for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2006.13461.pdf)|
+|2020-08|Y. Xie and Y. Xia|Pairwise Relation Learning for Semi-supervised Gland Segmentation|None|[MICCAI2020](https://arxiv.org/pdf/2008.02699.pdf)|
 |2020-07|S. Li and X. He|Shape-aware Semi-supervised 3D Semantic Segmentation for Medical Images|[SASSNet](https://github.com/kleinzcy/SASSnet)|[MICCAI2020](https://arxiv.org/pdf/2007.10732.pdf)|
 |2020-07|Y. Zhou and P. Heng|Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation|[MMT-PSM](https://github.com/SIAAAAAA/MMT-PSM)|[MICCAI2020](https://arxiv.org/pdf/2007.10787.pdf)|
 |2020-07|J. Peng and C. Desrosiers|Mutual information deep regularization for semi-supervised segmentation|[deepclustering ](https://github.com/jizongFox/deep-clustering-toolbox)|[MIDL2020](https://openreview.net/pdf?id=iunvffXgPm)|
