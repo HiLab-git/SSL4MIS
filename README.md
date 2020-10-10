@@ -12,6 +12,7 @@
 |2020-08|X. Huo and Q. Tian|ATSO: Asynchronous Teacher-Student Optimization for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2006.13461.pdf)|
 |2020-08|Y. Xie and Y. Xia|Pairwise Relation Learning for Semi-supervised Gland Segmentation|None|[MICCAI2020](https://arxiv.org/pdf/2008.02699.pdf)|
 |2020-07|S. Li and X. He|Shape-aware Semi-supervised 3D Semantic Segmentation for Medical Images|[SASSNet](https://github.com/kleinzcy/SASSnet)|[MICCAI2020](https://arxiv.org/pdf/2007.10732.pdf)|
+|2020-07|Z. Zhao and P. Heng|Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video|[Semi-InstruSeg](https://github.com/zxzhaoeric/Semi-InstruSeg/)|[MICCAI2020](https://arxiv.org/abs/2007.02501)|
 |2020-07|Y. Zhou and P. Heng|Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation|[MMT-PSM](https://github.com/SIAAAAAA/MMT-PSM)|[MICCAI2020](https://arxiv.org/pdf/2007.10787.pdf)|
 |2020-07|J. Peng and C. Desrosiers|Mutual information deep regularization for semi-supervised segmentation|[deepclustering ](https://github.com/jizongFox/deep-clustering-toolbox)|[MIDL2020](https://openreview.net/pdf?id=iunvffXgPm)|
 |2020-07|Y. Xia and H. Roth|Uncertainty-aware multi-view co-training for semi-supervised medical image segmentation and domain adaptation|None|[WACV2020](https://arxiv.org/abs/1811.12506),[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841520301304)|
