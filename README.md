@@ -5,6 +5,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2020-10|Y. Wang and Z. He|Double-Uncertainty Weighted Method for Semi-supervised Learning|None|[MICCAI2020](https://link.springer.com/chapter/10.1007%2F978-3-030-59710-8_53)|
 |2020-10|K. Fang and W. Li|DMNet: Difference Minimization Network for Semi-supervised Segmentation in Medical Images|None|[MICCAI2020](https://link.springer.com/chapter/10.1007/978-3-030-59710-8_52)|
 |2020-10|X. Cao and L. Cheng|Uncertainty Aware Temporal-Ensembling Model for Semi-supervised ABUS Mass Segmentation|None|[TMI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9214845)|
 |2020-09|Z. Zhang and W. Zhang|Semi-supervised Semantic Segmentation of Organs at Risk on 3D Pelvic CT Images|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2009/2009.09571.pdf)|
@@ -13,6 +14,7 @@
 |2020-08|X. Huo and Q. Tian|ATSO: Asynchronous Teacher-Student Optimization for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2006.13461.pdf)|
 |2020-08|Y. Xie and Y. Xia|Pairwise Relation Learning for Semi-supervised Gland Segmentation|None|[MICCAI2020](https://arxiv.org/pdf/2008.02699.pdf)|
 |2020-07|S. Li and X. He|Shape-aware Semi-supervised 3D Semantic Segmentation for Medical Images|[SASSNet](https://github.com/kleinzcy/SASSnet)|[MICCAI2020](https://arxiv.org/pdf/2007.10732.pdf)|
+|Y. Li and Y. Zheng |Self-Loop Uncertainty: A Novel Pseudo-Label for Semi-Supervised Medical Image Segmentation|None|[MICCAI2020](https://arxiv.org/abs/2007.09854)|
 |2020-07|Z. Zhao and P. Heng|Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video|[Semi-InstruSeg](https://github.com/zxzhaoeric/Semi-InstruSeg/)|[MICCAI2020](https://arxiv.org/abs/2007.02501)|
 |2020-07|Y. Zhou and P. Heng|Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation|[MMT-PSM](https://github.com/SIAAAAAA/MMT-PSM)|[MICCAI2020](https://arxiv.org/pdf/2007.10787.pdf)|
 |2020-07|J. Peng and C. Desrosiers|Mutual information deep regularization for semi-supervised segmentation|[deepclustering ](https://github.com/jizongFox/deep-clustering-toolbox)|[MIDL2020](https://openreview.net/pdf?id=iunvffXgPm)|
