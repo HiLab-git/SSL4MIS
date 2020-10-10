@@ -17,6 +17,7 @@
 |2020-07|Y. Li and Y. Zheng |Self-Loop Uncertainty: A Novel Pseudo-Label for Semi-Supervised Medical Image Segmentation|None|[MICCAI2020](https://arxiv.org/abs/2007.09854)|
 |2020-07|Z. Zhao and P. Heng|Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video|[Semi-InstruSeg](https://github.com/zxzhaoeric/Semi-InstruSeg/)|[MICCAI2020](https://arxiv.org/abs/2007.02501)|
 |2020-07|Y. Zhou and P. Heng|Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation|[MMT-PSM](https://github.com/SIAAAAAA/MMT-PSM)|[MICCAI2020](https://arxiv.org/pdf/2007.10787.pdf)|
+|2020-07|A. Tehrani and H. Rivaz|Semi-Supervised Training of Optical Flow Convolutional Neural Networks in Ultrasound Elastography|None|[MICCAI2020](https://arxiv.org/pdf/2007.01421.pdf)|
 |2020-07|J. Peng and C. Desrosiers|Mutual information deep regularization for semi-supervised segmentation|[deepclustering ](https://github.com/jizongFox/deep-clustering-toolbox)|[MIDL2020](https://openreview.net/pdf?id=iunvffXgPm)|
 |2020-07|Y. Xia and H. Roth|Uncertainty-aware multi-view co-training for semi-supervised medical image segmentation and domain adaptation|None|[WACV2020](https://arxiv.org/abs/1811.12506),[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841520301304)|
 |2020-07|X. Li and P. Heng|Transformation-Consistent Self-Ensembling Model for Semisupervised Medical Image Segmentation|[TCSM](https://github.com/xmengli999/TCSM)|[TNNLS2020](https://ieeexplore.ieee.org/document/9104928)|
