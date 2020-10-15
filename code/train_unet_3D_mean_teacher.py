@@ -143,12 +143,14 @@ def train(args, snapshot_path):
             with torch.no_grad():
                 ema_output = ema_model(ema_inputs)
 
-            loss_ce = ce_loss(outputs[:args.labeled_bs], label_batch[:args.labeled_bs][:])
-            loss_dice = dice_loss(outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
+            loss_ce = ce_loss(outputs[:args.labeled_bs],
+                              label_batch[:args.labeled_bs][:])
+            loss_dice = dice_loss(
+                outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
             consistency_weight = get_current_consistency_weight(iter_num//150)
-            consistency_loss = F.mse_loss(
-                outputs[args.labeled_bs:], ema_output)
+            consistency_loss = torch.mean(
+                (outputs[args.labeled_bs:] - ema_output)**2)
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
             loss.backward()
@@ -164,8 +166,10 @@ def train(args, snapshot_path):
             writer.add_scalar('info/total_loss', loss, iter_num)
             writer.add_scalar('info/loss_ce', loss_ce, iter_num)
             writer.add_scalar('info/loss_dice', loss_dice, iter_num)
-            writer.add_scalar('info/consistency_loss', consistency_loss, iter_num)
-            writer.add_scalar('info/consistency_weight', consistency_weight, iter_num)
+            writer.add_scalar('info/consistency_loss',
+                              consistency_loss, iter_num)
+            writer.add_scalar('info/consistency_weight',
+                              consistency_weight, iter_num)
 
             logging.info(
                 'iteration %d : loss : %f, loss_ce: %f, loss_dice: %f' %

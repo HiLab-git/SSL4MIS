@@ -22,8 +22,8 @@ from tqdm import tqdm
 
 from dataloaders import utils
 from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
-                             RandomRotFlip, ToTensor,
-                             TwoStreamBatchSampler)
+                                   RandomRotFlip, ToTensor,
+                                   TwoStreamBatchSampler)
 from networks.unet_3D import unet_3D
 from utils import losses, metrics, ramps
 from val_unet_3D_util import test_all_case
@@ -99,13 +99,13 @@ def train(args, snapshot_path):
     ema_model = create_model(ema=True)
 
     db_train = BraTS2019(base_dir=train_data_path,
-                   split='train',
-                   num=None,
-                   transform=transforms.Compose([
-                       RandomRotFlip(),
-                       RandomCrop(args.patch_size),
-                       ToTensor(),
-                   ]))
+                         split='train',
+                         num=None,
+                         transform=transforms.Compose([
+                             RandomRotFlip(),
+                             RandomCrop(args.patch_size),
+                             ToTensor(),
+                         ]))
 
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)
@@ -171,8 +171,8 @@ def train(args, snapshot_path):
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
             consistency_weight = get_current_consistency_weight(iter_num//150)
-            consistency_loss = F.mse_loss(
-                outputs_soft[args.labeled_bs:], batch_pred_mixed)
+            consistency_loss = torch.mean(
+                (outputs_soft[args.labeled_bs:] - batch_pred_mixed)**2)
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
             loss.backward()
