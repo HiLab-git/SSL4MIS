@@ -30,6 +30,7 @@
 |2020-04|R. Li and D. Auer|A Generic Ensemble Based Deep Convolutional Neural Network for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/ruizhe-l/semi-segmentation)|[ISBI2020](https://arxiv.org/pdf/2004.07995.pdf)|
 |2020-04|K. Ta and J. Ducan|A Semi-Supervised Joint Learning Approach to Left Ventricular Segmentation and Motion Tracking in Echocardiography|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098664)|
 |2020-04|Q. Chang and D. Metaxas|Soft-Label Guided Semi-Supervised Learning for Bi-Ventricle Segmentation in Cardiac Cine MRI|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098546)|
+|2020-04|D. Fan and L. Shao|Inf-Net: Automatic COVID-19 Lung Infection Segmentation from CT Images|[Code](https://github.com/DengPingFan/Inf-Net)|[TMI2020](https://ieeexplore.ieee.org/document/9098956)|
 |2019-10|L. Yu and P. Heng|Uncertainty-aware self-ensembling model for semi-supervised 3D left atrium segmentation|[Code](https://github.com/yulequan/UA-MT)|[MICCAI2019](https://arxiv.org/pdf/1907.07034.pdf)|
 |2019-10|G. Bortsova and M. Bruijne|Semi-Supervised Medical Image Segmentation via Learning Consistency under Transformations|None|[MICCAI2019](https://arxiv.org/pdf/1911.01218.pdf)|
 |2019-10|H. Zheng and X. Han|Semi-supervised Segmentation of Liver Using Adversarial Learning with Deep Atlas Prior|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_17)|
