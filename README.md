@@ -40,6 +40,7 @@
 |2019-10|S. Chen and M. Bruijne|Multi-task Attention-based Semi-supervised Learning for Medical Image Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1907.12303.pdf)|
 |2019-10|Z. Xu and M. Niethammer|DeepAtlas: Joint Semi-Supervised Learning of Image Registration and Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.08465.pdf)|
 |2019-10|S. Sedai and R. Garnavi|Uncertainty Guided Semi-supervised Segmentation of Retinal Layers in OCT Images|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32239-7_32)|
+|2019-10|G. Pombo and P. Nachev|Bayesian Volumetric Autoregressive Generative Models for Better Semisupervised Learning|[Code](https://github.com/guilherme-pombo/3DPixelCNN)|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32251-9_47)|
 |2019-06|W. Cui and C. Ye|Semi-Supervised Brain Lesion Segmentation with an Adapted Mean Teacher Model|None|[IPMI2019](https://link.springer.com/chapter/10.1007/978-3-030-20351-1_43)|
 |2019-06|K. Chaitanya and E. Konukoglu|Semi-supervised and Task-Driven Data Augmentation|[Code](https://github.com/krishnabits001/task_driven_data_augmentation)|[IPMI2019](http://link-springer-com-443.webvpn.fjmu.edu.cn/chapter/10.1007%2F978-3-030-20351-1_3)|
 |2019-04|M. Jafari and P. Abolmaesumi|Semi-Supervised Learning For Cardiac Left Ventricle Segmentation Using Conditional Deep Generative Models as Prior|None|[ISBI2019](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8759292)|
