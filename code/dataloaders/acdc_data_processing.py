@@ -1,9 +1,9 @@
+import glob
 import os
+
+import h5py
 import numpy as np
 import SimpleITK as sitk
-import glob
-from scipy.ndimage import interpolation
-import h5py
 
 slice_num = 0
 mask_path = sorted(glob.glob("/home/xdluo/data/ACDC/image/*.nii.gz"))
@@ -25,11 +25,13 @@ for case in mask_path:
         if image.shape != mask.shape:
             print("Error")
         print(item)
-	for slice_ind in range(image.shape[0]):
-	    f = h5py.File('/home/xdluo//data/ACDC/data/{}_slice_{}.h5'.format(item, slice_ind), 'w')
-	    f.create_dataset('image', data=image[slice_ind], compression="gzip")
-	    f.create_dataset('label', data=mask[slice_ind], compression="gzip")
-	    f.close()
-	    slice_num += 1
+        for slice_ind in range(image.shape[0]):
+            f = h5py.File(
+                '/home/xdluo/data/ACDC/data/{}_slice_{}.h5'.format(item, slice_ind), 'w')
+            f.create_dataset(
+                'image', data=image[slice_ind], compression="gzip")
+            f.create_dataset('label', data=mask[slice_ind], compression="gzip")
+            f.close()
+            slice_num += 1
 print("Converted all ACDC volumes to 2D slices")
 print("Total {} slices".format(slice_num))
