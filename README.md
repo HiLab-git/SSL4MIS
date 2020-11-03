@@ -69,5 +69,5 @@ This repository is part of our previous work [**DTC**](https://arxiv.org/pdf/200
 	  year={2020}
 	}
 	
-## Questions
+## Questions and Suggestions
 * If you have any questions or suggestions about this project, please contact me through email: `luoxd1996@gmail.com`. 
