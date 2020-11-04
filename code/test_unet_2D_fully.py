@@ -13,7 +13,7 @@ from scipy.ndimage.interpolation import zoom
 from tqdm import tqdm
 
 # from networks.efficientunet import UNet
-from networks.unet import UNet, UNet_UADS
+from networks.net_factory import net_factory
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
@@ -22,6 +22,8 @@ parser.add_argument('--exp', type=str,
                     default='ACDC_Uncertainty_Aware_Mean_Teacher_136_labeled', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet', help='model_name')
+parser.add_argument('--num_classes', type=int,
+                    default=4, help='model_name')
 
 
 def calculate_metric_percase(pred, gt):
@@ -80,9 +82,8 @@ def Inference(FLAGS):
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)
-    # net = UNet('efficientnet-b3', encoder_weights='imagenet',
-    #            in_channels=1, classes=4).cuda()
-    net = UNet(in_chns=1, class_num=4).cuda()
+    net = net_factory(net_type=FLAGS.model, in_chns=1,
+                      class_num=FLAGS.num_classes)
     save_mode_path = os.path.join(
         snapshot_path, '{}_best_model.pth'.format(FLAGS.model))
     net.load_state_dict(torch.load(save_mode_path))
