@@ -12,7 +12,7 @@ from scipy import ndimage
 from torch.utils.data.sampler import Sampler
 
 
-class ACDC(Dataset):
+class BaseDataSets(Dataset):
     def __init__(self, base_dir=None, split='train', num=None, transform=None):
         self._base_dir = base_dir
         self.sample_list = []

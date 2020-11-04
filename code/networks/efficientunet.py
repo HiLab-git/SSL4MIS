@@ -142,7 +142,7 @@ class UnetDecoder(nn.Module):
         return x
 
 
-class UNet(nn.Module):
+class Effi_UNet(nn.Module):
     """Unet_ is a fully convolution neural network for image semantic segmentation
 
     Args:

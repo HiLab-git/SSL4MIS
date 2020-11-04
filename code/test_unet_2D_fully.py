@@ -1,25 +1,27 @@
-import os
 import argparse
-import torch
-import h5py
-import numpy as np
-from tqdm import tqdm
-import SimpleITK as sitk
-from medpy import metric
-from networks.efficientunet import UNet
-from scipy.ndimage.interpolation import zoom
-import nibabel as nib
+import os
 import shutil
-from scipy.ndimage import zoom
 
+import h5py
+import nibabel as nib
+import numpy as np
+import SimpleITK as sitk
+import torch
+from medpy import metric
+from scipy.ndimage import zoom
+from scipy.ndimage.interpolation import zoom
+from tqdm import tqdm
+
+# from networks.efficientunet import UNet
+from networks.unet import UNet, UNet_UADS
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/ACDC', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='ACDC_Fully_Supervised', help='experiment_name')
+                    default='ACDC_Uncertainty_Aware_Mean_Teacher_136_labeled', help='experiment_name')
 parser.add_argument('--model', type=str,
-                    default='efficient_unet_2D', help='model_name')
+                    default='unet', help='model_name')
 
 
 def calculate_metric_percase(pred, gt):
@@ -78,8 +80,9 @@ def Inference(FLAGS):
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)
-    net = UNet('efficientnet-b3', encoder_weights='imagenet',
-               in_channels=1, classes=4).cuda()
+    # net = UNet('efficientnet-b3', encoder_weights='imagenet',
+    #            in_channels=1, classes=4).cuda()
+    net = UNet(in_chns=1, class_num=4).cuda()
     save_mode_path = os.path.join(
         snapshot_path, '{}_best_model.pth'.format(FLAGS.model))
     net.load_state_dict(torch.load(save_mode_path))
@@ -104,3 +107,4 @@ if __name__ == '__main__':
     FLAGS = parser.parse_args()
     metric = Inference(FLAGS)
     print(metric)
+    print((metric[0]+metric[1]+metric[2])/3)
