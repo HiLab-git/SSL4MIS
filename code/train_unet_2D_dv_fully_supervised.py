@@ -7,6 +7,7 @@ import sys
 import time
 
 import numpy as np
+from numpy.core.numeric import outer
 import torch
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
@@ -22,9 +23,9 @@ from tqdm import tqdm
 
 from dataloaders import utils
 from dataloaders.dataset import BaseDataSets, RandomGenerator
-from networks.net_factory import net_factory
+from networks.unet import UNet_DS
 from utils import losses, metrics, ramps
-from val_unet_2D import test_single_volume
+from val_unet_2D_dv import test_single_volume
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
@@ -70,7 +71,7 @@ def train(args, snapshot_path):
     batch_size = args.batch_size
     max_iterations = args.max_iterations
 
-    model = net_factory(net_type=args.model, in_chns=1, class_num=num_classes)
+    model = UNet_DS(in_chns=1, class_num=num_classes).cuda()
     labeled_slice = patients_to_slices(args.root_path, args.labeled_num)
 
     db_train = BaseDataSets(base_dir=args.root_path, split="train", num=labeled_slice, transform=transforms.Compose([
@@ -106,11 +107,17 @@ def train(args, snapshot_path):
             volume_batch, label_batch = sampled_batch['image'], sampled_batch['label']
             volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
 
-            outputs = model(volume_batch)
-            outputs_soft = torch.softmax(outputs, dim=1)
+            dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg = model(
+                volume_batch)
+            dp0_out_seg_soft = torch.softmax(dp0_out_seg, dim=1)
+            dp1_out_seg_soft = torch.softmax(dp1_out_seg, dim=1)
+            dp2_out_seg_soft = torch.softmax(dp2_out_seg, dim=1)
+            dp3_out_seg_soft = torch.softmax(dp3_out_seg, dim=1)
 
-            loss_ce = ce_loss(outputs, label_batch[:].long())
-            loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
+            loss_ce = (ce_loss(dp0_out_seg, label_batch[:].long()) + ce_loss(dp1_out_seg, label_batch[:].long(
+            )) + ce_loss(dp2_out_seg, label_batch[:].long()) + ce_loss(dp3_out_seg, label_batch[:].long())) / 4
+            loss_dice = (dice_loss(dp0_out_seg_soft, label_batch.unsqueeze(1)) + dice_loss(dp1_out_seg_soft, label_batch.unsqueeze(
+                1)) + dice_loss(dp2_out_seg_soft, label_batch.unsqueeze(1)) + dice_loss(dp3_out_seg_soft, label_batch.unsqueeze(1))) / 4
             loss = 0.5 * (loss_dice + loss_ce)
             optimizer.zero_grad()
             loss.backward()
@@ -134,7 +141,7 @@ def train(args, snapshot_path):
                 image = volume_batch[1, 0:1, :, :]
                 writer.add_image('train/Image', image, iter_num)
                 outputs = torch.argmax(torch.softmax(
-                    outputs, dim=1), dim=1, keepdim=True)
+                    dp0_out_seg, dim=1), dim=1, keepdim=True)
                 writer.add_image('train/Prediction',
                                  outputs[1, ...] * 50, iter_num)
                 labs = label_batch[1, ...].unsqueeze(0) * 50
