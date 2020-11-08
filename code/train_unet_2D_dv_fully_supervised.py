@@ -23,7 +23,7 @@ from tqdm import tqdm
 
 from dataloaders import utils
 from dataloaders.dataset import BaseDataSets, RandomGenerator
-from networks.unet import UNet_DS
+from networks.net_factory import net_factory
 from utils import losses, metrics, ramps
 from val_unet_2D_dv import test_single_volume
 
@@ -71,7 +71,7 @@ def train(args, snapshot_path):
     batch_size = args.batch_size
     max_iterations = args.max_iterations
 
-    model = UNet_DS(in_chns=1, class_num=num_classes).cuda()
+    model = net_factory(net_type=args.model, in_chns=1, class_num=num_classes)
     labeled_slice = patients_to_slices(args.root_path, args.labeled_num)
 
     db_train = BaseDataSets(base_dir=args.root_path, split="train", num=labeled_slice, transform=transforms.Compose([
