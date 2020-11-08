@@ -163,7 +163,6 @@ class Decoder_DS(nn.Module):
                                       kernel_size=3, padding=1)
         self.out_conv_dp1 = nn.Conv2d(self.ft_chns[1], self.n_class,
                                       kernel_size=3, padding=1)
-        self.feature_noise = FeatureNoise()
 
         self.dropout = nn.Dropout2d(0.5)
 
@@ -177,24 +176,13 @@ class Decoder_DS(nn.Module):
         x4 = feature[4]
         x4 = self.dropout(x4)
         x = self.up1(x4, x3)
-        if self.training:
-            dp3_out_seg = self.out_conv_dp3(Dropout(x, p=0.5))
-        else:
-            dp3_out_seg = self.out_conv_dp3(x)
+        dp3_out_seg = self.out_conv_dp3(x)
         dp3_out_seg = torch.nn.functional.interpolate(dp3_out_seg, shape)
 
-        x = self.up2(x, x2)
-        if self.training:
-            dp2_out_seg = self.out_conv_dp2(FeatureDropout(x))
-        else:
-            dp2_out_seg = self.out_conv_dp2(x)
+        dp2_out_seg = self.out_conv_dp2(x)
         dp2_out_seg = torch.nn.functional.interpolate(dp2_out_seg, shape)
 
-        x = self.up3(x, x1)
-        if self.training:
-            dp1_out_seg = self.out_conv_dp1(self.feature_noise(x))
-        else:
-            dp1_out_seg = self.out_conv_dp1(x)
+        dp1_out_seg = self.out_conv_dp1(x)
         dp1_out_seg = torch.nn.functional.interpolate(dp1_out_seg, shape)
 
         x = self.up4(x, x0)
@@ -236,8 +224,6 @@ class UNet_DS(nn.Module):
                   'acti_func': 'relu'}
         self.encoder = Encoder(params)
         self.decoder = Decoder_DS(params)
-
-        self.classifier = nn.Conv2d
 
     def forward(self, x):
         shape = x.shape[2:]
