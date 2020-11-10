@@ -1,8 +1,8 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
 
-(1), More papers and code repositories will be updated later, unfortunately, there are very few codes and data is open available. For easy evaluation and fair comparison , we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
+* More papers and code repositories will be updated later, unfortunately, there are very few codes and data is open available. For easy evaluation and fair comparison , we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image segmentation community. If you are interested, you can push your implementations or ideas to this repository at any time.
 
-(2), This repository proivdes a daily-update literature reviews, algorithoms' implementation and some examples of using pytorch for semi-supervised medical image segmentation. The project is under development. Currently it supports 2D and 3D semi-supervised image segmentation and includes five widely-used algorithoms' implementations. It was originally developped for our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf), If you use this baselines, please consider to cite the following paper:
+* This repository proivdes a daily-update literature reviews, algorithoms' implementation and some examples of using pytorch for semi-supervised medical image segmentation. The project is under development. Currently it supports 2D and 3D semi-supervised image segmentation and includes five widely-used algorithoms' implementations. It was originally developped for our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf), If you use this baselines, please consider to cite the following paper:
 
 	@article{luo2020semi,
 	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
