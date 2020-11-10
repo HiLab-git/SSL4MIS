@@ -69,7 +69,7 @@ Some implementations of semi-supervised learning methods can be found in this [L
 	  	journal={arXiv preprint arXiv:2009.04448},
 	  	year={2020}
 		}
-* In the next two or three months we will provide more algorithoms' implementations, examples and pre-tained models.
+* In the next two or three months, we will provide more algorithms' implementations, examples, and pre-trained models.
 
 ## Questions and Suggestions
 * If you have any questions or suggestions about this project, please contact me through email: `luoxd1996@gmail.com`. 
