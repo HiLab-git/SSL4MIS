@@ -64,10 +64,10 @@ Some implementations of semi-supervised learning methods can be found in this [L
 * This repository proivdes a daily-update literature reviews, algorithoms' implementation and some examples of using pytorch for semi-supervised medical image segmentation. The project is under development. Currently it supports 2D and 3D semi-supervised image segmentation and includes five widely-used algorithoms' implementations. It was originally developped for our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf), If you use this baselines, please consider to cite the following paper:
 
 		@article{luo2020semi,
-	  	title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
-	 	 author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
-	  	journal={arXiv preprint arXiv:2009.04448},
-	  	year={2020}
+	  	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
+	 	  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+	  	  journal={arXiv preprint arXiv:2009.04448},
+	  	  year={2020}
 		}
 * In the next two or three months, we will provide more algorithms' implementations, examples, and pre-trained models.
 
