@@ -21,7 +21,8 @@ from torchvision.utils import make_grid
 from tqdm import tqdm
 
 from dataloaders import utils
-from dataloaders.dataset import BaseDataSets, RandomGenerator, TwoStreamBatchSampler
+from dataloaders.dataset import (BaseDataSets, RandomGenerator,
+                                 TwoStreamBatchSampler)
 from networks.net_factory import net_factory
 from utils import losses, metrics, ramps
 from val_unet_2D import test_single_volume
@@ -183,8 +184,8 @@ def train(args, snapshot_path):
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
             consistency_weight = get_current_consistency_weight(iter_num//150)
-            consistency_loss = F.mse_loss(
-                outputs_soft[args.labeled_bs:], batch_pred_mixed)
+            consistency_loss = torch.mean(
+                (outputs_soft[args.labeled_bs:] - batch_pred_mixed) ** 2)
             loss = supervised_loss + consistency_weight * consistency_loss
 
             optimizer.zero_grad()

@@ -1,29 +1,31 @@
-import os
-import sys
-from torch.nn.modules.loss import CrossEntropyLoss
-from tqdm import tqdm
-from tensorboardX import SummaryWriter
-import shutil
 import argparse
 import logging
-import time
+import os
 import random
-import numpy as np
+import shutil
+import sys
+import time
 
+import numpy as np
 import torch
-import torch.optim as optim
-from torchvision import transforms
-import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from tensorboardX import SummaryWriter
 from torch.nn import BCEWithLogitsLoss
+from torch.nn.modules.loss import CrossEntropyLoss
 from torch.utils.data import DataLoader
+from torchvision import transforms
 from torchvision.utils import make_grid
-from networks.unet_3D import unet_3D
+from tqdm import tqdm
 
 from dataloaders import utils
-from utils import ramps, losses, metrics
-from dataloaders.brats2019 import BraTS2019, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
+from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
+                                   RandomRotFlip, ToTensor,
+                                   TwoStreamBatchSampler)
+from networks.unet_3D import unet_3D
+from utils import losses, metrics, ramps
 from val_unet_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()

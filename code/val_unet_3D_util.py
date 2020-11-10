@@ -1,4 +1,5 @@
 import math
+from glob import glob
 
 import h5py
 import nibabel as nib
@@ -8,7 +9,6 @@ import torch
 import torch.nn.functional as F
 from medpy import metric
 from tqdm import tqdm
-from glob import glob
 
 
 def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1):
@@ -69,7 +69,7 @@ def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1)
                 cnt[xs:xs+patch_size[0], ys:ys+patch_size[1], zs:zs+patch_size[2]] \
                     = cnt[xs:xs+patch_size[0], ys:ys+patch_size[1], zs:zs+patch_size[2]] + 1
     score_map = score_map/np.expand_dims(cnt, axis=0)
-    label_map = np.argmax(score_map, axis = 0)
+    label_map = np.argmax(score_map, axis=0)
 
     if add_pad:
         label_map = label_map[wl_pad:wl_pad+w,

@@ -1,13 +1,14 @@
-import h5py
 import math
+
+import h5py
 import nibabel as nib
 import numpy as np
-from medpy import metric
+import SimpleITK as sitk
 import torch
 import torch.nn.functional as F
-from tqdm import tqdm
+from medpy import metric
 from skimage.measure import label
-import SimpleITK as sitk
+from tqdm import tqdm
 
 
 def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1):

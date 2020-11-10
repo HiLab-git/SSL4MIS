@@ -1,10 +1,12 @@
-from glob import glob
-import os
 import argparse
-import torch
-from test_unet_3D_util import test_all_case
-from networks.unet_3D import unet_3D
+import os
 import shutil
+from glob import glob
+
+import torch
+
+from networks.unet_3D import unet_3D
+from test_unet_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,

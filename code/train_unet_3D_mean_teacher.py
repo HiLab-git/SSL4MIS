@@ -1,29 +1,31 @@
-import os
-import sys
-from torch.nn.modules.loss import CrossEntropyLoss
-from tqdm import tqdm
-from tensorboardX import SummaryWriter
-import shutil
 import argparse
 import logging
-import time
+import os
 import random
-import numpy as np
+import shutil
+import sys
+import time
 
+import numpy as np
 import torch
-import torch.optim as optim
-from torchvision import transforms
-import torch.nn.functional as F
 import torch.backends.cudnn as cudnn
 import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from tensorboardX import SummaryWriter
 from torch.nn import BCEWithLogitsLoss
+from torch.nn.modules.loss import CrossEntropyLoss
 from torch.utils.data import DataLoader
+from torchvision import transforms
 from torchvision.utils import make_grid
-from networks.unet_3D import unet_3D
+from tqdm import tqdm
 
 from dataloaders import utils
-from utils import ramps, losses, metrics
-from dataloaders.brats2019 import BraTS2019, RandomCrop, CenterCrop, RandomRotFlip, ToTensor, TwoStreamBatchSampler
+from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
+                                   RandomRotFlip, ToTensor,
+                                   TwoStreamBatchSampler)
+from networks.unet_3D import unet_3D
+from utils import losses, metrics, ramps
 from val_unet_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()
@@ -142,6 +144,7 @@ def train(args, snapshot_path):
             outputs_soft = torch.softmax(outputs, dim=1)
             with torch.no_grad():
                 ema_output = ema_model(ema_inputs)
+                ema_output_soft = torch.softmax(ema_output, dim=1)
 
             loss_ce = ce_loss(outputs[:args.labeled_bs],
                               label_batch[:args.labeled_bs][:])
@@ -150,7 +153,7 @@ def train(args, snapshot_path):
             supervised_loss = 0.5 * (loss_dice + loss_ce)
             consistency_weight = get_current_consistency_weight(iter_num//150)
             consistency_loss = torch.mean(
-                (outputs[args.labeled_bs:] - ema_output)**2)
+                (outputs_soft[args.labeled_bs:] - ema_output_soft)**2)
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
             loss.backward()
