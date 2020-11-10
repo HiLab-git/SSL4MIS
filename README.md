@@ -65,10 +65,11 @@ Some implementations of semi-supervised learning methods can be found in this [L
 
 		@article{luo2020semi,
 	  	  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
-	 	  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
 	  	  journal={arXiv preprint arXiv:2009.04448},
 	  	  year={2020}
 		}
+		
 * In the next two or three months, we will provide more algorithms' implementations, examples, and pre-trained models.
 
 ## Questions and Suggestions
