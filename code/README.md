@@ -38,4 +38,4 @@ python test_XXXXX.py
 * [Uncertainty Aware Mean Teacher](https://arxiv.org/pdf/1907.07034.pdf)
 * [Interpolation Consistency Training](https://arxiv.org/pdf/1903.03825.pdf)
 ## Acknowledgement
-* Part of the code is adapted from [UA-MT](https://github.com/yulequan/UA-MT), [Attention-Gated-Networks](https://github.com/ozan-oktay/Attention-Gated-Networks) and [segmentatic_segmentation.pytorch](https://github.com/qubvel/segmentation_models.pytorch). 
+* Part of the code is adapted from open-source codebase and original implementations of algorithms, we thank these author for their fantastic and efficient codebase, such as, [UA-MT](https://github.com/yulequan/UA-MT), [Attention-Gated-Networks](https://github.com/ozan-oktay/Attention-Gated-Networks) and [segmentatic_segmentation.pytorch](https://github.com/qubvel/segmentation_models.pytorch) . 
