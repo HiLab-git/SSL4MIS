@@ -161,7 +161,6 @@ class Decoder_DS(nn.Module):
                                       kernel_size=3, padding=1)
         self.out_conv_dp1 = nn.Conv2d(self.ft_chns[1], self.n_class,
                                       kernel_size=3, padding=1)
-        self.feature_noise = FeatureNoise()
 
         self.dropout = nn.Dropout2d(0.5)
 
