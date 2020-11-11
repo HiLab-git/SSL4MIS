@@ -73,4 +73,4 @@ Some implementations of semi-supervised learning methods can be found in this [L
 * In the next two or three months, we will provide more algorithms' implementations, examples, and pre-trained models.
 
 ## Questions and Suggestions
-* If you have any questions or suggestions about this project, please contact me through email: `luoxd1996@gmail.com`. 
+* If you have any questions or suggestions about this project, please contact me through email: `luoxd1996@gmail.com` or QQ Group (Chinese):`906808850`. 
