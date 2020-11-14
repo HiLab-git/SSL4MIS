@@ -1,7 +1,6 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
 
 * Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. If you are interested, you can push your implementations or ideas to this repository at any time.
-
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
 |Date|The First and Last Authors|Title|Code|Reference|
@@ -33,7 +32,7 @@
 |2020-06|H. Yang and P. With|Deep Q-Network-Driven Catheter Segmentation in 3D US by Hybrid Constrained Semi-Supervised Learning and Dual-UNet|None|[MICCAI2020](https://arxiv.org/pdf/2006.14702.pdf)|
 |2020-04|C. Liu and C. Ye|Semi-Supervised Brain Lesion Segmentation Using Training Images with and Without Lesions|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098565)|
 |2020-04|R. Li and D. Auer|A Generic Ensemble Based Deep Convolutional Neural Network for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/ruizhe-l/semi-segmentation)|[ISBI2020](https://arxiv.org/pdf/2004.07995.pdf)|
-|2020-04|K. Ta and J. Ducan|A Semi-Supervised Joint Learning Approach to Left Ventricular Segmentation and Motion Tracking in Echocardiography|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098664)|
+|2020-04|K. Ta and J. Duncan|A Semi-Supervised Joint Learning Approach to Left Ventricular Segmentation and Motion Tracking in Echocardiography|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098664)|
 |2020-04|Q. Chang and D. Metaxas|Soft-Label Guided Semi-Supervised Learning for Bi-Ventricle Segmentation in Cardiac Cine MRI|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098546)|
 |2020-04|D. Fan and L. Shao|Inf-Net: Automatic COVID-19 Lung Infection Segmentation from CT Images|[Code](https://github.com/DengPingFan/Inf-Net)|[TMI2020](https://ieeexplore.ieee.org/document/9098956)|
 |2019-10|L. Yu and P. Heng|Uncertainty-aware self-ensembling model for semi-supervised 3D left atrium segmentation|[Code](https://github.com/yulequan/UA-MT)|[MICCAI2019](https://arxiv.org/pdf/1907.07034.pdf)|
