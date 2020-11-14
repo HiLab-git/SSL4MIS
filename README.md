@@ -11,6 +11,7 @@
 |2020-10|L. Sun and Y. Yu|A Teacher-Student Framework for Semi-supervised Medical Image Segmentation From Mixed Supervision|None|[Arxiv](https://arxiv.org/pdf/2010.12219.pdf)|
 |2020-10|J. Ma and X. Yang|Active Contour Regularized Semi-supervised Learning for COVID-19 CT Infection Segmentation with Limited Annotations|[Code](https://zenodo.org/record/4246238#.X6PSyogzZFE)|[Physics in Medicine & Biology2020](https://iopscience.iop.org/article/10.1088/1361-6560/abc04e/pdf)|
 |2020-10|W. Hang and J. Qin|Local and Global Structure-Aware Entropy Regularized Mean Teacher Model for 3D Left Atrium Segmentation|[Code](https://github.com/3DMRIs/LG-ER-MT)|[MICCAI2020](https://link.springer.com/chapter/10.1007/978-3-030-59710-8_55)|
+|2020-10|K. Tan and J. Duncan|A Semi-supervised Joint Network for Simultaneous Left Ventricular Motion Tracking and Segmentation in 4D Echocardiography|None|[MICCAI2020](https://link.springer.com/chapter/10.1007/978-3-030-59725-2_45)|
 |2020-10|Y. Wang and Z. He|Double-Uncertainty Weighted Method for Semi-supervised Learning|None|[MICCAI2020](https://link.springer.com/chapter/10.1007%2F978-3-030-59710-8_53)|
 |2020-10|K. Fang and W. Li|DMNet: Difference Minimization Network for Semi-supervised Segmentation in Medical Images|None|[MICCAI2020](https://link.springer.com/chapter/10.1007/978-3-030-59710-8_52)|
 |2020-10|X. Cao and L. Cheng|Uncertainty Aware Temporal-Ensembling Model for Semi-supervised ABUS Mass Segmentation|None|[TMI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9214845)|
