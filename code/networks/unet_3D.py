@@ -1,8 +1,19 @@
+# -*- coding: utf-8 -*-
+"""
+An implementation of the 3D U-Net paper:
+     Özgün Çiçek, Ahmed Abdulkadir, Soeren S. Lienkamp, Thomas Brox, Olaf Ronneberger:
+     3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation. 
+     MICCAI (2) 2016: 424-432
+Note that there are some modifications from the original paper, such as
+the use of batch normalization, dropout, and leaky relu here.
+"""
 import math
+
 import torch.nn as nn
-from networks.utils import UnetConv3, UnetUp3, UnetUp3_CT
 import torch.nn.functional as F
+
 from networks.networks_other import init_weights
+from networks.utils import UnetConv3, UnetUp3, UnetUp3_CT
 
 
 class unet_3D(nn.Module):

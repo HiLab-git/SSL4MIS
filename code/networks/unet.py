@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+"""
+An implementation of the U-Net paper:
+    Olaf Ronneberger, Philipp Fischer, Thomas Brox:
+    U-Net: Convolutional Networks for Biomedical Image Segmentation. 
+    MICCAI (3) 2015: 234-241
+Note that there are some modifications from the original paper, such as
+the use of batch normalization, dropout, and leaky relu here.
+"""
 from __future__ import division, print_function
 
 import torch

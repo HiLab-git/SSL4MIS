@@ -5,8 +5,6 @@ import torch.nn.functional as F
 from networks.attention import *
 from networks.efficient_encoder import get_encoder
 
-import torch.nn as nn
-
 
 def initialize_decoder(module):
     for m in module.modules():

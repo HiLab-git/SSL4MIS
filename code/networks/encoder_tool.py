@@ -1,9 +1,10 @@
+from typing import List
+
 import torch
 import torch.nn as nn
-from typing import List
-from efficientnet_pytorch import EfficientNet
-from efficientnet_pytorch.utils import url_map, get_model_params
 import torch.utils.model_zoo as model_zoo
+from efficientnet_pytorch import EfficientNet
+from efficientnet_pytorch.utils import get_model_params, url_map
 
 
 class EncoderMixin:
