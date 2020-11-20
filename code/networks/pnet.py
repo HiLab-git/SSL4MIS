@@ -74,7 +74,6 @@ class OutPutBlock(nn.Module):
         self.drop1 = nn.Dropout2d(0.3)
         self.drop2 = nn.Dropout2d(0.3)
         self.ac1 = nn.LeakyReLU()
-        self.ac2 = nn.LeakyReLU()
 
     def forward(self, x):
         x = self.drop1(x)
@@ -82,7 +81,6 @@ class OutPutBlock(nn.Module):
         x = self.ac1(x)
         x = self.drop2(x)
         x = self.conv2(x)
-        x = self.ac2(x)
         return x
 
 
