@@ -14,6 +14,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2020-11|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA](https://arxiv.org/pdf/2011.11750.pdf)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[Arxiv](https://arxiv.org/pdf/2011.00325.pdf)|
 |2020-10|S. Shailja and B.S. Manjunath|Semi supervised segmentation and graph-based tracking of 3D nuclei in time-lapse microscopy|[Code](https://github.com/s-shailja/ucsb_ctc)|[Arxiv](https://arxiv.org/pdf/2010.13343.pdf)|
