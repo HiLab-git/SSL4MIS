@@ -24,16 +24,15 @@ from dataloaders import utils
 from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
                                    RandomRotFlip, ToTensor,
                                    TwoStreamBatchSampler)
-from networks.discriminator import FC3DDiscriminator
-from networks.unet_3D import unet_3D
+from networks.net_factory_3d import net_factory_3d
 from utils import losses, metrics, ramps
-from val_unet_3D_util import test_all_case
+from val_3D import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/BraTS2019', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='BraTs2019_Adversarial_Network', help='experiment_name')
+                    default='BraTs2019_Mean_Teacher', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet_3D', help='model_name')
 parser.add_argument('--max_iterations', type=int,
@@ -44,8 +43,6 @@ parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.01,
                     help='segmentation network learning rate')
-parser.add_argument('--DAN_lr', type=float,  default=0.0001,
-                    help='DAN learning rate')
 parser.add_argument('--patch_size', type=list,  default=[96, 96, 96],
                     help='patch size of network input')
 parser.add_argument('--seed', type=int,  default=1337, help='random seed')
@@ -63,6 +60,7 @@ parser.add_argument('--consistency', type=float,
                     default=0.1, help='consistency')
 parser.add_argument('--consistency_rampup', type=float,
                     default=200.0, help='consistency_rampup')
+
 args = parser.parse_args()
 
 
@@ -79,16 +77,24 @@ def update_ema_variables(model, ema_model, alpha, global_step):
 
 
 def train(args, snapshot_path):
-    num_classes = 2
     base_lr = args.base_lr
     train_data_path = args.root_path
     batch_size = args.batch_size
     max_iterations = args.max_iterations
+    num_classes = 2
 
-    net = unet_3D(n_classes=num_classes, in_channels=1)
-    model = net.cuda()
-    DAN = FC3DDiscriminator(num_classes=num_classes)
-    DAN = DAN.cuda()
+    def create_model(ema=False):
+        # Network definition
+        net = net_factory_3d(net_type=args.model,
+                             in_chns=1, class_num=num_classes)
+        model = net.cuda()
+        if ema:
+            for param in model.parameters():
+                param.detach_()
+        return model
+
+    model = create_model()
+    ema_model = create_model(ema=True)
 
     db_train = BraTS2019(base_dir=train_data_path,
                          split='train',
@@ -111,11 +117,10 @@ def train(args, snapshot_path):
                              num_workers=4, pin_memory=True, worker_init_fn=worker_init_fn)
 
     model.train()
+    ema_model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
-    DAN_optimizer = optim.Adam(
-        DAN.parameters(), lr=args.DAN_lr, betas=(0.9, 0.99))
     ce_loss = CrossEntropyLoss()
     dice_loss = losses.DiceLoss(2)
 
@@ -131,42 +136,53 @@ def train(args, snapshot_path):
 
             volume_batch, label_batch = sampled_batch['image'], sampled_batch['label']
             volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
+            unlabeled_volume_batch = volume_batch[args.labeled_bs:]
 
-            DAN_target = torch.tensor([1, 1, 0, 0]).cuda()
-            model.train()
-            DAN.eval()
+            noise = torch.clamp(torch.randn_like(
+                unlabeled_volume_batch) * 0.1, -0.2, 0.2)
+            ema_inputs = unlabeled_volume_batch + noise
 
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
+            with torch.no_grad():
+                ema_output = ema_model(ema_inputs)
+            T = 8
+            _, _, d, w, h = unlabeled_volume_batch.shape
+            volume_batch_r = unlabeled_volume_batch.repeat(2, 1, 1, 1, 1)
+            stride = volume_batch_r.shape[0] // 2
+            preds = torch.zeros([stride * T, 2, d, w, h]).cuda()
+            for i in range(T//2):
+                ema_inputs = volume_batch_r + \
+                    torch.clamp(torch.randn_like(
+                        volume_batch_r) * 0.1, -0.2, 0.2)
+                with torch.no_grad():
+                    preds[2 * stride * i:2 * stride *
+                          (i + 1)] = ema_model(ema_inputs)
+            preds = torch.softmax(preds, dim=1)
+            preds = preds.reshape(T, stride, 2, d, w, h)
+            preds = torch.mean(preds, dim=0)
+            uncertainty = -1.0 * \
+                torch.sum(preds*torch.log(preds + 1e-6), dim=1, keepdim=True)
 
             loss_ce = ce_loss(outputs[:args.labeled_bs],
                               label_batch[:args.labeled_bs][:])
             loss_dice = dice_loss(
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
-
             consistency_weight = get_current_consistency_weight(iter_num//150)
-            DAN_outputs = DAN(
-                outputs_soft[args.labeled_bs:], volume_batch[args.labeled_bs:])
+            consistency_dist = losses.softmax_mse_loss(
+                outputs[args.labeled_bs:], ema_output)  # (batch, 2, 112,112,80)
+            threshold = (0.75+0.25*ramps.sigmoid_rampup(iter_num,
+                                                        max_iterations))*np.log(2)
+            mask = (uncertainty < threshold).float()
+            consistency_loss = torch.sum(
+                mask*consistency_dist)/(2*torch.sum(mask)+1e-16)
 
-            consistency_loss = F.cross_entropy(
-                DAN_outputs, (DAN_target[:args.labeled_bs]).long())
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-
-            model.eval()
-            DAN.train()
-            with torch.no_grad():
-                outputs = model(volume_batch)
-                outputs_soft = torch.softmax(outputs, dim=1)
-
-            DAN_outputs = DAN(outputs_soft, volume_batch)
-            DAN_loss = F.cross_entropy(DAN_outputs, DAN_target.long())
-            DAN_optimizer.zero_grad()
-            DAN_loss.backward()
-            DAN_optimizer.step()
+            update_ema_variables(model, ema_model, args.ema_decay, iter_num)
 
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
@@ -185,6 +201,7 @@ def train(args, snapshot_path):
             logging.info(
                 'iteration %d : loss : %f, loss_ce: %f, loss_dice: %f' %
                 (iter_num, loss.item(), loss_ce.item(), loss_dice.item()))
+            writer.add_scalar('loss/loss', loss, iter_num)
 
             if iter_num % 20 == 0:
                 image = volume_batch[0, 0:1, :, :, 20:61:10].permute(

@@ -19,11 +19,13 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/ACDC', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='ACDC_Uncertainty_Aware_Mean_Teacher_136_labeled', help='experiment_name')
+                    default='ACDC/Fully_Supervised', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet', help='model_name')
-parser.add_argument('--num_classes', type=int,
-                    default=4, help='model_name')
+parser.add_argument('--num_classes', type=int,  default=4,
+                    help='output channel of network')
+parser.add_argument('--labeled_num', type=int, default=3,
+                    help='labeled data')
 
 
 def calculate_metric_percase(pred, gt):
@@ -35,7 +37,7 @@ def calculate_metric_percase(pred, gt):
     return dice, hd95, asd
 
 
-def test_single_volume(case, net, test_save_path):
+def test_single_volume(case, net, test_save_path, FLAGS):
     h5f = h5py.File(FLAGS.root_path + "/data/{}.h5".format(case), 'r')
     image = h5f['image'][:]
     label = h5f['label'][:]
@@ -48,7 +50,10 @@ def test_single_volume(case, net, test_save_path):
             0).unsqueeze(0).float().cuda()
         net.eval()
         with torch.no_grad():
-            out_main = net(input)
+            if FLAGS.model == "unet_urds":
+                out_main, _, _, _ = net(input)
+            else:
+                out_main = net(input)
             out = torch.argmax(torch.softmax(
                 out_main, dim=1), dim=1).squeeze(0)
             out = out.cpu().detach().numpy()
@@ -76,9 +81,10 @@ def Inference(FLAGS):
         image_list = f.readlines()
     image_list = sorted([item.replace('\n', '').split(".")[0]
                          for item in image_list])
-    snapshot_path = "../model/{}/{}".format(FLAGS.exp, FLAGS.model)
-    test_save_path = "../model/{}/{}_Prediction/".format(FLAGS.exp,
-                                                         FLAGS.model)
+    snapshot_path = "../model/{}_{}_labeled/{}".format(
+        FLAGS.exp, FLAGS.labeled_num, FLAGS.model)
+    test_save_path = "../model/{}_{}_labeled/{}_predictions/".format(
+        FLAGS.exp, FLAGS.labeled_num, FLAGS.model)
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)
@@ -95,7 +101,7 @@ def Inference(FLAGS):
     third_total = 0.0
     for case in tqdm(image_list):
         first_metric, second_metric, third_metric = test_single_volume(
-            case, net, test_save_path)
+            case, net, test_save_path, FLAGS)
         first_total += np.asarray(first_metric)
         second_total += np.asarray(second_metric)
         third_total += np.asarray(third_metric)
