@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+"""
+The implementation is borrowed from: https://github.com/HiLab-git/PyMIC
+"""
 from __future__ import division, print_function
 
 import numpy as np
@@ -116,7 +119,6 @@ class Decoder(nn.Module):
 
         self.out_conv = nn.Conv2d(self.ft_chns[0], self.n_class,
                                   kernel_size=3, padding=1)
-        self.dropout = nn.Dropout2d(0.5)
 
     def forward(self, feature):
         x0 = feature[0]
@@ -129,7 +131,6 @@ class Decoder(nn.Module):
         x = self.up2(x, x2)
         x = self.up3(x, x1)
         x = self.up4(x, x0)
-        x = self.dropout(x)
         output = self.out_conv(x)
         return output
 
@@ -163,9 +164,6 @@ class Decoder_DS(nn.Module):
                                       kernel_size=3, padding=1)
         self.out_conv_dp1 = nn.Conv2d(self.ft_chns[1], self.n_class,
                                       kernel_size=3, padding=1)
-        self.feature_noise = FeatureNoise()
-
-        self.dropout = nn.Dropout2d(0.5)
 
     def forward(self, feature, shape):
         x0 = feature[0]
@@ -186,14 +184,13 @@ class Decoder_DS(nn.Module):
         dp1_out_seg = torch.nn.functional.interpolate(dp1_out_seg, shape)
 
         x = self.up4(x, x0)
-        x = self.dropout(x)
         dp0_out_seg = self.out_conv(x)
         return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
 
 
-class Decoder_UADS(nn.Module):
+class Decoder_URDS(nn.Module):
     def __init__(self, params):
-        super(Decoder_UADS, self).__init__()
+        super(Decoder_URDS, self).__init__()
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
@@ -221,8 +218,6 @@ class Decoder_UADS(nn.Module):
         self.out_conv_dp1 = nn.Conv2d(self.ft_chns[1], self.n_class,
                                       kernel_size=3, padding=1)
         self.feature_noise = FeatureNoise()
-
-        self.dropout = nn.Dropout2d(0.5)
 
     def forward(self, feature, shape):
         x0 = feature[0]
@@ -257,7 +252,7 @@ class Decoder_UADS(nn.Module):
 
 
 def Dropout(x, p=0.5):
-    x = torch.nn.functional.dropout3d(x, p)
+    x = torch.nn.functional.dropout2d(x, p)
     return x
 
 
@@ -340,7 +335,7 @@ class UNet_URDS(nn.Module):
                   'bilinear': False,
                   'acti_func': 'relu'}
         self.encoder = Encoder(params)
-        self.decoder = Decoder_UADS(params)
+        self.decoder = Decoder_URDS(params)
 
     def forward(self, x):
         shape = x.shape[2:]
