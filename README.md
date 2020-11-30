@@ -12,7 +12,7 @@
 		}
 		@misc{ssl4mis2020,
 		  title={SSL4MIS},
-		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+		  author={Luo, Xiangde},
 		  howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
 		  year={2020}
 		}
