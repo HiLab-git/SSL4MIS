@@ -11,11 +11,11 @@
 		  year={2020}
 		}
 		@misc{ssl4mis2020,
-  		  author={Luo, Xiangde},
-                  title={SSL4MIS},
-                  howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
-                  year={2020}
-                }
+		  title={SSL4MIS},
+		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+		  howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
+		  year={2020}
+		}
 
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
