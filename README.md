@@ -10,7 +10,6 @@
 		  journal={arXiv preprint arXiv:2009.04448},
 		  year={2020}
 		}
-		
 		@misc{ssl4mis2020,
   		  author={Luo, Xiangde},
                   title={SSL4MIS},
