@@ -2,7 +2,7 @@
 
 * Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only a few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. If you are interested, you can push your implementations or ideas to this repository at any time.  
 
-* This project was originally developed for our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf), if you find it's useful for your research, please consider to cite it:
+* This project was originally developed for our previous work [**DTC**](https://arxiv.org/pdf/2009.04448.pdf), if you find it's useful for your research, please consider to cite the followings:
 
 		@article{luo2020semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
@@ -10,10 +10,18 @@
 		  journal={arXiv preprint arXiv:2009.04448},
 		  year={2020}
 		}
+		@misc{ssl4mis2020,
+		  title={{SSL4MIS}},
+		  author={Luo, Xiangde},
+		  howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
+		  year={2020}
+		}
+
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2020-12|M. Abdel‐Basset and M. Ryan|FSS-2019-nCov: A Deep Learning Architecture for Semi-supervised Few-Shot Segmentation of COVID-19 Infection|None|[Knowledge-Based Systems2020](https://www.sciencedirect.com/science/article/pii/S0950705120307760)|
 |2020-11|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA2020](https://arxiv.org/pdf/2011.11750.pdf)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[Arxiv](https://arxiv.org/pdf/2011.00325.pdf)|

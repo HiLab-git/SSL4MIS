@@ -188,9 +188,9 @@ class Decoder_DS(nn.Module):
         return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
 
 
-class Decoder_URDS(nn.Module):
+class Decoder_URPC(nn.Module):
     def __init__(self, params):
-        super(Decoder_URDS, self).__init__()
+        super(Decoder_URPC, self).__init__()
         self.params = params
         self.in_chns = self.params['in_chns']
         self.ft_chns = self.params['feature_chns']
@@ -324,9 +324,9 @@ class UNet_DS(nn.Module):
         return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
 
 
-class UNet_URDS(nn.Module):
+class UNet_URPC(nn.Module):
     def __init__(self, in_chns, class_num):
-        super(UNet_URDS, self).__init__()
+        super(UNet_URPC, self).__init__()
 
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
@@ -335,7 +335,7 @@ class UNet_URDS(nn.Module):
                   'bilinear': False,
                   'acti_func': 'relu'}
         self.encoder = Encoder(params)
-        self.decoder = Decoder_URDS(params)
+        self.decoder = Decoder_URPC(params)
 
     def forward(self, x):
         shape = x.shape[2:]
