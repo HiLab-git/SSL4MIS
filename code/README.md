@@ -24,7 +24,7 @@ cd SSL4MIS
 3. Train the model
 ```
 cd code
-python train_unet_3D_XXXXX.py or python train_unet_2D_XXXXX.py or bash train_acdc_XXXXX.sh
+python train_XXXXX_3D.py or python train_XXXXX_2D.py or bash train_acdc_XXXXX.sh
 ```
 
 4. Test the model
