@@ -21,77 +21,65 @@ from torchvision.utils import make_grid
 from tqdm import tqdm
 
 from dataloaders import utils
-from dataloaders.dataset import BaseDataSets, RandomGenerator
-from networks.net_factory import net_factory
+from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
+                                   RandomRotFlip, ToTensor,
+                                   TwoStreamBatchSampler)
+from networks.net_factory_3d import net_factory_3d
 from utils import losses, metrics, ramps
-from val_unet_2D import test_single_volume
+from val_3D import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
-                    default='../data/ACDC', help='Name of Experiment')
+                    default='../data/BraTS2019', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='ACDC/Fully_Supervised', help='experiment_name')
+                    default='BraTs2019_Fully_Supervised', help='experiment_name')
 parser.add_argument('--model', type=str,
-                    default='unet', help='model_name')
-parser.add_argument('--num_classes', type=int,  default=4,
-                    help='output channel of network')
+                    default='unet_3D', help='model_name')
 parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
-parser.add_argument('--batch_size', type=int, default=24,
+parser.add_argument('--batch_size', type=int, default=2,
                     help='batch_size per gpu')
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.01,
                     help='segmentation network learning rate')
-parser.add_argument('--patch_size', type=list,  default=[256, 256],
+parser.add_argument('--patch_size', type=list,  default=[128, 128, 128],
                     help='patch size of network input')
 parser.add_argument('--seed', type=int,  default=1337, help='random seed')
-parser.add_argument('--labeled_num', type=int, default=50,
+parser.add_argument('--labeled_num', type=int, default=25,
                     help='labeled data')
+
 args = parser.parse_args()
-
-
-def patients_to_slices(dataset, patiens_num):
-    ref_dict = None
-    if "ACDC" in dataset:
-        ref_dict = {"3": 68, "7": 136,
-                    "14": 256, "21": 396, "28": 512, "35": 664, "140": 1312}
-    elif "Prostate":
-        ref_dict = {"2": 27, "4": 53, "8": 120,
-                    "12": 179, "16": 256, "21": 312, "42": 623}
-    else:
-        print("Error")
-    return ref_dict[str(patiens_num)]
 
 
 def train(args, snapshot_path):
     base_lr = args.base_lr
-    num_classes = args.num_classes
+    train_data_path = args.root_path
     batch_size = args.batch_size
     max_iterations = args.max_iterations
-
-    labeled_slice = patients_to_slices(args.root_path, args.labeled_num)
-
-    model = net_factory(net_type=args.model, in_chns=1, class_num=num_classes)
-    db_train = BaseDataSets(base_dir=args.root_path, split="train", num=labeled_slice, transform=transforms.Compose([
-        RandomGenerator(args.patch_size)
-    ]))
-    db_val = BaseDataSets(base_dir=args.root_path, split="val")
+    num_classes = 2
+    model = net_factory_3d(net_type=args.model, in_chns=1, class_num=num_classes)
+    db_train = BraTS2019(base_dir=train_data_path,
+                         split='train',
+                         num=args.labeled_num,
+                         transform=transforms.Compose([
+                             RandomRotFlip(),
+                             RandomCrop(args.patch_size),
+                             ToTensor(),
+                         ]))
 
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)
 
     trainloader = DataLoader(db_train, batch_size=batch_size, shuffle=True,
                              num_workers=16, pin_memory=True, worker_init_fn=worker_init_fn)
-    valloader = DataLoader(db_val, batch_size=1, shuffle=False,
-                           num_workers=1)
 
     model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
     ce_loss = CrossEntropyLoss()
-    dice_loss = losses.DiceLoss(num_classes)
+    dice_loss = losses.DiceLoss(2)
 
     writer = SummaryWriter(snapshot_path + '/log')
     logging.info("{} iterations per epoch".format(len(trainloader)))
@@ -109,7 +97,7 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            loss_ce = ce_loss(outputs, label_batch[:].long())
+            loss_ce = ce_loss(outputs, label_batch[:])
             loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
             loss = 0.5 * (loss_dice + loss_ce)
             optimizer.zero_grad()
@@ -129,39 +117,33 @@ def train(args, snapshot_path):
             logging.info(
                 'iteration %d : loss : %f, loss_ce: %f, loss_dice: %f' %
                 (iter_num, loss.item(), loss_ce.item(), loss_dice.item()))
+            writer.add_scalar('loss/loss', loss, iter_num)
 
             if iter_num % 20 == 0:
-                image = volume_batch[1, 0:1, :, :]
-                writer.add_image('train/Image', image, iter_num)
-                outputs = torch.argmax(torch.softmax(
-                    outputs, dim=1), dim=1, keepdim=True)
-                writer.add_image('train/Prediction',
-                                 outputs[1, ...] * 50, iter_num)
-                labs = label_batch[1, ...].unsqueeze(0) * 50
-                writer.add_image('train/GroundTruth', labs, iter_num)
+                image = volume_batch[0, 0:1, :, :, 20:61:10].permute(
+                    3, 0, 1, 2).repeat(1, 3, 1, 1)
+                grid_image = make_grid(image, 5, normalize=True)
+                writer.add_image('train/Image', grid_image, iter_num)
+
+                image = outputs_soft[0, 1:2, :, :, 20:61:10].permute(
+                    3, 0, 1, 2).repeat(1, 3, 1, 1)
+                grid_image = make_grid(image, 5, normalize=False)
+                writer.add_image('train/Predicted_label',
+                                 grid_image, iter_num)
+
+                image = label_batch[0, :, :, 20:61:10].unsqueeze(
+                    0).permute(3, 0, 1, 2).repeat(1, 3, 1, 1)
+                grid_image = make_grid(image, 5, normalize=False)
+                writer.add_image('train/Groundtruth_label',
+                                 grid_image, iter_num)
 
             if iter_num > 0 and iter_num % 200 == 0:
                 model.eval()
-                metric_list = 0.0
-                for i_batch, sampled_batch in enumerate(valloader):
-                    metric_i = test_single_volume(
-                        sampled_batch["image"], sampled_batch["label"], model, classes=num_classes)
-                    metric_list += np.array(metric_i)
-                metric_list = metric_list / len(db_val)
-                for class_i in range(num_classes-1):
-                    writer.add_scalar('info/val_{}_dice'.format(class_i+1),
-                                      metric_list[class_i, 0], iter_num)
-                    writer.add_scalar('info/val_{}_hd95'.format(class_i+1),
-                                      metric_list[class_i, 1], iter_num)
-
-                performance = np.mean(metric_list, axis=0)[0]
-
-                mean_hd95 = np.mean(metric_list, axis=0)[1]
-                writer.add_scalar('info/val_mean_dice', performance, iter_num)
-                writer.add_scalar('info/val_mean_hd95', mean_hd95, iter_num)
-
-                if performance > best_performance:
-                    best_performance = performance
+                avg_metric = test_all_case(
+                    model, args.root_path, test_list="val.txt", num_classes=2, patch_size=args.patch_size,
+                    stride_xy=64, stride_z=64)
+                if avg_metric[:, 0].mean() > best_performance:
+                    best_performance = avg_metric[:, 0].mean()
                     save_mode_path = os.path.join(snapshot_path,
                                                   'iter_{}_dice_{}.pth'.format(
                                                       iter_num, round(best_performance, 4)))
@@ -170,8 +152,12 @@ def train(args, snapshot_path):
                     torch.save(model.state_dict(), save_mode_path)
                     torch.save(model.state_dict(), save_best)
 
+                writer.add_scalar('info/val_dice_score',
+                                  avg_metric[0, 0], iter_num)
+                writer.add_scalar('info/val_hd95',
+                                  avg_metric[0, 1], iter_num)
                 logging.info(
-                    'iteration %d : mean_dice : %f mean_hd95 : %f' % (iter_num, performance, mean_hd95))
+                    'iteration %d : dice_score : %f hd95 : %f' % (iter_num, avg_metric[0, 0].mean(), avg_metric[0, 1].mean()))
                 model.train()
 
             if iter_num % 3000 == 0:
@@ -202,8 +188,7 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
 
-    snapshot_path = "../model/{}_{}_labeled/{}".format(
-        args.exp, args.labeled_num, args.model)
+    snapshot_path = "../model/{}/{}".format(args.exp, args.model)
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
     if os.path.exists(snapshot_path + '/code'):

@@ -6,6 +6,7 @@ An implementation of the 3D U-Net paper:
      MICCAI (2) 2016: 424-432
 Note that there are some modifications from the original paper, such as
 the use of batch normalization, dropout, and leaky relu here.
+The implementation is borrowed from: https://github.com/ozan-oktay/Attention-Gated-Networks
 """
 import math
 
