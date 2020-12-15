@@ -37,5 +37,6 @@ python test_XXXXX.py
 * [Deep Adversarial Networks](https://link.springer.com/chapter/10.1007/978-3-319-66179-7_47)
 * [Uncertainty Aware Mean Teacher](https://arxiv.org/pdf/1907.07034.pdf)
 * [Interpolation Consistency Training](https://arxiv.org/pdf/1903.03825.pdf)
+* [Uncertainty Rectified Pyramid Consistency](https://arxiv.org/pdf/2012.07042.pdf)
 ## Acknowledgement
 * Part of the code is adapted from open-source codebase and original implementations of algorithms, we thank these author for their fantastic and efficient codebase, such as, [UA-MT](https://github.com/yulequan/UA-MT), [Attention-Gated-Networks](https://github.com/ozan-oktay/Attention-Gated-Networks) and [segmentatic_segmentation.pytorch](https://github.com/qubvel/segmentation_models.pytorch) . 
