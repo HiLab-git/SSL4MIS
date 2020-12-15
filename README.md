@@ -4,12 +4,6 @@
 
 * This project was originally developed for our previous works, if you find it's useful for your research, please consider to cite the followings:
 
-		@article{luo2020urpc,
-		  title={Semi-supervised Segmentation via Uncertainty Rectified Pyramid Consistency and Its Application to Gross Target Volume of Nasopharyngeal Carcinoma},
-		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
-		  journal={arXiv preprint arXiv:2012.07042},
-		  year={2020}
-		}
 		@article{luo2020semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
