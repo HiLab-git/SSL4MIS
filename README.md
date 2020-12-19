@@ -56,7 +56,7 @@
 |2020-07|X. Li and P. Heng|Transformation-Consistent Self-Ensembling Model for Semisupervised Medical Image Segmentation|[Code](https://github.com/xmengli999/TCSM)|[TNNLS2020](https://ieeexplore.ieee.org/document/9104928)|
 |2020-06|F. Garcıa and S. Ourselin|Simulation of Brain Resection for Cavity Segmentation Using Self-Supervised and Semi-Supervised Learning|None|[MICCAI2020](https://arxiv.org/pdf/2006.15693.pdf)|
 |2020-06|H. Yang and P. With|Deep Q-Network-Driven Catheter Segmentation in 3D US by Hybrid Constrained Semi-Supervised Learning and Dual-UNet|None|[MICCAI2020](https://arxiv.org/pdf/2006.14702.pdf)|
-|2020-05|G. Fotedar and X. Ding|Extreme Consistency: Overcoming Annotation Scarcity and Domain Shifts|None|[ArXiv](https://arxiv.org/pdf/2004.11966.pdf)|
+|2020-05|G. Fotedar and X. Ding|Extreme Consistency: Overcoming Annotation Scarcity and Domain Shifts|None|[MICCAI2020](https://link.springer.com/chapter/10.1007/978-3-030-59710-8_68)|
 |2020-04|C. Liu and C. Ye|Semi-Supervised Brain Lesion Segmentation Using Training Images with and Without Lesions|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098565)|
 |2020-04|R. Li and D. Auer|A Generic Ensemble Based Deep Convolutional Neural Network for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/ruizhe-l/semi-segmentation)|[ISBI2020](https://arxiv.org/pdf/2004.07995.pdf)|
 |2020-04|K. Ta and J. Duncan|A Semi-Supervised Joint Learning Approach to Left Ventricular Segmentation and Motion Tracking in Echocardiography|None|[ISBI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9098664)|
