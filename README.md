@@ -42,7 +42,7 @@
 |2020-10|X. Cao and L. Cheng|Uncertainty Aware Temporal-Ensembling Model for Semi-supervised ABUS Mass Segmentation|None|[TMI2020](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9214845)|
 |2020-09|Z. Zhang and W. Zhang|Semi-supervised Semantic Segmentation of Organs at Risk on 3D Pelvic CT Images|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2009/2009.09571.pdf)|
 |2020-09|J. Wang and G. Xie|Semi-supervised Active Learning for Instance Segmentation via Scoring Predictions|None|[BMVC2020](http://scholar.google.com/scholar_url?url=https://www.bmvc2020-conference.com/assets/papers/0031.pdf&hl=zh-CN&sa=X&d=4465129548770333798&ei=u85pX6XsJNKsmwG4zr6YCw&scisig=AAGBfm1GGUNfq7zId6WBRyppRRjnPSpLsQ&nossl=1&oi=scholaralrt&html=&cited-by=)|
-|2020-09|X. Luo and S. Zhang|Semi-supervised Medical Image Segmentation through Dual-task Consistency|[Code](https://github.com/Luoxd1996/DTC)|[Arxiv](https://arxiv.org/pdf/2009.04448.pdf)|
+|2020-09|X. Luo and S. Zhang|Semi-supervised Medical Image Segmentation through Dual-task Consistency|[Code](https://github.com/Luoxd1996/DTC)|[AAAI2021](https://arxiv.org/pdf/2009.04448.pdf)|
 |2020-08|X. Huo and Q. Tian|ATSO: Asynchronous Teacher-Student Optimization for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2006.13461.pdf)|
 |2020-08|Y. Xie and Y. Xia|Pairwise Relation Learning for Semi-supervised Gland Segmentation|None|[MICCAI2020](https://arxiv.org/pdf/2008.02699.pdf)|
 |2020-07|K. Chaitanya and E. Konukoglu|Semi-supervised Task-driven Data Augmentation for Medical Image Segmentation|[Code](https://github.com/krishnabits001/task_driven_data_augmentation)|[Arxiv](https://arxiv.org/pdf/2007.05363.pdf)|
@@ -51,6 +51,7 @@
 |2020-07|Z. Zhao and P. Heng|Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video|[Code](https://github.com/zxzhaoeric/Semi-InstruSeg/)|[MICCAI2020](https://arxiv.org/abs/2007.02501)|
 |2020-07|Y. Zhou and P. Heng|Deep Semi-supervised Knowledge Distillation for Overlapping Cervical Cell Instance Segmentation|[Code](https://github.com/SIAAAAAA/MMT-PSM)|[MICCAI2020](https://arxiv.org/pdf/2007.10787.pdf)|
 |2020-07|A. Tehrani and H. Rivaz|Semi-Supervised Training of Optical Flow Convolutional Neural Networks in Ultrasound Elastography|None|[MICCAI2020](https://arxiv.org/pdf/2007.01421.pdf)|
+|2020-07|Y. He and S. Li|Dense biased networks with deep priori anatomy and hard region adaptation: Semi-supervised learning for fine renal artery segmentation|None|[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841520300864)|
 |2020-07|J. Peng and C. Desrosiers|Mutual information deep regularization for semi-supervised segmentation|[Code](https://github.com/jizongFox/deep-clustering-toolbox)|[MIDL2020](https://openreview.net/pdf?id=iunvffXgPm)|
 |2020-07|Y. Xia and H. Roth|Uncertainty-aware multi-view co-training for semi-supervised medical image segmentation and domain adaptation|None|[WACV2020](https://arxiv.org/abs/1811.12506),[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841520301304)|
 |2020-07|X. Li and P. Heng|Transformation-Consistent Self-Ensembling Model for Semisupervised Medical Image Segmentation|[Code](https://github.com/xmengli999/TCSM)|[TNNLS2020](https://ieeexplore.ieee.org/document/9104928)|
@@ -64,6 +65,7 @@
 |2020-04|D. Fan and L. Shao|Inf-Net: Automatic COVID-19 Lung Infection Segmentation from CT Images|[Code](https://github.com/DengPingFan/Inf-Net)|[TMI2020](https://ieeexplore.ieee.org/document/9098956)|
 |2019-10|L. Yu and P. Heng|Uncertainty-aware self-ensembling model for semi-supervised 3D left atrium segmentation|[Code](https://github.com/yulequan/UA-MT)|[MICCAI2019](https://arxiv.org/pdf/1907.07034.pdf)|
 |2019-10|G. Bortsova and M. Bruijne|Semi-Supervised Medical Image Segmentation via Learning Consistency under Transformations|None|[MICCAI2019](https://arxiv.org/pdf/1911.01218.pdf)|
+|2019-10|Y. He and S. Li|DPA-DenseBiasNet: Semi-supervised 3D Fine Renal Artery Segmentation with Dense Biased Network and Deep Priori Anatomy|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_16)|
 |2019-10|H. Zheng and X. Han|Semi-supervised Segmentation of Liver Using Adversarial Learning with Deep Atlas Prior|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_17)|
 |2019-10|Y. Zhao and C. Liu|Multi-view Semi-supervised 3D Whole Brain Segmentation with a Self-ensemble Network|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32248-9_29)|
 |2019-10|H. Kervade and I. Ayed|Curriculum semi-supervised segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.05236.pdf)|
