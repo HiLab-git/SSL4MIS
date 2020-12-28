@@ -32,6 +32,7 @@
 |2020-11|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA2020](https://arxiv.org/pdf/2011.11750.pdf)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[Arxiv](https://arxiv.org/pdf/2011.00325.pdf)|
+|2020-10|L. Chen and D. Merhof|Semi-supervised Instance Segmentation with a Learned Shape Prior|[Code](https://github.com/looooongChen/shape_prior_seg)|[LABELS2020](https://link.springer.com/chapter/10.1007/978-3-030-61166-8_10)|
 |2020-10|S. Shailja and B.S. Manjunath|Semi supervised segmentation and graph-based tracking of 3D nuclei in time-lapse microscopy|[Code](https://github.com/s-shailja/ucsb_ctc)|[Arxiv](https://arxiv.org/pdf/2010.13343.pdf)|
 |2020-10|L. Sun and Y. Yu|A Teacher-Student Framework for Semi-supervised Medical Image Segmentation From Mixed Supervision|None|[Arxiv](https://arxiv.org/pdf/2010.12219.pdf)|
 |2020-10|J. Ma and X. Yang|Active Contour Regularized Semi-supervised Learning for COVID-19 CT Infection Segmentation with Limited Annotations|[Code](https://zenodo.org/record/4246238#.X6PSyogzZFE)|[Physics in Medicine & Biology2020](https://iopscience.iop.org/article/10.1088/1361-6560/abc04e/pdf)|
