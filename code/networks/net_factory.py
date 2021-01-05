@@ -7,7 +7,7 @@ from networks.unet import UNet, UNet_DS, UNet_URPC
 def net_factory(net_type="unet", in_chns=1, class_num=3):
     if net_type == "unet":
         net = UNet(in_chns=in_chns, class_num=class_num).cuda()
-    if net_type == "enet":
+    elif net_type == "enet":
         net = ENet(in_channels=in_chns, num_classes=class_num).cuda()
     elif net_type == "unet_ds":
         net = UNet_DS(in_chns=in_chns, class_num=class_num).cuda()
