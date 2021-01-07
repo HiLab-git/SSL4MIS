@@ -28,6 +28,7 @@
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2021-01|Y. Zhang and Z. He|Semi-supervised Cardiac Image Segmentation via Label Propagation and Style Transfer|None|[Arxiv](https://arxiv.org/pdf/2012.14785.pdf)|
+|2020-12|H. Wang and D. Chen|Unlabeled Data Guided Semi-supervised Histopathology Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2012.09373.pdf)|
 |2020-12|X. Luo and S. Zhang|Semi-supervised Segmentation via Uncertainty Rectified Pyramid Consistency and Its Application to Gross Target Volume of Nasopharyngeal Carcinoma|[Code](https://github.com/HiLab-git/SSL4MIS)|[Arxiv](https://arxiv.org/pdf/2012.07042.pdf)|
 |2020-12|M. Abdel‐Basset and M. Ryan|FSS-2019-nCov: A Deep Learning Architecture for Semi-supervised Few-Shot Segmentation of COVID-19 Infection|None|[Knowledge-Based Systems2020](https://www.sciencedirect.com/science/article/pii/S0950705120307760)|
 |2020-11|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA2020](https://arxiv.org/pdf/2011.11750.pdf)|
