@@ -81,6 +81,7 @@
 |2019-06|W. Cui and C. Ye|Semi-Supervised Brain Lesion Segmentation with an Adapted Mean Teacher Model|None|[IPMI2019](https://link.springer.com/chapter/10.1007/978-3-030-20351-1_43)|
 |2019-06|K. Chaitanya and E. Konukoglu|Semi-supervised and Task-Driven Data Augmentation|[Code](https://github.com/krishnabits001/task_driven_data_augmentation)|[IPMI2019](http://link-springer-com-443.webvpn.fjmu.edu.cn/chapter/10.1007%2F978-3-030-20351-1_3)|
 |2019-04|M. Jafari and P. Abolmaesumi|Semi-Supervised Learning For Cardiac Left Ventricle Segmentation Using Conditional Deep Generative Models as Prior|None|[ISBI2019](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8759292)|
+|2019-03|Z. Zhao and Z. Zeng|Semi-Supervised Self-Taught Deep Learning for Finger Bones Segmentation|None|[BHI](https://ieeexplore.ieee.org/document/8834460)|
 |2019-03|J. Peng and C. Desrosiers|Deep co-training for semi-supervised image segmentation|[Code](https://github.com/jizongFox/deep-clustering-toolbox)|[PR2020](https://www.sciencedirect.com/science/article/pii/S0031320320300741/pdfft?md5=ecbfff8052e991b23c1796f97588d7e5&pid=1-s2.0-S0031320320300741-main.pdf)|
 |2019-01|Y. Zhou and A. Yuille|Semi-Supervised 3D Abdominal Multi-Organ Segmentation via Deep Multi-Planar Co-Training|None|[WACV2019](http://www.robots.ox.ac.uk/~tvg/publications/2019/dmpct_wacv.pdf)|
 |2018-10|P. Ganaye and H. Cattin|Semi-supervised Learning for Segmentation Under Semantic Constraint|None|[MICCAI2018](https://link.springer.com/chapter/10.1007/978-3-030-00931-1_68)|
