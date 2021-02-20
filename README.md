@@ -29,7 +29,7 @@
 |---|---|---|---|---|
 |2021-02|Y. Wang and A. Yuille|Learning Inductive Attention Guidance for Partially Supervised Pancreatic Ductal Adenocarcinoma Prediction|None|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9357342)|
 |2021-02|R. Alizadehsaniand U R. Acharya|Uncertainty-Aware Semi-supervised Method using Large Unlabelled and Limited Labeled COVID-19 Data|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2102/2102.06388.pdf)|
-|2021-02|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA2020](https://www.sciencedirect.com/science/article/pii/S1361841521000384)|
+|2021-02|D. Yang and D. Xu|Federated Semi-Supervised Learning for COVID Region Segmentation in Chest CT using Multi-National Data from China, Italy, Japan|None|[MedIA2021](https://www.sciencedirect.com/science/article/pii/S1361841521000384)|
 |2020-01|E. Takaya and S. Kurihara|Sequential Semi-supervised Segmentation for Serial Electron Microscopy Image with Small Number of Labels|[Code](https://github.com/eichitakaya/Sequential-Semi-supervised-Segmentation)|[Journal of Neuroscience Methods](https://www.sciencedirect.com/science/article/pii/S0165027021000017)|
 |2021-01|Y. Zhang and Z. He|Semi-supervised Cardiac Image Segmentation via Label Propagation and Style Transfer|None|[Arxiv](https://arxiv.org/pdf/2012.14785.pdf)|
 |2020-12|H. Wang and D. Chen|Unlabeled Data Guided Semi-supervised Histopathology Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2012.09373.pdf)|
