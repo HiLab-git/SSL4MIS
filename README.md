@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-02|J. Dolz and I. B. Ayed|Teach me to segment with mixed supervision: Confident students become masters|[Code](https://github.com/josedolz/MSL-student-becomes-master)|[IPMI2021](https://arxiv.org/pdf/2012.08051.pdf)|
 |2021-02|C. Cabrera and K. McGuinness|Semi-supervised Segmentation of Cardiac MRI using Image Registration|None|[Under review for MIDL2021](https://openreview.net/pdf?id=ZMBea7SLdi)|
 |2021-02|Y. Wang and A. Yuille|Learning Inductive Attention Guidance for Partially Supervised Pancreatic Ductal Adenocarcinoma Prediction|None|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9357342)|
 |2021-02|R. Alizadehsaniand U R. Acharya|Uncertainty-Aware Semi-supervised Method using Large Unlabelled and Limited Labeled COVID-19 Data|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2102/2102.06388.pdf)|
