@@ -5,8 +5,8 @@
 * This project was originally developed for our previous works, if you find it's useful for your research, please consider to cite the followings:
 
 		@article{luo2020urpc,
-		  title={Semi-supervised Segmentation via Uncertainty Rectified Pyramid Consistency and Its Application to Gross Target Volume of Nasopharyngeal Carcinoma},
-		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Wang, Guotai and Zhang, Shaoting},
+		  title={Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency},
+		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
 		  journal={arXiv preprint arXiv:2012.07042},
 		  year={2020}
 		}
@@ -27,6 +27,8 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-02|Y. Wu and L. Zhang|Semi-supervised Left Atrium Segmentation with Mutual Consistency Training|None|[Arxiv](https://arxiv.org/pdf/2103.02911)|
+|2021-02|J. Peng and Y. Wang|Medical Image Segmentation with Limited Supervision: A Review of Deep Network Models|None|[Arxiv](https://arxiv.org/pdf/2103.00429.pdf)|
 |2021-02|J. Dolz and I. B. Ayed|Teach me to segment with mixed supervision: Confident students become masters|[Code](https://github.com/josedolz/MSL-student-becomes-master)|[IPMI2021](https://arxiv.org/pdf/2012.08051.pdf)|
 |2021-02|C. Cabrera and K. McGuinness|Semi-supervised Segmentation of Cardiac MRI using Image Registration|None|[Under review for MIDL2021](https://openreview.net/pdf?id=ZMBea7SLdi)|
 |2021-02|Y. Wang and A. Yuille|Learning Inductive Attention Guidance for Partially Supervised Pancreatic Ductal Adenocarcinoma Prediction|None|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9357342)|
