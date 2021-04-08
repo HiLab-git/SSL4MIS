@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-04|Y. Li and P.  Heng|Dual-Consistency Semi-Supervised Learning with Uncertainty Quantification for COVID-19 Lesion Segmentation from CT Images|None|[Arxiv](https://arxiv.org/pdf/2104.03225.pdf)|
 |2021-03|Y. Zhang and C. Zhang|Dual-Task Mutual Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/YichiZhang98/DTML)|[Arxiv](https://arxiv.org/pdf/2103.04708.pdf)|
 |2021-03|J. Peng and C. Desrosiers|Boosting Semi-supervised Image Segmentation with Global and Local Mutual Information Regularization|None|[MELBA](https://arxiv.org/pdf/2103.04813.pdf)|
 |2021-03|Y. Wu and L. Zhang|Semi-supervised Left Atrium Segmentation with Mutual Consistency Training|None|[Arxiv](https://arxiv.org/pdf/2103.02911)|
@@ -39,7 +40,7 @@
 |2020-01|E. Takaya and S. Kurihara|Sequential Semi-supervised Segmentation for Serial Electron Microscopy Image with Small Number of Labels|[Code](https://github.com/eichitakaya/Sequential-Semi-supervised-Segmentation)|[Journal of Neuroscience Methods](https://www.sciencedirect.com/science/article/pii/S0165027021000017)|
 |2021-01|Y. Zhang and Z. He|Semi-supervised Cardiac Image Segmentation via Label Propagation and Style Transfer|None|[Arxiv](https://arxiv.org/pdf/2012.14785.pdf)|
 |2020-12|H. Wang and D. Chen|Unlabeled Data Guided Semi-supervised Histopathology Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2012.09373.pdf)|
-|2020-12|X. Luo and S. Zhang|Semi-supervised Segmentation via Uncertainty Rectified Pyramid Consistency and Its Application to Gross Target Volume of Nasopharyngeal Carcinoma|[Code](https://github.com/HiLab-git/SSL4MIS)|[Arxiv](https://arxiv.org/pdf/2012.07042.pdf)|
+|2020-12|X. Luo and S. Zhang|Efficient Semi-supervised Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[Arxiv](https://arxiv.org/pdf/2012.07042.pdf)|
 |2020-12|M. Abdel‐Basset and M. Ryan|FSS-2019-nCov: A Deep Learning Architecture for Semi-supervised Few-Shot Segmentation of COVID-19 Infection|None|[Knowledge-Based Systems2020](https://www.sciencedirect.com/science/article/pii/S0950705120307760)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[Arxiv](https://arxiv.org/pdf/2011.00325.pdf)|
