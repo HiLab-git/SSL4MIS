@@ -2,15 +2,15 @@
 
 * Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only a few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. If you are interested, you can push your implementations or ideas to this repository at any time.  
 
-* This project was originally developed for our previous works, if you find it's useful for your research, please consider to cite the followings:
+* This project was originally developed for our previous works[DTC](https://arxiv.org/abs/2009.04448) and [URPC](https://arxiv.org/pdf/2012.07042.pdf), if you find it's useful for your research, please consider to cite the followings:
 
-		@article{luo2020urpc,
+		@article{luo2021urpc,
 		  title={Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency},
-		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
-		  journal={arXiv preprint arXiv:2012.07042},
-		  year={2020}
+		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
+		  journal={MICCAI},
+		  year={2021}
 		}
-		@article{luo2020semi,
+		@article{luo2021semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
 		  journal={AAAI Conference on Artificial Intelligence},
@@ -43,7 +43,7 @@
 |2020-01|E. Takaya and S. Kurihara|Sequential Semi-supervised Segmentation for Serial Electron Microscopy Image with Small Number of Labels|[Code](https://github.com/eichitakaya/Sequential-Semi-supervised-Segmentation)|[Journal of Neuroscience Methods](https://www.sciencedirect.com/science/article/pii/S0165027021000017)|
 |2021-01|Y. Zhang and Z. He|Semi-supervised Cardiac Image Segmentation via Label Propagation and Style Transfer|None|[Arxiv](https://arxiv.org/pdf/2012.14785.pdf)|
 |2020-12|H. Wang and D. Chen|Unlabeled Data Guided Semi-supervised Histopathology Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2012.09373.pdf)|
-|2020-12|X. Luo and S. Zhang|Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[Arxiv](https://arxiv.org/pdf/2012.07042.pdf)|
+|2020-12|X. Luo and S. Zhang|Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[MICCAI2021](https://arxiv.org/pdf/2012.07042.pdf)|
 |2020-12|M. Abdel‐Basset and M. Ryan|FSS-2019-nCov: A Deep Learning Architecture for Semi-supervised Few-Shot Segmentation of COVID-19 Infection|None|[Knowledge-Based Systems2020](https://www.sciencedirect.com/science/article/pii/S0950705120307760)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[Arxiv](https://arxiv.org/pdf/2011.00325.pdf)|
