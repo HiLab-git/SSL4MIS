@@ -28,6 +28,7 @@
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2021-05|C. You and J. Duncan|Momentum Contrastive Voxel-wise Representation Learning for Semi-supervised Volumetric Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.07059.pdf)|
+|2021-05|Z. Xie and Y. Yang|Semi-Supervised Skin Lesion Segmentation with Learning Model Confidence|None|[ICASSP2021](https://ieeexplore.ieee.org/document/9414297)|
 |2021-04|S. Reiß and R. Stiefelhagen|Every Annotation Counts: Multi-label Deep Supervision for Medical Image Segmentation|None|[CVPR2021](https://arxiv.org/pdf/2104.13243.pdf)|
 |2021-04|S. Chatterjee and A. Nurnberger|DS6, Deformation-aware Semi-supervised Learning: Application to Small Vessel Segmentation with Noisy Training Data|[Code](https://github.com/soumickmj/DS6)|[MIDL](https://openreview.net/pdf?id=2t0_AxD1otB)|
 |2021-04|A. Meyer and M. Rak|Uncertainty-Aware Temporal Self-Learning (UATS): Semi-Supervised Learning for Segmentation of Prostate Zones and Beyond|[Code](https://github.com/suhitaghosh10/UATS)|[Arxiv](https://arxiv.org/pdf/2104.03840.pdf)|
