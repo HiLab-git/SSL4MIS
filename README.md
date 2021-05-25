@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-05|S. Li and C. Guan|Hierarchical Consistency Regularized Mean Teacher for Semi-supervised 3D Left Atrium Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.10369.pdf)|
 |2021-05|C. You and J. Duncan|Momentum Contrastive Voxel-wise Representation Learning for Semi-supervised Volumetric Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.07059.pdf)|
 |2021-05|Z. Xie and J. Yang|Semi-Supervised Skin Lesion Segmentation with Learning Model Confidence|None|[ICASSP2021](https://ieeexplore.ieee.org/document/9414297)|
 |2021-04|S. Reiß and R. Stiefelhagen|Every Annotation Counts: Multi-label Deep Supervision for Medical Image Segmentation|None|[CVPR2021](https://arxiv.org/pdf/2104.13243.pdf)|
