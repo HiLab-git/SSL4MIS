@@ -39,7 +39,7 @@
 |2021-04|A. Meyer and M. Rak|Uncertainty-Aware Temporal Self-Learning (UATS): Semi-Supervised Learning for Segmentation of Prostate Zones and Beyond|[Code](https://github.com/suhitaghosh10/UATS)|[Arxiv](https://arxiv.org/pdf/2104.03840.pdf)|
 |2021-04|Y. Li and P.  Heng|Dual-Consistency Semi-Supervised Learning with Uncertainty Quantification for COVID-19 Lesion Segmentation from CT Images|None|[Arxiv](https://arxiv.org/pdf/2104.03225.pdf)|
 |2021-03|Y. Zhang and C. Zhang|Dual-Task Mutual Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/YichiZhang98/DTML)|[Arxiv](https://arxiv.org/pdf/2103.04708.pdf)|
-|2021-03|J. Peng and C. Desrosiers|Boosting Semi-supervised Image Segmentation with Global and Local Mutual Information Regularization|None|[MELBA](https://arxiv.org/pdf/2103.04813.pdf)|
+|2021-03|J. Peng and C. Desrosiers|Boosting Semi-supervised Image Segmentation with Global and Local Mutual Information Regularization|[Code](https://github.com/jizongFox/MI-based-Regularized-Semi-supervised-Segmentation)|[MELBA](https://arxiv.org/pdf/2103.04813.pdf)|
 |2021-03|Y. Wu and L. Zhang|Semi-supervised Left Atrium Segmentation with Mutual Consistency Training|None|[MICCAI2021](https://arxiv.org/pdf/2103.02911)|
 |2021-02|J. Peng and Y. Wang|Medical Image Segmentation with Limited Supervision: A Review of Deep Network Models|None|[Arxiv](https://arxiv.org/pdf/2103.00429.pdf)|
 |2021-02|J. Dolz and I. B. Ayed|Teach me to segment with mixed supervision: Confident students become masters|[Code](https://github.com/josedolz/MSL-student-becomes-master)|[IPMI2021](https://arxiv.org/pdf/2012.08051.pdf)|
