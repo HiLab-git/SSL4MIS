@@ -72,10 +72,10 @@ def kaiming_normal_init_weight(model):
             m.bias.data.zero_()
     return model
 
-def sparse_init_weight(model):
+def xavier_normal_init_weight(model):
     for m in model.modules():
         if isinstance(m, nn.Conv2d):
-            torch.nn.init.sparse_(m.weight, sparsity=0.1)
+            torch.nn.init.xavier_normal_(m.weight)
         elif isinstance(m, nn.BatchNorm2d):
             m.weight.data.fill_(1)
             m.bias.data.zero_()
@@ -122,7 +122,7 @@ def train(args, snapshot_path):
         return model
 
     model1 = kaiming_normal_init_weight(create_model())
-    model2 = sparse_init_weight(create_model())
+    model2 = xavier_normal_init_weight(create_model())
     
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)

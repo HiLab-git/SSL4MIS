@@ -86,10 +86,10 @@ def kaiming_normal_init_weight(model):
     return model
 
 
-def sparse_init_weight(model):
+def xavier_normal_init_weight(model):
     for m in model.modules():
         if isinstance(m, nn.Conv3d):
-            torch.nn.init.sparse_(m.weight, sparsity=0.1)
+            torch.nn.init.xavier_normal_(m.weight)
         elif isinstance(m, nn.BatchNorm3d):
             m.weight.data.fill_(1)
             m.bias.data.zero_()
@@ -105,7 +105,7 @@ def train(args, snapshot_path):
 
     net = net_factory_3d(net_type=args.model, in_chns=1, class_num=num_classes).cuda()
     model1 = kaiming_normal_init_weight(net)
-    model2 = sparse_init_weight(net)
+    model2 = xavier_normal_init_weight(net)
     model1.train()
     model2.train()
 
