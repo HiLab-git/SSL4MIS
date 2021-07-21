@@ -103,9 +103,10 @@ def train(args, snapshot_path):
     max_iterations = args.max_iterations
     num_classes = 2
 
-    net = net_factory_3d(net_type=args.model, in_chns=1, class_num=num_classes).cuda()
-    model1 = kaiming_normal_init_weight(net)
-    model2 = xavier_normal_init_weight(net)
+    net1 = net_factory_3d(net_type=args.model, in_chns=1, class_num=num_classes).cuda()
+    net2 = net_factory_3d(net_type=args.model, in_chns=1, class_num=num_classes).cuda()
+    model1 = kaiming_normal_init_weight(net1)
+    model2 = xavier_normal_init_weight(net2)
     model1.train()
     model2.train()
 
