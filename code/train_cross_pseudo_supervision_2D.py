@@ -325,3 +325,32 @@ def train(args, snapshot_path):
             iterator.close()
             break
     writer.close()
+
+
+if __name__ == "__main__":
+    if not args.deterministic:
+        cudnn.benchmark = True
+        cudnn.deterministic = False
+    else:
+        cudnn.benchmark = False
+        cudnn.deterministic = True
+
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed(args.seed)
+
+    snapshot_path = "../model/{}_{}/{}".format(
+        args.exp, args.labeled_num, args.model)
+    if not os.path.exists(snapshot_path):
+        os.makedirs(snapshot_path)
+    if os.path.exists(snapshot_path + '/code'):
+        shutil.rmtree(snapshot_path + '/code')
+    shutil.copytree('.', snapshot_path + '/code',
+                    shutil.ignore_patterns(['.git', '__pycache__']))
+
+    logging.basicConfig(filename=snapshot_path+"/log.txt", level=logging.INFO,
+                        format='[%(asctime)s.%(msecs)03d] %(message)s', datefmt='%H:%M:%S')
+    logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
+    logging.info(str(args))
+    train(args, snapshot_path)
