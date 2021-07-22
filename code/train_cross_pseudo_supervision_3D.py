@@ -265,7 +265,7 @@ def train(args, snapshot_path):
 
                 writer.add_scalar('info/model2_val_dice_score',
                                   avg_metric2[0, 0], iter_num)
-                writer.add_scalar('info/model1_val_hd95',
+                writer.add_scalar('info/model2_val_hd95',
                                   avg_metric2[0, 1], iter_num)
                 logging.info(
                     'iteration %d : model2_dice_score : %f model2_hd95 : %f' % (

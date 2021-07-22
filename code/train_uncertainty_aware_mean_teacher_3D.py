@@ -165,7 +165,7 @@ def train(args, snapshot_path):
                 torch.sum(preds*torch.log(preds + 1e-6), dim=1, keepdim=True)
 
             loss_ce = ce_loss(outputs[:args.labeled_bs],
-                              label_batch[:args.labeled_bs][:])
+                              label_batch[:args.labeled_bs])
             loss_dice = dice_loss(
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)

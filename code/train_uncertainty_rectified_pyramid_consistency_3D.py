@@ -137,13 +137,13 @@ def train(args, snapshot_path):
             outputs_aux4_soft = torch.softmax(outputs_aux4, dim=1)
 
             loss_ce_aux1 = ce_loss(outputs_aux1[:args.labeled_bs],
-                                   label_batch[:args.labeled_bs][:])
+                                   label_batch[:args.labeled_bs])
             loss_ce_aux2 = ce_loss(outputs_aux2[:args.labeled_bs],
-                                   label_batch[:args.labeled_bs][:])
+                                   label_batch[:args.labeled_bs])
             loss_ce_aux3 = ce_loss(outputs_aux3[:args.labeled_bs],
-                                   label_batch[:args.labeled_bs][:])
+                                   label_batch[:args.labeled_bs])
             loss_ce_aux4 = ce_loss(outputs_aux4[:args.labeled_bs],
-                                   label_batch[:args.labeled_bs][:])
+                                   label_batch[:args.labeled_bs])
 
             loss_dice_aux1 = dice_loss(
                 outputs_aux1_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))

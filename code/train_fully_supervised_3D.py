@@ -97,7 +97,7 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            loss_ce = ce_loss(outputs, label_batch[:])
+            loss_ce = ce_loss(outputs, label_batch)
             loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
             loss = 0.5 * (loss_dice + loss_ce)
             optimizer.zero_grad()

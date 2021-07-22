@@ -131,7 +131,7 @@ def train(args, snapshot_path):
             outputs_soft = torch.softmax(outputs, dim=1)
 
             loss_ce = ce_loss(outputs[:args.labeled_bs],
-                              label_batch[:args.labeled_bs][:])
+                              label_batch[:args.labeled_bs])
             loss_dice = dice_loss(
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)

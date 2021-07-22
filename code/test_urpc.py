@@ -44,19 +44,18 @@ def Inference(FLAGS):
 
 
 if __name__ == '__main__':
-    for exp_id in ["GTV_Uncertain_Aware_Deep_Supervised_V2_90_labeled"]:
-        print(exp_id)
-        model = os.listdir(
-            "/media/xdluo/ssd/Projects/UADS/data_ratio_model/{}".format(exp_id))[0]
-        parser = argparse.ArgumentParser()
-        parser.add_argument('--root_path', type=str,
-                            default='../data/WestChina', help='Name of Experiment')
-        parser.add_argument('--exp', type=str,
-                            default=exp_id, help='experiment_name')
-        parser.add_argument('--model', type=str,
-                            default=model, help='model_name')
-        FLAGS = parser.parse_args()
 
-        metric = Inference(FLAGS)
-        print(metric)
-        print((metric[0] + metric[1]) / 2)
+    model = os.listdir(
+        "/media/xdluo/ssd/Projects/UADS/data_ratio_model/URPC")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--root_path', type=str,
+                        default='../data/WestChina', help='Name of Experiment')
+    parser.add_argument('--exp', type=str,
+                        default="URPC", help='experiment_name')
+    parser.add_argument('--model', type=str,
+                        default=model, help='model_name')
+    FLAGS = parser.parse_args()
+
+    metric = Inference(FLAGS)
+    print(metric)
+
