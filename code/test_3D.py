@@ -6,13 +6,13 @@ from glob import glob
 import torch
 
 from networks.unet_3D import unet_3D
-from test_unet_3D_util import test_all_case
+from test_3D_util import test_all_case
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/BraTS2019', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='BraTs2019_Mean_Teacher_25', help='experiment_name')
+                    default='BraTS2019/Interpolation_Consistency_Training_25', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet_3D', help='model_name')
 
@@ -20,8 +20,7 @@ parser.add_argument('--model', type=str,
 def Inference(FLAGS):
     snapshot_path = "../model/{}/{}".format(FLAGS.exp, FLAGS.model)
     num_classes = 2
-    test_save_path = "../model/BraTs2019_Mean_Teacher_25/{}_Prediction".format(
-        FLAGS.model)
+    test_save_path = "../model/{}/Prediction".format(FLAGS.exp)
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)

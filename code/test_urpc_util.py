@@ -96,43 +96,43 @@ def cal_metric(gt, pred):
 def test_all_case(net, base_dir, method="unet_3D", test_list="full_test.list", num_classes=4, patch_size=(48, 160, 160), stride_xy=32, stride_z=24, test_save_path=None):
     with open(base_dir + '/{}'.format(test_list), 'r') as f:
         image_list = f.readlines()
-    image_list = [base_dir + "/nii_data/{}".format(
+    image_list = [base_dir + "/data/{}.h5".format(
         item.replace('\n', '').split(",")[0]) for item in image_list]
-    total_metric = np.zeros((num_classes-1, 4))
+    total_metric = np.zeros((num_classes - 1, 4))
     print("Testing begin")
     with open(test_save_path + "/{}.txt".format(method), "a") as f:
         for image_path in tqdm(image_list):
-            ids = image_path.split("/")[-1]
-            image_itk = sitk.ReadImage(image_path+".nii.gz")
-            label_itk = sitk.ReadImage(image_path + "_label.nii.gz")
-            image = sitk.GetArrayFromImage(image_itk)
-            label = sitk.GetArrayFromImage(label_itk)
+            ids = image_path.split("/")[-1].replace(".h5", "")
+            h5f = h5py.File(image_path, 'r')
+            image = h5f['image'][:]
+            label = h5f['label'][:]
             prediction = test_single_case(
                 net, image, stride_xy, stride_z, patch_size, num_classes=num_classes)
 
-            for cls in range(1, num_classes):
-                metric = calculate_metric_percase(
-                    label == cls, prediction == cls)
-                total_metric[cls-1, :] += metric
-                f.writelines("{}_{},{},{},{},{}\n".format(
-                    ids, cls, metric[0], metric[1], metric[2], metric[3]))
+            metric = calculate_metric_percase(label == 1, prediction == 1)
+            total_metric[0, :] += metric
+            f.writelines("{},{},{},{},{}\n".format(
+                ids, metric[0], metric[1], metric[2], metric[3]))
 
             pred_itk = sitk.GetImageFromArray(prediction.astype(np.uint8))
-            pred_itk.CopyInformation(image_itk)
+            pred_itk.SetSpacing((1.0, 1.0, 1.0))
             sitk.WriteImage(pred_itk, test_save_path +
                             "/{}_pred.nii.gz".format(ids))
 
-            sitk.WriteImage(image_itk, test_save_path +
+            img_itk = sitk.GetImageFromArray(image)
+            img_itk.SetSpacing((1.0, 1.0, 1.0))
+            sitk.WriteImage(img_itk, test_save_path +
                             "/{}_img.nii.gz".format(ids))
 
-            sitk.WriteImage(label_itk, test_save_path +
+            lab_itk = sitk.GetImageFromArray(label.astype(np.uint8))
+            lab_itk.SetSpacing((1.0, 1.0, 1.0))
+            sitk.WriteImage(lab_itk, test_save_path +
                             "/{}_lab.nii.gz".format(ids))
-        for cls in range(1, num_classes):
-            f.writelines("Mean metrics,Id_{},{},{},{},{}\n".format(cls, total_metric[cls-1, 0] / len(image_list), total_metric[cls-1, 1] / len(
-                image_list), total_metric[cls-1, 2] / len(image_list), total_metric[cls-1, 3] / len(image_list)))
-    f.close()
-    print("Testing end")
-    return total_metric / len(image_list)
+        f.writelines("Mean metrics,{},{},{},{}".format(total_metric[0, 0] / len(image_list), total_metric[0, 1] / len(
+            image_list), total_metric[0, 2] / len(image_list), total_metric[0, 3] / len(image_list)))
+        f.close()
+        print("Testing end")
+        return total_metric / len(image_list)
 
 
 def cal_dice(prediction, label, num=2):
