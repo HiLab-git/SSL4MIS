@@ -21,7 +21,7 @@ from torchvision.utils import make_grid
 from tqdm import tqdm
 
 from dataloaders import utils
-from dataloaders.GTV import (GTV, CenterCrop, RandomCrop,
+from dataloaders.brats2019 import (BraTS2019, CenterCrop, RandomCrop,
                              RandomRotFlip, ToTensor,
                              TwoStreamBatchSampler)
 from networks.unet_3D_dv_semi import unet_3D_dv_semi
@@ -87,7 +87,7 @@ def train(args, snapshot_path):
     net = unet_3D_dv_semi(n_classes=num_classes, in_channels=1)
     model = net.cuda()
 
-    db_train = GTV(base_dir=train_data_path,
+    db_train = BraTS2019(base_dir=train_data_path,
                    split='train',
                    num=None,
                    transform=transforms.Compose([
