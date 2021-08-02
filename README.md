@@ -93,6 +93,7 @@
 |2019-10|G. Bortsova and M. Bruijne|Semi-Supervised Medical Image Segmentation via Learning Consistency under Transformations|None|[MICCAI2019](https://arxiv.org/pdf/1911.01218.pdf)|
 |2019-10|Y. He and S. Li|DPA-DenseBiasNet: Semi-supervised 3D Fine Renal Artery Segmentation with Dense Biased Network and Deep Priori Anatomy|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_16)|
 |2019-10|H. Zheng and X. Han|Semi-supervised Segmentation of Liver Using Adversarial Learning with Deep Atlas Prior|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32226-7_17)|
+|2019-10|P. Ganayea and H. Cattin|Removing Segmentation Inconsistencies with Semi-Supervised Non-Adjacency Constraint|[Code](https://github.com/trypag/NonAdjLoss)|[MedIA2019](https://www.sciencedirect.com/science/article/abs/pii/S1361841519300866)|
 |2019-10|Y. Zhao and C. Liu|Multi-view Semi-supervised 3D Whole Brain Segmentation with a Self-ensemble Network|None|[MICCAI2019](https://link.springer.com/chapter/10.1007/978-3-030-32248-9_29)|
 |2019-10|H. Kervade and I. Ayed|Curriculum semi-supervised segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1904.05236.pdf)|
 |2019-10|S. Chen and M. Bruijne|Multi-task Attention-based Semi-supervised Learning for Medical Image Segmentation|None|[MICCAI2019](https://arxiv.org/pdf/1907.12303.pdf)|
