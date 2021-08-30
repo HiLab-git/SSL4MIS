@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-08|J. Sun and Y. Kong|Semi-Supervised Medical Image Semantic Segmentation with Multi-scale Graph Cut Loss|None|[ICIP](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9506098)|
 |2021-08|X. Shen and J. Lu|PoissonSeg: Semi-Supervised Few-Shot Medical Image Segmentation via Poisson Learning|None|[ArXiv](https://arxiv.org/pdf/2108.11694.pdf)|
 |2021-08|C. You and J. Duncan|SimCVD: Simple Contrastive Voxel-Wise Representation Distillation for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2108.06227.pdf)|
 |2021-08|C. Li and P. Heng|Self-Ensembling Co-Training Framework for Semi-supervised COVID-19 CT Segmentation|None|[JBHI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9511146)|
