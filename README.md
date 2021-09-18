@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-09|J. Chen and G. Adaptive Hierarchical Dual Consistency for Semi-Supervised Left Atrium Segmentation on Cross-Domain Data|[Code](https://github.com/Heye-SYSU/AHDC)|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9540830)|
 |2021-09|X. Hu and Y. Shi|Semi-supervised Contrastive Learning for Label-efficient Medical Image Segmentation|[Code](https://github.com/xhu248/semi_cotrast_seg)|[MICCAI2021](https://arxiv.org/pdf/2109.07407.pdf)|
 |2021-09|G. Chen and J. Shi|MTANS: Multi-Scale Mean Teacher Combined Adversarial Network with Shape-Aware Embedding for Semi-Supervised Brain Lesion Segmentation|[Code](https://github.com/wzcgx/MTANS)|[NeuroImage2021](https://www.sciencedirect.com/science/article/pii/S1053811921008417)|
 |2021-08|H. Peiris and M. Harandi|Duo-SegNet: Adversarial Dual-Views for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/himashi92/Duo-SegNet)|[ArXiv](https://arxiv.org/pdf/2108.11154.pdf)|
