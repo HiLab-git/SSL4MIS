@@ -27,6 +27,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-09|Y. Wu and J. Cai|Enforcing Mutual Consistency of Hard Regions for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2109.09960.pdf)|
 |2021-09|X. Zeng and Y. Wang|Reciprocal Learning for Semi-supervised Segmentation|[Code](https://github.com/XYZach/RLSSS)|[MICCAI2021](https://dilincv.github.io/papers/reciprocal_miccai2021.pdf)|
 |2021-09|G. Zhang and S. Jiang|Automatic segmentation of organs at risk and tumors in CT images of lung cancer from partially labelled datasets with a semi-supervised conditional nnU-Net|None|[CMPB2021](https://doi.org/10.1016/j.cmpb.2021.106419)|
 |2021-09|J. Chen and G. Yang|Adaptive Hierarchical Dual Consistency for Semi-Supervised Left Atrium Segmentation on Cross-Domain Data|[Code](https://github.com/Heye-SYSU/AHDC)|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9540830)|
