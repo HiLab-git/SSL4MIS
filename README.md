@@ -4,19 +4,19 @@
 
 * This project was originally developed for our previous works ([DTC](https://arxiv.org/abs/2009.04448) and [URPC](https://arxiv.org/pdf/2012.07042.pdf)), if you find it's useful for your research, please cite the followings:
 
-		@InProceedings{10.1007/978-3-030-87196-3_30,
-		author="Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting",
-		title="Efficient Semi-supervised Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency",
-		booktitle="Medical Image Computing and Computer Assisted Intervention -- MICCAI 2021",
-		year="2021",
-		pages="318--329"
+		@InProceedings{luo2021urpc,
+		author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
+		title={Efficient Semi-supervised Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency},
+		booktitle={Medical Image Computing and Computer Assisted Intervention -- MICCAI 2021},
+		year={2021},
+		pages={318--329}
 		}
 
 		@article{luo2021semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
 		  journal={AAAI Conference on Artificial Intelligence},
-		  year={2021}
+		  year={2021},
 		  pages={8801-8809}
 		}
 		@misc{ssl4mis2020,
