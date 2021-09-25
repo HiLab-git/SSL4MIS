@@ -4,17 +4,20 @@
 
 * This project was originally developed for our previous works ([DTC](https://arxiv.org/abs/2009.04448) and [URPC](https://arxiv.org/pdf/2012.07042.pdf)), if you find it's useful for your research, please cite the followings:
 
-		@article{luo2021urpc,
-		  title={Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency},
-		  author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
-		  journal={MICCAI},
-		  year={2021}
+		@InProceedings{10.1007/978-3-030-87196-3_30,
+		author="Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting",
+		title="Efficient Semi-supervised Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency",
+		booktitle="Medical Image Computing and Computer Assisted Intervention -- MICCAI 2021",
+		year="2021",
+		pages="318--329"
 		}
+
 		@article{luo2021semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
 		  journal={AAAI Conference on Artificial Intelligence},
 		  year={2021}
+		  pages={8801-8809}
 		}
 		@misc{ssl4mis2020,
 		  title={{SSL4MIS}},
@@ -27,6 +30,11 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-09|K. Wang and Y. Wang|Tripled-Uncertainty Guided Mean Teacher Model for Semi-supervised Medical Image Segmentation|[Code](https://github.com/DeepMedLab/Tri-U-MT)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_42)|
+|2021-09|H. Huang and R. Tong|3D Graph-S2Net: Shape-Aware Self-ensembling Network for Semi-supervised Segmentation with Bilateral Graph Convolution|None|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_39)|
+|2021-09|L. Zhu and B. Ooi|Semi-Supervised Unpaired Multi-Modal Learning for Label-Efficient Medical Image Segmentation|[Code](https://github.com/nusdbsystem/SSUMML)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_37)|
+|2021-09|R. Zhang and G. Li|Self-supervised Correction Learning for Semi-supervised Biomedical Image Segmentation|[Code](https://github.com/ReaFly/SemiMedSeg)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_13)|
+|2021-09|D. Kiyasseh and A. Chen|Segmentation of Left Atrial MR Images via Self-supervised Semi-supervised Meta-learning|None|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_2)|
 |2021-09|Y. Wu and J. Cai|Enforcing Mutual Consistency of Hard Regions for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2109.09960.pdf)|
 |2021-09|X. Zeng and Y. Wang|Reciprocal Learning for Semi-supervised Segmentation|[Code](https://github.com/XYZach/RLSSS)|[MICCAI2021](https://dilincv.github.io/papers/reciprocal_miccai2021.pdf)|
 |2021-09|G. Zhang and S. Jiang|Automatic segmentation of organs at risk and tumors in CT images of lung cancer from partially labelled datasets with a semi-supervised conditional nnU-Net|None|[CMPB2021](https://doi.org/10.1016/j.cmpb.2021.106419)|
@@ -50,8 +58,8 @@
 |2021-04|S. Reiß and R. Stiefelhagen|Every Annotation Counts: Multi-label Deep Supervision for Medical Image Segmentation|None|[CVPR2021](https://arxiv.org/pdf/2104.13243.pdf)|
 |2021-04|S. Chatterjee and A. Nurnberger|DS6, Deformation-aware Semi-supervised Learning: Application to Small Vessel Segmentation with Noisy Training Data|[Code](https://github.com/soumickmj/DS6)|[MIDL](https://openreview.net/pdf?id=2t0_AxD1otB)|
 |2021-04|A. Meyer and M. Rak|Uncertainty-Aware Temporal Self-Learning (UATS): Semi-Supervised Learning for Segmentation of Prostate Zones and Beyond|[Code](https://github.com/suhitaghosh10/UATS)|[Arxiv](https://arxiv.org/pdf/2104.03840.pdf)|
-|2021-04|Y. Li and P.  Heng|Dual-Consistency Semi-Supervised Learning with Uncertainty Quantification for COVID-19 Lesion Segmentation from CT Images|None|[Arxiv](https://arxiv.org/pdf/2104.03225.pdf)|
-|2021-03|Y. Zhang and C. Zhang|Dual-Task Mutual Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/YichiZhang98/DTML)|[Arxiv](https://arxiv.org/pdf/2103.04708.pdf)|
+|2021-04|Y. Li and P. Heng|Dual-Consistency Semi-Supervised Learning with Uncertainty Quantification for COVID-19 Lesion Segmentation from CT Images|None|[MICCAI2021](https://arxiv.org/pdf/2104.03225.pdf)|
+|2021-03|Y. Zhang and C. Zhang|Dual-Task Mutual Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/YichiZhang98/DTML)|[PRCV2021](https://arxiv.org/pdf/2103.04708.pdf)|
 |2021-03|J. Peng and C. Desrosiers|Boosting Semi-supervised Image Segmentation with Global and Local Mutual Information Regularization|[Code](https://github.com/jizongFox/MI-based-Regularized-Semi-supervised-Segmentation)|[MELBA](https://arxiv.org/pdf/2103.04813.pdf)|
 |2021-03|Y. Wu and L. Zhang|Semi-supervised Left Atrium Segmentation with Mutual Consistency Training|None|[MICCAI2021](https://arxiv.org/pdf/2103.02911)|
 |2021-02|J. Peng and Y. Wang|Medical Image Segmentation with Limited Supervision: A Review of Deep Network Models|None|[Arxiv](https://arxiv.org/pdf/2103.00429.pdf)|
