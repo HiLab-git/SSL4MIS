@@ -10,12 +10,14 @@
 		booktitle={Medical Image Computing and Computer Assisted Intervention -- MICCAI 2021},
 		year={2021},
 		pages={318--329}}
-		@article{luo2021semi,
+		
+		@InProceedings{luo2021semi,
 		  title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
 		  journal={AAAI Conference on Artificial Intelligence},
 		  year={2021},
 		  pages={8801-8809}}
+		  
 		@misc{ssl4mis2020,
 		  title={{SSL4MIS}},
 		  author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
