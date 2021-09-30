@@ -30,6 +30,8 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-09|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2109.13930.pdf)|
+|2021-09|G. Wang and S. Zhang|Semi-Supervised Segmentation of Radiation-Induced Pulmonary Fibrosis from Lung CT Scans with Multi-Scale Guided Dense Attention|[Code](https://github.com/HiLab-git/PF-Net)|[TMI2021](https://arxiv.org/pdf/2109.14172.pdf)|
 |2021-09|K. Wang and Y. Wang|Tripled-Uncertainty Guided Mean Teacher Model for Semi-supervised Medical Image Segmentation|[Code](https://github.com/DeepMedLab/Tri-U-MT)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_42)|
 |2021-09|H. Huang and R. Tong|3D Graph-S2Net: Shape-Aware Self-ensembling Network for Semi-supervised Segmentation with Bilateral Graph Convolution|None|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_39)|
 |2021-09|L. Zhu and B. Ooi|Semi-Supervised Unpaired Multi-Modal Learning for Label-Efficient Medical Image Segmentation|[Code](https://github.com/nusdbsystem/SSUMML)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_37)|
