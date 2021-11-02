@@ -1,6 +1,7 @@
 # Semi-supervised-learning-for-medical-image-segmentation.
 
-* Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only a few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. **If you are interested, you can push your implementations or ideas to this repository or contact us at any time**.  
+* Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only a few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. 
+**If you are interested, you can push your implementations or ideas to this repository or contact us at any time**.  
 
 * This project was originally developed for our previous works ([AAAI2021](https://arxiv.org/abs/2009.04448) and [MICCAI2021](https://arxiv.org/pdf/2012.07042.pdf)). **If you use this codebase in your research, please cite the following papers**:
 
