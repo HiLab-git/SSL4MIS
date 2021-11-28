@@ -2,7 +2,7 @@
 
 * Recently, semi-supervised image segmentation has become a hot topic in medical image computing, unfortunately, there are only a few open-source codes and datasets, since the privacy policy and others. For easy evaluation and fair comparison, we are trying to build a semi-supervised medical image segmentation benchmark to boost the semi-supervised learning research in the medical image computing community. **If you are interested, you can push your implementations or ideas to this repo or contact us at any time**.  
 
-* This project was originally developed for our previous works [URPC](https://arxiv.org/pdf/2012.07042.pdf) ([MICCAI2021](https://miccai2021.org/en/) early accept) and [DTC](https://ojs.aaai.org/index.php/AAAI/article/view/17066/16873). **If you use this codebase in your research, please cite the following works**:
+* This project was originally developed for our previous works [URPC](https://arxiv.org/pdf/2012.07042.pdf) ([MICCAI2021](https://miccai2021.org/en/) early accept). **If you use this codebase in your research, please cite the following works**:
 
 		@InProceedings{luo2021urpc,
 		author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
@@ -28,7 +28,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2021-11|X. Zheng and C. Sham|Uncertainty-Aware Deep Co-training for Semi-supervised Medical Image|None|[Arxiv](https://arxiv.org/pdf/2111.11629v1.pdf)|
+|2021-11|X. Zheng and C. Sham|Uncertainty-Aware Deep Co-training for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2111.11629v1.pdf)|
 |2021-11|J. Peng and M. Pedersoli|Diversified Multi-prototype Representation for Semi-supervised Segmentation|[Code](https://github.com/jizongFox/MI-based-Regularized-Semi-supervised-Segmentation)|[Arxiv](https://arxiv.org/pdf/2111.08651.pdf)|
 |2021-10|J. Hou and J. Deng|Semi-Supervised Semantic Segmentation of Vessel Images using Leaking Perturbations|None|[WACV2021](https://arxiv.org/pdf/2110.11998.pdf)|
 |2021-10|M. Xu and J. Jacob|MisMatch: Learning to Change Predictive Confidences with Attention for Consistency-Based, Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2110.12179.pdf)|
