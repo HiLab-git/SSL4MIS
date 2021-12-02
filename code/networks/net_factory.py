@@ -1,7 +1,7 @@
 from networks.efficientunet import Effi_UNet
 from networks.enet import ENet
 from networks.pnet import PNet2D
-from networks.unet import UNet, UNet_DS, UNet_URPC
+from networks.unet import UNet, UNet_DS, UNet_URPC, UNet_CCT
 
 
 def net_factory(net_type="unet", in_chns=1, class_num=3):
@@ -11,6 +11,8 @@ def net_factory(net_type="unet", in_chns=1, class_num=3):
         net = ENet(in_channels=in_chns, num_classes=class_num).cuda()
     elif net_type == "unet_ds":
         net = UNet_DS(in_chns=in_chns, class_num=class_num).cuda()
+    elif net_type == "unet_cct":
+        net = UNet_CCT(in_chns=in_chns, class_num=class_num).cuda()
     elif net_type == "unet_urpc":
         net = UNet_URPC(in_chns=in_chns, class_num=class_num).cuda()
     elif net_type == "efficient_unet":

@@ -269,8 +269,8 @@ class Decoder_URPC(nn.Module):
         return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
 
 
-def Dropout(x, p=0.5):
-    x = torch.nn.functional.dropout2d(x, p)
+def Dropout(x, p=0.3):
+    x = torch.nn.functional.dropout(x, p)
     return x
 
 
@@ -321,9 +321,9 @@ class UNet(nn.Module):
         return output
 
 
-class UNet_DS(nn.Module):
+class UNet_CCT(nn.Module):
     def __init__(self, in_chns, class_num):
-        super(UNet_DS, self).__init__()
+        super(UNet_CCT, self).__init__()
 
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
@@ -332,14 +332,21 @@ class UNet_DS(nn.Module):
                   'bilinear': False,
                   'acti_func': 'relu'}
         self.encoder = Encoder(params)
-        self.decoder = Decoder_DS(params)
+        self.main_decoder = Decoder(params)
+        self.aux_decoder1 = Decoder(params)
+        self.aux_decoder2 = Decoder(params)
+        self.aux_decoder3 = Decoder(params)
 
     def forward(self, x):
-        shape = x.shape[2:]
         feature = self.encoder(x)
-        dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg = self.decoder(
-            feature, shape)
-        return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
+        main_seg = self.main_decoder(feature)
+        aux1_feature = [FeatureNoise()(i) for i in feature]
+        aux_seg1 = self.aux_decoder1(aux1_feature)
+        aux2_feature = [Dropout(i) for i in feature]
+        aux_seg2 = self.aux_decoder2(aux2_feature)
+        aux3_feature = [FeatureDropout(i) for i in feature]
+        aux_seg3 = self.aux_decoder3(aux3_feature)
+        return main_seg, aux_seg1, aux_seg2, aux_seg3
 
 
 class UNet_URPC(nn.Module):
@@ -361,3 +368,26 @@ class UNet_URPC(nn.Module):
         dp1_out_seg, dp2_out_seg, dp3_out_seg, dp4_out_seg = self.decoder(
             feature, shape)
         return dp1_out_seg, dp2_out_seg, dp3_out_seg, dp4_out_seg
+
+
+class UNet_DS(nn.Module):
+    def __init__(self, in_chns, class_num):
+        super(UNet_DS, self).__init__()
+
+        params = {'in_chns': in_chns,
+                  'feature_chns': [16, 32, 64, 128, 256],
+                  'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
+                  'class_num': class_num,
+                  'bilinear': False,
+                  'acti_func': 'relu'}
+        self.encoder = Encoder(params)
+        self.decoder = Decoder_DS(params)
+
+    def forward(self, x):
+        shape = x.shape[2:]
+        feature = self.encoder(x)
+        dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg = self.decoder(
+            feature, shape)
+        return dp0_out_seg, dp1_out_seg, dp2_out_seg, dp3_out_seg
+
+
