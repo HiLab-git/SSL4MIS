@@ -29,8 +29,7 @@
 
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2021-12|C. Seibold and R. Stiefelhagen|Reference-guided Pseudo-Label Generation for Medical Semantic Segmentation
-|None|[AAAI2022](https://arxiv.org/abs/2112.00735)|
+|2021-12|C. Seibold and R. Stiefelhagen|Reference-guided Pseudo-Label Generation for Medical Semantic Segmentation|None|[AAAI2022](https://arxiv.org/abs/2112.00735)|
 |2021-11|X. Zheng and C. Sham|Uncertainty-Aware Deep Co-training for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2111.11629v1.pdf)|
 |2021-11|J. Peng and M. Pedersoli|Diversified Multi-prototype Representation for Semi-supervised Segmentation|[Code](https://github.com/jizongFox/MI-based-Regularized-Semi-supervised-Segmentation)|[Arxiv](https://arxiv.org/pdf/2111.08651.pdf)|
 |2021-10|J. Hou and J. Deng|Semi-Supervised Semantic Segmentation of Vessel Images using Leaking Perturbations|None|[WACV2021](https://arxiv.org/pdf/2110.11998.pdf)|
