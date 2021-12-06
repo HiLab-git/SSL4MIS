@@ -26,9 +26,9 @@
 		year={2020}}
 
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
-
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-12|J. Chen and Y. Lu|MT-TransUNet: Mediating Multi-Task Tokens in Transformers for Skin Lesion Segmentation and Classification|[Code](https://github.com/JingyeChen/MT-TransUNet)|[Arxiv](https://arxiv.org/pdf/2112.01767.pdf)|
 |2021-12|C. Seibold and R. Stiefelhagen|Reference-guided Pseudo-Label Generation for Medical Semantic Segmentation|None|[AAAI2022](https://arxiv.org/abs/2112.00735)|
 |2021-11|X. Zheng and C. Sham|Uncertainty-Aware Deep Co-training for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2111.11629v1.pdf)|
 |2021-11|J. Peng and M. Pedersoli|Diversified Multi-prototype Representation for Semi-supervised Segmentation|[Code](https://github.com/jizongFox/MI-based-Regularized-Semi-supervised-Segmentation)|[Arxiv](https://arxiv.org/pdf/2111.08651.pdf)|
