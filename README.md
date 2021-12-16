@@ -12,19 +12,25 @@
 		year={2021},
 		pages={318--329}}
 		 
-		@InProceedings{luo2021semi,
+		@InProceedings{luo2021dtc,
 		title={Semi-supervised Medical Image Segmentation through Dual-task Consistency},
 		author={Luo, Xiangde and Chen, Jieneng and Song, Tao and  Wang, Guotai},
 		journal={AAAI Conference on Artificial Intelligence},
 		year={2021},
 		pages={8801-8809}}
 		
+		@article{luo2021ctbct,
+  		title={Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer},
+  		author={Luo, Xiangde and Hu, Minhao and Song, Tao and Wang, Guotai and Zhang, Shaoting},
+  		journal={arXiv preprint arXiv:2112.04894},
+  		year={2021}}
+		
 		@misc{ssl4mis2020,
 		title={{SSL4MIS}},
 		author={Luo, Xiangde},
 		howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
 		year={2020}}
-
+		
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
