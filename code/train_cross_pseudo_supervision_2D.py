@@ -121,8 +121,8 @@ def train(args, snapshot_path):
                 param.detach_()
         return model
 
-    model1 = kaiming_normal_init_weight(create_model())
-    model2 = xavier_normal_init_weight(create_model())
+    model1 = create_model()
+    model2 = create_model()
     
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)
