@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-12|K. Chaitanya and E. Konukoglu|Local contrastive loss with pseudo-label based self-training for semi-supervised medical image segmentation|[Code](https://github.com/krishnabits001/pseudo_label_contrastive_training)|[Arxiv](https://arxiv.org/pdf/2112.09645.pdf)|
 |2021-12|X. Luo and S. Zhang|Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer|[Code](https://github.com/HiLab-git/SSL4MIS)|[Arxiv](https://arxiv.org/pdf/2112.04894.pdf)|
 |2021-12|Y. Zhang and J. Zhang|Uncertainty-Guided Mutual Consistency Learning for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2112.02508.pdf)|
 |2021-12|J. Wang and Q. Zhou|Separated Contrastive Learning for Organ-at-Risk and Gross-Tumor-Volume Segmentation with Limited Annotat|[Code](https://github.com/jcwang123/Separate_CL)|[AAAI2022](https://arxiv.org/pdf/2112.02743.pdf)|
