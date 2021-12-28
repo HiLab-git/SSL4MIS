@@ -5,6 +5,8 @@ from networks.unet import UNet, UNet_DS, UNet_URPC, UNet_CCT
 import argparse
 from networks.vision_transformer import SwinUnet as ViT_seg
 from networks.config import get_config
+from networks.nnunet import initialize_network
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
@@ -26,27 +28,32 @@ parser.add_argument('--patch_size', type=list,  default=[224, 224],
 parser.add_argument('--seed', type=int,  default=1337, help='random seed')
 parser.add_argument('--num_classes', type=int,  default=4,
                     help='output channel of network')
-parser.add_argument('--cfg', type=str, default="../code/configs/swin_tiny_patch4_window7_224_lite.yaml", help='path to config file', )
 parser.add_argument(
-        "--opts",
-        help="Modify config options by adding 'KEY VALUE' pairs. ",
-        default=None,
-        nargs='+',
-    )
-parser.add_argument('--zip', action='store_true', help='use zipped dataset instead of folder dataset')
+    '--cfg', type=str, default="../code/configs/swin_tiny_patch4_window7_224_lite.yaml", help='path to config file', )
+parser.add_argument(
+    "--opts",
+    help="Modify config options by adding 'KEY VALUE' pairs. ",
+    default=None,
+    nargs='+',
+)
+parser.add_argument('--zip', action='store_true',
+                    help='use zipped dataset instead of folder dataset')
 parser.add_argument('--cache-mode', type=str, default='part', choices=['no', 'full', 'part'],
                     help='no: no cache, '
-                            'full: cache all data, '
-                            'part: sharding the dataset into nonoverlapping pieces and only cache one piece')
+                    'full: cache all data, '
+                    'part: sharding the dataset into nonoverlapping pieces and only cache one piece')
 parser.add_argument('--resume', help='resume from checkpoint')
-parser.add_argument('--accumulation-steps', type=int, help="gradient accumulation steps")
+parser.add_argument('--accumulation-steps', type=int,
+                    help="gradient accumulation steps")
 parser.add_argument('--use-checkpoint', action='store_true',
                     help="whether to use gradient checkpointing to save memory")
 parser.add_argument('--amp-opt-level', type=str, default='O1', choices=['O0', 'O1', 'O2'],
                     help='mixed precision opt level, if O0, no amp is used')
 parser.add_argument('--tag', help='tag of experiment')
-parser.add_argument('--eval', action='store_true', help='Perform evaluation only')
-parser.add_argument('--throughput', action='store_true', help='Test throughput only')
+parser.add_argument('--eval', action='store_true',
+                    help='Perform evaluation only')
+parser.add_argument('--throughput', action='store_true',
+                    help='Test throughput only')
 
 # label and unlabel
 parser.add_argument('--labeled_bs', type=int, default=4,
@@ -64,6 +71,7 @@ parser.add_argument('--consistency_rampup', type=float,
 args = parser.parse_args()
 config = get_config(args)
 
+
 def net_factory(net_type="unet", in_chns=1, class_num=3):
     if net_type == "unet":
         net = UNet(in_chns=in_chns, class_num=class_num).cuda()
@@ -78,10 +86,13 @@ def net_factory(net_type="unet", in_chns=1, class_num=3):
     elif net_type == "efficient_unet":
         net = Effi_UNet('efficientnet-b3', encoder_weights='imagenet',
                         in_channels=in_chns, classes=class_num).cuda()
-    elif net_type =="ViT_Seg":
-        net = ViT_seg(config, img_size=args.patch_size, num_classes=args.num_classes).cuda()
+    elif net_type == "ViT_Seg":
+        net = ViT_seg(config, img_size=args.patch_size,
+                      num_classes=args.num_classes).cuda()
     elif net_type == "pnet":
         net = PNet2D(in_chns, class_num, 64, [1, 2, 4, 8, 16]).cuda()
+    elif net_type == "nnUNet":
+        net = initialize_network(num_classes=class_num).cuda()
     else:
         net = None
     return net
