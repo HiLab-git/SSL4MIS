@@ -32,7 +32,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/BraTS2019', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='BraTs2019/dtc_nosdf_sigmoid', help='experiment_name')
+                    default='BraTS2019/dtc_nosdf_sigmoid', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet_3D_seg', help='model_name')
 parser.add_argument('--max_iterations', type=int,
@@ -111,7 +111,6 @@ def train(args, snapshot_path):
                              num_workers=4, pin_memory=True, worker_init_fn=worker_init_fn)
 
     model.train()
-    ema_model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
