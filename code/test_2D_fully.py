@@ -50,8 +50,10 @@ def test_single_volume(case, net, test_save_path, FLAGS):
             0).unsqueeze(0).float().cuda()
         net.eval()
         with torch.no_grad():
-            if FLAGS.model == "unet_urds":
+            if FLAGS.model == "unet_urds" or FLAGS.model == "unet_urpc":
                 out_main, _, _, _ = net(input)
+            elif FLAGS.model == "unet_seg":
+                _ , out_main = net(input)
             else:
                 out_main = net(input)
             out = torch.argmax(torch.softmax(
@@ -87,31 +89,44 @@ def Inference(FLAGS):
         FLAGS.exp, FLAGS.labeled_num, FLAGS.model)
     if os.path.exists(test_save_path):
         shutil.rmtree(test_save_path)
-    os.makedirs(test_save_path)
-    net = net_factory(net_type=FLAGS.model, in_chns=1,
-                      class_num=FLAGS.num_classes)
-    save_mode_path = os.path.join(
-        snapshot_path, '{}_best_model.pth'.format(FLAGS.model))
-    net.load_state_dict(torch.load(save_mode_path))
-    print("init weight from {}".format(save_mode_path))
-    net.eval()
+    
+    
+    model_paths = glob.glob(os.path.join(snapshot_path, "*best*"))
+    
+    if len(model_paths)>0:
+        os.makedirs(test_save_path)
+    elif len(model_paths)==0:
+        print("no models in {}", snapshot_path)
+    avg_metrics = []
+    for save_mode_path in model_paths:
+        #save_mode_path = os.path.join(snapshot_path, model_path)
+        net = net_factory(net_type=FLAGS.model, in_chns=1,
+                          class_num=FLAGS.num_classes)
 
-    first_total = 0.0
-    second_total = 0.0
-    third_total = 0.0
-    for case in tqdm(image_list):
-        first_metric, second_metric, third_metric = test_single_volume(
-            case, net, test_save_path, FLAGS)
-        first_total += np.asarray(first_metric)
-        second_total += np.asarray(second_metric)
-        third_total += np.asarray(third_metric)
-    avg_metric = [first_total / len(image_list), second_total /
-                  len(image_list), third_total / len(image_list)]
-    return avg_metric
+        net.load_state_dict(torch.load(save_mode_path))
+        print("init weight from {}".format(save_mode_path))
+        net.eval()
+
+        first_total = 0.0
+        second_total = 0.0
+        third_total = 0.0
+        for case in tqdm(image_list):
+            first_metric, second_metric, third_metric = test_single_volume(
+                case, net, test_save_path, FLAGS)
+            first_total += np.asarray(first_metric)
+            second_total += np.asarray(second_metric)
+            third_total += np.asarray(third_metric)
+        avg_metric = [first_total / len(image_list), second_total /
+                      len(image_list), third_total / len(image_list)]
+        avg_metrics.append(avg_metric)
+        del net
+        
+    return avg_metrics
 
 
 if __name__ == '__main__':
     FLAGS = parser.parse_args()
-    metric = Inference(FLAGS)
-    print(metric)
-    print((metric[0]+metric[1]+metric[2])/3)
+    metrics = Inference(FLAGS)
+    for metric in metrics:
+        print(metric)
+        print((metric[0]+metric[1]+metric[2])/3)
