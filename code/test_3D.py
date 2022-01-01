@@ -25,17 +25,30 @@ def Inference(FLAGS):
         shutil.rmtree(test_save_path)
     os.makedirs(test_save_path)
     net = unet_3D(n_classes=num_classes, in_channels=1).cuda()
-    save_mode_path = os.path.join(
-        snapshot_path, '{}_best_model.pth'.format(FLAGS.model))
-    net.load_state_dict(torch.load(save_mode_path))
-    print("init weight from {}".format(save_mode_path))
-    net.eval()
-    avg_metric = test_all_case(net, base_dir=FLAGS.root_path, method=FLAGS.model, test_list="test.txt", num_classes=num_classes,
-                               patch_size=(96, 96, 96), stride_xy=64, stride_z=64, test_save_path=test_save_path)
-    return avg_metric
+    # save_mode_path = os.path.join(snapshot_path, '{}_best_model.pth'.format(FLAGS.model))
+
+    model_paths = glob.glob(os.path.join(snapshot_path, "*best*"))
+    
+    if len(model_paths)>0:
+        os.makedirs(test_save_path)
+    elif len(model_paths)==0:
+        print("no models in {}", snapshot_path)
+    avg_metrics = []
+
+    for save_mode_path in model_paths:
+        net.load_state_dict(torch.load(save_mode_path))
+        print("init weight from {}".format(save_mode_path))
+        net.eval()
+        avg_metric = test_all_case(net, base_dir=FLAGS.root_path, method=FLAGS.model, test_list="test.txt", num_classes=num_classes,
+                                patch_size=(96, 96, 96), stride_xy=64, stride_z=64, test_save_path=test_save_path)
+        avg_metrics.append(avg_metric)
+    
+    return avg_metrics
 
 
 if __name__ == '__main__':
     FLAGS = parser.parse_args()
-    metric = Inference(FLAGS)
-    print(metric)
+    metrics = Inference(FLAGS)
+    for metric in metrics:
+        print(metric)
+        print((metric[0]+metric[1]+metric[2])/3)
