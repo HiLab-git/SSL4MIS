@@ -60,8 +60,12 @@ def test_single_case(net, image, stride_xy, stride_z, patch_size, num_classes=1)
 
                 with torch.no_grad():
                     y1 = net(test_patch)
+                    if len(y1)==2:
+                        y1 = y1[1]
+                        y = torch.sigmoid(y1)
                     # ensemble
-                    y = torch.softmax(y1, dim=1)
+                    else:
+                        y = torch.softmax(y1, dim=1)
                 y = y.cpu().data.numpy()
                 y = y[0, :, :, :, :]
                 score_map[:, xs:xs+patch_size[0], ys:ys+patch_size[1], zs:zs+patch_size[2]] \
