@@ -148,3 +148,20 @@ def compute_sdf(img_gt, out_shape):
             # assert np.max(sdf) ==  1.0, print(np.min(posdis), np.min(negdis), np.max(posdis), np.max(negdis))
 
     return normalized_sdf
+
+
+def compute_sdf_multi(img_gt, out_shape):
+    img_gt = img_gt.astype(np.uint8)
+    gt_sdf = np.zeros(out_shape)
+    for b in range(out_shape[0]): 
+        for c in np.unique(img_gt): 
+            posmask = img_gt[b] == c
+            negmask = ~posmask
+            if posmask.any() and negmask.any():
+                posdis = distance(posmask)
+                negdis = distance(negmask)
+                boundary = skimage_seg.find_boundaries(posmask, mode='inner').astype(np.uint8)
+                sdf = (negdis-np.min(negdis))/(np.max(negdis)-np.min(negdis)) - (posdis-np.min(posdis))/(np.max(posdis)-np.min(posdis))
+                sdf[boundary==1] = 0
+                gt_sdf[b][c] = sdf
+    return gt_sdf
