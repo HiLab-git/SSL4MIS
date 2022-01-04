@@ -1,7 +1,7 @@
 from networks.efficientunet import Effi_UNet
 from networks.enet import ENet
 from networks.pnet import PNet2D
-from networks.unet import UNet, UNet_DS, UNet_URPC, UNet_CCT
+from networks.unet import UNet, UNet_DS, UNet_URPC, UNet_CCT, UNet_DTC
 import argparse
 from networks.vision_transformer import SwinUnet as ViT_seg
 from networks.config import get_config
@@ -29,7 +29,7 @@ parser.add_argument('--seed', type=int,  default=1337, help='random seed')
 parser.add_argument('--num_classes', type=int,  default=4,
                     help='output channel of network')
 parser.add_argument(
-    '--cfg', type=str, default="../code/configs/swin_tiny_patch4_window7_224_lite.yaml", help='path to config file', )
+    '--cfg', type=str, default="/home/cse_jeny/FCD_Govind/SSL4MIS/code/configs/swin_tiny_patch4_window7_224_lite.yaml", help='path to config file', )
 parser.add_argument(
     "--opts",
     help="Modify config options by adding 'KEY VALUE' pairs. ",
@@ -75,6 +75,8 @@ config = get_config(args)
 def net_factory(net_type="unet", in_chns=1, class_num=3):
     if net_type == "unet":
         net = UNet(in_chns=in_chns, class_num=class_num).cuda()
+    elif net_type == "unet_dtc" or net_type == "unet_sdf":
+        net = UNet_DTC(in_chns=in_chns, class_num=class_num).cuda()
     elif net_type == "enet":
         net = ENet(in_channels=in_chns, num_classes=class_num).cuda()
     elif net_type == "unet_ds":
