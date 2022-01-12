@@ -154,7 +154,7 @@ def train(args, snapshot_path):
 
             consistency_weight = get_current_consistency_weight(iter_num//150)
 
-            consistency_loss = torch.mean((unlabeled_rot_outputs_soft - torch.rot90(outputs_soft[args.labeled_bs:], rot_times, [2,3]))**2)
+            consistency_loss = 0.5 * (torch.mean((unlabeled_rot_outputs_soft.detach() - torch.rot90(outputs_soft[args.labeled_bs:], rot_times, [2,3]))**2) + torch.mean((unlabeled_rot_outputs_soft - torch.rot90(outputs_soft[args.labeled_bs:].detach(), rot_times, [2,3]))**2))
 
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
