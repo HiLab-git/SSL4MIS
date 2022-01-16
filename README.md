@@ -96,6 +96,7 @@
 |2020-12|H. Wang and D. Chen|Unlabeled Data Guided Semi-supervised Histopathology Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2012.09373.pdf)|
 |2020-12|X. Luo and S. Zhang|Efficient Semi-supervised  Gross Target Volume of Nasopharyngeal Carcinoma Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[MICCAI2021](https://arxiv.org/pdf/2012.07042.pdf)|
 |2020-12|M. Abdel‐Basset and M. Ryan|FSS-2019-nCov: A Deep Learning Architecture for Semi-supervised Few-Shot Segmentation of COVID-19 Infection|None|[Knowledge-Based Systems2020](https://www.sciencedirect.com/science/article/pii/S0950705120307760)|
+|2020-11|A. Chartsias and S. A. Tsaftaris|Disentangle, Align and Fuse for Multimodal and Semi-Supervised Image Segmentation|[Code](https://github.com/vios-s/multimodal_segmentation)|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9250615)|
 |2020-11|N. Horlava and N. Scherf|A comparative study of semi- and self-supervised semantic segmentation of biomedical microscopy data|None|[Arxiv](https://arxiv.org/pdf/2011.08076.pdf)|
 |2020-11|P. Wang and C. Desrosiers|Self-paced and self-consistent co-training for semi-supervised image segmentation|None|[MedIA2021](https://arxiv.org/pdf/2011.00325.pdf)|
 |2020-10|Y. Sun and L. Wang|Semi-supervised Transfer Learning for Infant Cerebellum Tissue Segmentation|None|[MLMI2020](http://liwang.web.unc.edu/files/2020/10/Sun2020_Chapter_Semi-supervisedTransferLearnin.pdf)|
