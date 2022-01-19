@@ -34,7 +34,10 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2021-12|S. Liu and G. Cao|Shape-aware Multi-task Learning for Semi-supervised 3D Medical Image Segmentation|None|[BIBM2022](https://ieeexplore.ieee.org/document/9669523)|
+|2021-12|S. Li and X. Yang|Semi-supervised Cardiac MRI Segmentation Based on Generative Adversarial Network and Variational Auto-Encoder|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669685)|
+|2021-12|N. Zhang and Y. Zhang|Semi-supervised Medical Image Segmentation with Distribution Calibration and Non-local Semantic Constraint
+|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669560)|
+|2021-12|S. Liu and G. Cao|Shape-aware Multi-task Learning for Semi-supervised 3D Medical Image Segmentation|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669523)|
 |2021-12|X. Xu and P. Yan|Shadow-consistent Semi-supervised Learning for Prostate Ultrasound Segmentation|[Code](https://github.com/DIAL-RPI/SCO-SSL)|[TMI2021](https://ieeexplore.ieee.org/document/9667363)|
 |2021-12|L. Hu and Y. Wang|Semi-supervised NPC segmentation with uncertainty and attention guided consistency|None|[KBS2021](https://www.sciencedirect.com/science/article/abs/pii/S0950705121011205)|
 |2021-12|J. Peng and M. Pedersoli|Self-Paced Contrastive Learning for Semi-supervised Medical Image Segmentation with Meta-labels|[Code](https://github.com/jizongFox/Self-paced-Contrastive-Learning)|[NeurIPS2021](https://proceedings.neurips.cc/paper/2021/file/8b5c8441a8ff8e151b191c53c1842a38-Paper.pdf)|
