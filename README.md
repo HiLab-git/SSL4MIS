@@ -35,8 +35,7 @@
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2021-12|S. Li and X. Yang|Semi-supervised Cardiac MRI Segmentation Based on Generative Adversarial Network and Variational Auto-Encoder|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669685)|
-|2021-12|N. Zhang and Y. Zhang|Semi-supervised Medical Image Segmentation with Distribution Calibration and Non-local Semantic Constraint
-|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669560)|
+|2021-12|N. Zhang and Y. Zhang|Semi-supervised Medical Image Segmentation with Distribution Calibration and Non-local Semantic Constraint|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669560)|
 |2021-12|S. Liu and G. Cao|Shape-aware Multi-task Learning for Semi-supervised 3D Medical Image Segmentation|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669523)|
 |2021-12|X. Xu and P. Yan|Shadow-consistent Semi-supervised Learning for Prostate Ultrasound Segmentation|[Code](https://github.com/DIAL-RPI/SCO-SSL)|[TMI2021](https://ieeexplore.ieee.org/document/9667363)|
 |2021-12|L. Hu and Y. Wang|Semi-supervised NPC segmentation with uncertainty and attention guided consistency|None|[KBS2021](https://www.sciencedirect.com/science/article/abs/pii/S0950705121011205)|
