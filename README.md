@@ -34,7 +34,8 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2022-01|H. Yao and X. Li|Enhancing Pseudo Label Quality for Semi-Supervised Domain-Generalized Medical Image Segmentation|None|[AAAI2022](https://arxiv.org/pdf/2201.08657.pdf)|
+|2022-02|An Embarrassingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation|
+|2022-01|H. Yao and X. Li|Enhancing Pseudo Label Quality for Semi-Supervised Domain-Generalized Medical Image Segmentation|None|[AAAI2022](https://arxiv.org/pdf/2201.08657.pdf)|H. Basak and A. Chatterjee|An Embarrassingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/ICT-MedSeg)|[ISBI2022](https://arxiv.org/abs/2202.00677)|
 |2021-12|S. Li and X. Yang|Semi-supervised Cardiac MRI Segmentation Based on Generative Adversarial Network and Variational Auto-Encoder|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669685)|
 |2021-12|N. Zhang and Y. Zhang|Semi-supervised Medical Image Segmentation with Distribution Calibration and Non-local Semantic Constraint|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669560)|
 |2021-12|S. Liu and G. Cao|Shape-aware Multi-task Learning for Semi-supervised 3D Medical Image Segmentation|None|[BIBM2021](https://ieeexplore.ieee.org/document/9669523)|
