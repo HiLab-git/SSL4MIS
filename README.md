@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-02|Z. Liu and C. Zhao|Semi-supervised Medical Image Segmentation via Geometry-aware Consistency Training|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2202/2202.06104.pdf)|
 |2022-02|X. Zhao and G. Li|Cross-level Contrastive Learning and Consistency Constraint for Semi-supervised Medical Image Segmentation|[Code](https://github.com/ShinkaiZ/CLCC-semi)|[ISBI2022](https://arxiv.org/pdf/2202.04074.pdf)|
 |2022-02|H. Basak and A. Chatterjee|An Embarrassingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/ICT-MedSeg)|[ISBI2022](https://arxiv.org/abs/2202.00677)|
 |2022-01|H. Yao and X. Li|Enhancing Pseudo Label Quality for Semi-Supervised Domain-Generalized Medical Image Segmentation|None|[AAAI2022](https://arxiv.org/pdf/2201.08657.pdf)|H. Basak and A. Chatterjee|An Embarrassingly Simple Consistency Regularization Method for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/ICT-MedSeg)|[ISBI2022](https://arxiv.org/abs/2202.00677)|
