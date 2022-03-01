@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-02|Y. Shu and W. Li|Cross-Mix Monitoring for Medical Image Segmentation with Limited Supervision|None|[TMM2022](https://ieeexplore.ieee.org/abstract/document/9721091)|
 |2022-02|H. Huang and H. Hu|MTL-ABS3Net: Atlas-Based Semi-Supervised Organ Segmentation Network with Multi-Task Learning for Medical Images|None|[JHBI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9721677)|
 |2022-02|H. Wu and J. Qin|Semi-supervised Segmentation of Echocardiography Videos via Noise-resilient Spatiotemporal Semantic Calibration and Fusion|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522000494)|
 |2022-02|Z. Liu and C. Zhao|Semi-supervised Medical Image Segmentation via Geometry-aware Consistency Training|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2202/2202.06104.pdf)|
