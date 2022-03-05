@@ -36,7 +36,7 @@
 |---|---|---|---|---|
 |2022-03|W. Cui and R. M. Leahy|Semi-supervised Learning using Robust Loss|None|[Arxiv](https://arxiv.org/pdf/2203.01524.pdf)|
 |2022-03|Y. Wu and J. Cai|Exploring Smoothness and Class-Separation for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.01324.pdf)|
-|2022-02|Y. Hua and L. Uncertainty-Guided Voxel-Level Supervised Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[IJNS2022](https://www.worldscientific.com/doi/epdf/10.1142/S0129065722500162)|
+|2022-02|Y. Hua and L. Zhang|Uncertainty-Guided Voxel-Level Supervised Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[IJNS2022](https://www.worldscientific.com/doi/epdf/10.1142/S0129065722500162)|
 |2022-02|Y. Shu and W. Li|Cross-Mix Monitoring for Medical Image Segmentation with Limited Supervision|None|[TMM2022](https://ieeexplore.ieee.org/abstract/document/9721091)|
 |2022-02|H. Huang and H. Hu|MTL-ABS3Net: Atlas-Based Semi-Supervised Organ Segmentation Network with Multi-Task Learning for Medical Images|None|[JHBI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9721677)|
 |2022-02|H. Wu and J. Qin|Semi-supervised Segmentation of Echocardiography Videos via Noise-resilient Spatiotemporal Semantic Calibration and Fusion|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522000494)|
