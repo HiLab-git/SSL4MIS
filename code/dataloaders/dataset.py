@@ -1,37 +1,66 @@
-import os
-import cv2
-import torch
-import random
-import numpy as np
-from glob import glob
-from torch.utils.data import Dataset
-import h5py
-from scipy.ndimage.interpolation import zoom
 import itertools
+import os
+import random
+import re
+from glob import glob
+
+import cv2
+import h5py
+import numpy as np
+import torch
 from scipy import ndimage
-from torch.utils.data.sampler import Sampler
+from scipy.ndimage.interpolation import zoom
+from torch.utils.data import Dataset
+from sklearn.model_selection import KFold
 
 
 class BaseDataSets(Dataset):
-    def __init__(self, base_dir=None, split='train', num=None, transform=None):
+    def __init__(self, base_dir=None, labeled_type="labeled", labeled_ratio=10, split='train', transform=None, fold=1):
         self._base_dir = base_dir
         self.sample_list = []
         self.split = split
         self.transform = transform
+        self.labeled_type = labeled_type
+        self.all_volumes = sorted(os.listdir(self._base_dir + "/all_volumes"))
+        train_ids, test_ids = self._get_fold_ids(fold)
+        all_labeled_ids = train_ids[::labeled_ratio]
         if self.split == 'train':
-            with open(self._base_dir + '/train_slices.list', 'r') as f1:
-                self.sample_list = f1.readlines()
-            self.sample_list = [item.replace('\n', '')
-                                for item in self.sample_list]
+            self.all_slices = os.listdir(self._base_dir + "/all_slices")
+            self.sample_list = []
+            labeled_ids = [i for i in all_labeled_ids if i in train_ids]
+            unlabeled_ids = [i for i in train_ids if i not in labeled_ids]
+            if self.labeled_type == "labeled":
+                print("Labeled patients IDs", labeled_ids)
+                for ids in labeled_ids:
+                    new_data_list = list(filter(lambda x: re.match(
+                        '{}.*'.format(ids.replace(".h5", "")), x) != None, self.all_slices))
+                    self.sample_list.extend(new_data_list)
+                print("total labeled {} samples".format(len(self.sample_list)))
+            else:
+                print("Unlabeled patients IDs", unlabeled_ids)
+                for ids in unlabeled_ids:
+                    new_data_list = list(filter(lambda x: re.match(
+                        '{}.*'.format(ids.replace(".h5", "")), x) != None, self.all_slices))
+                    self.sample_list.extend(new_data_list)
+                print("total unlabeled {} samples".format(len(self.sample_list)))
 
         elif self.split == 'val':
-            with open(self._base_dir + '/val.list', 'r') as f:
-                self.sample_list = f.readlines()
-            self.sample_list = [item.replace('\n', '')
-                                for item in self.sample_list]
-        if num is not None and self.split == "train":
-            self.sample_list = self.sample_list[:num]
-        print("total {} samples".format(len(self.sample_list)))
+            print("test_ids", test_ids)
+            self.all_volumes = os.listdir(
+                self._base_dir + "/all_volumes")
+            self.sample_list = []
+            for ids in test_ids:
+                new_data_list = list(filter(lambda x: re.match(
+                    '{}.*'.format(ids.replace(".h5", "")), x) != None, self.all_volumes))
+                self.sample_list.extend(new_data_list)
+
+    def _get_fold_ids(self, fold):
+        folds = KFold(n_splits=5, shuffle=False)
+        all_cases = np.array(self.all_volumes)
+        k_fold_data = []
+        for trn_idx, val_idx in folds.split(all_cases):
+            k_fold_data.append([all_cases[trn_idx], all_cases[val_idx]])
+        return k_fold_data[fold][0], k_fold_data[fold][1]
 
     def __len__(self):
         return len(self.sample_list)
@@ -40,15 +69,20 @@ class BaseDataSets(Dataset):
         case = self.sample_list[idx]
         if self.split == "train":
             h5f = h5py.File(self._base_dir +
-                            "/data/slices/{}.h5".format(case), 'r')
+                            "/all_slices/{}".format(case), 'r')
         else:
-            h5f = h5py.File(self._base_dir + "/data/{}.h5".format(case), 'r')
-        image = h5f['image'][:]
-        label = h5f['label'][:]
-        sample = {'image': image, 'label': label}
+            h5f = h5py.File(self._base_dir +
+                            "/all_volumes/{}".format(case), 'r')
         if self.split == "train":
+            image = h5f['image'][:]
+            label = h5f["label"][:]
+            sample = {'image': image, 'label': label}
             sample = self.transform(sample)
-        sample["idx"] = idx
+        else:
+            image = h5f['image'][:]
+            label = h5f['label'][:].astype(np.int16)
+            sample = {'image': image, 'label': label}
+        sample["idx"] = case.split("_")[0]
         return sample
 
 
@@ -62,10 +96,19 @@ def random_rot_flip(image, label):
     return image, label
 
 
-def random_rotate(image, label):
+def random_rotate(image, label, cval):
     angle = np.random.randint(-20, 20)
     image = ndimage.rotate(image, angle, order=0, reshape=False)
-    label = ndimage.rotate(label, angle, order=0, reshape=False)
+    label = ndimage.rotate(label, angle, order=0,
+                           reshape=False, mode="constant", cval=cval)
+    return image, label
+
+
+def random_noise(image, label, mu=0, sigma=0.1):
+    noise = np.clip(sigma * np.random.randn(image.shape[0], image.shape[1]),
+                    -2 * sigma, 2 * sigma)
+    noise = noise + mu
+    image = image + noise
     return image, label
 
 
@@ -75,13 +118,12 @@ class RandomGenerator(object):
 
     def __call__(self, sample):
         image, label = sample['image'], sample['label']
-        # ind = random.randrange(0, img.shape[0])
-        # image = img[ind, ...]
-        # label = lab[ind, ...]
         if random.random() > 0.5:
             image, label = random_rot_flip(image, label)
-        elif random.random() > 0.5:
-            image, label = random_rotate(image, label)
+        if random.random() > 0.5:
+            image, label = random_rotate(image, label, cval=0)
+        if random.random() > 0.5:
+            image, label = random_noise(image, label)
         x, y = image.shape
         image = zoom(
             image, (self.output_size[0] / x, self.output_size[1] / y), order=0)
@@ -92,52 +134,3 @@ class RandomGenerator(object):
         label = torch.from_numpy(label.astype(np.uint8))
         sample = {'image': image, 'label': label}
         return sample
-
-
-class TwoStreamBatchSampler(Sampler):
-    """Iterate two sets of indices
-
-    An 'epoch' is one iteration through the primary indices.
-    During the epoch, the secondary indices are iterated through
-    as many times as needed.
-    """
-
-    def __init__(self, primary_indices, secondary_indices, batch_size, secondary_batch_size):
-        self.primary_indices = primary_indices
-        self.secondary_indices = secondary_indices
-        self.secondary_batch_size = secondary_batch_size
-        self.primary_batch_size = batch_size - secondary_batch_size
-
-        assert len(self.primary_indices) >= self.primary_batch_size > 0
-        assert len(self.secondary_indices) >= self.secondary_batch_size > 0
-
-    def __iter__(self):
-        primary_iter = iterate_once(self.primary_indices)
-        secondary_iter = iterate_eternally(self.secondary_indices)
-        return (
-            primary_batch + secondary_batch
-            for (primary_batch, secondary_batch)
-            in zip(grouper(primary_iter, self.primary_batch_size),
-                   grouper(secondary_iter, self.secondary_batch_size))
-        )
-
-    def __len__(self):
-        return len(self.primary_indices) // self.primary_batch_size
-
-
-def iterate_once(iterable):
-    return np.random.permutation(iterable)
-
-
-def iterate_eternally(indices):
-    def infinite_shuffles():
-        while True:
-            yield np.random.permutation(indices)
-    return itertools.chain.from_iterable(infinite_shuffles())
-
-
-def grouper(iterable, n):
-    "Collect data into fixed-length chunks or blocks"
-    # grouper('ABCDEFG', 3) --> ABC DEF"
-    args = [iter(iterable)] * n
-    return zip(*args)

@@ -119,6 +119,8 @@ class Decoder(nn.Module):
 
         self.out_conv = nn.Conv2d(self.ft_chns[0], self.n_class,
                                   kernel_size=3, padding=1)
+        self.out_conv_regression = nn.Conv2d(self.ft_chns[0], 1, kernel_size=3, padding=1)
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, feature):
         x0 = feature[0]
@@ -131,8 +133,9 @@ class Decoder(nn.Module):
         x = self.up2(x, x2)
         x = self.up3(x, x1)
         x = self.up4(x, x0)
-        output = self.out_conv(x)
-        return output
+        output_seg = self.out_conv(x)
+        output_reg = self.sigmoid(self.out_conv_regression(x))
+        return output_seg, output_reg
 
 
 class Decoder_DS(nn.Module):
@@ -283,9 +286,9 @@ class FeatureNoise(nn.Module):
         return x
 
 
-class UNet(nn.Module):
+class UNet_Multitask(nn.Module):
     def __init__(self, in_chns, class_num):
-        super(UNet, self).__init__()
+        super(UNet_Multitask, self).__init__()
 
         params = {'in_chns': in_chns,
                   'feature_chns': [16, 32, 64, 128, 256],
@@ -299,8 +302,8 @@ class UNet(nn.Module):
 
     def forward(self, x):
         feature = self.encoder(x)
-        output = self.decoder(feature)
-        return output
+        output_seg, output_reg = self.decoder(feature)
+        return output_seg, output_reg
 
 
 class UNet_DS(nn.Module):
@@ -343,3 +346,4 @@ class UNet_URDS(nn.Module):
         dp1_out_seg, dp2_out_seg, dp3_out_seg, dp4_out_seg = self.decoder(
             feature, shape)
         return dp1_out_seg, dp2_out_seg, dp3_out_seg, dp4_out_seg
+

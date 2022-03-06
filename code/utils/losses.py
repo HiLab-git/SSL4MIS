@@ -36,6 +36,35 @@ def entropy_loss(p, C=2):
     return ent
 
 
+def nuclear_norm_maximum(pr):
+    '''
+
+    :param pr: outputs_soft [N * C * W * H * D]
+    :param C:
+    :return:
+    '''
+
+    N = pr.shape[0]
+    C = pr.shape[1]
+
+    # L_FBNM = 0
+    # for n in range(N):
+    #     pr_batch = pr[n].view((C, -1)).t()
+    #     list_svd, _ = torch.sort(torch.sqrt(torch.sum(torch.pow(pr_batch, 2), dim=0)), descending=True)
+    #     nums = min(pr_batch.shape[0], pr_batch.shape[1])
+    #     L_FBNM += torch.sum(list_svd[:nums])
+    # return L_FBNM / N
+
+    L_BNM = 0
+    for n in range(N):
+        pr_batch = pr[n].view((C, -1)).t()
+        L_BNM += -torch.norm(pr_batch, p='nuc')
+
+        # S = torch.svdvals(A)
+    return L_BNM / N
+
+
+
 def softmax_dice_loss(input_logits, target_logits):
     """Takes softmax on both sides and returns MSE loss
 
