@@ -48,7 +48,7 @@ class UpBlock(nn.Module):
     """Upssampling followed by ConvBlock"""
 
     def __init__(self, in_channels1, in_channels2, out_channels, dropout_p,
-                 bilinear=True):
+                 bilinear=False):
         super(UpBlock, self).__init__()
         self.bilinear = bilinear
         if bilinear:
@@ -109,13 +109,13 @@ class Decoder(nn.Module):
         assert (len(self.ft_chns) == 5)
 
         self.up1 = UpBlock(
-            self.ft_chns[4], self.ft_chns[3], self.ft_chns[3], dropout_p=0.0)
+            self.ft_chns[4], self.ft_chns[3], self.ft_chns[3], dropout_p=0.0, bilinear=self.bilinear)
         self.up2 = UpBlock(
-            self.ft_chns[3], self.ft_chns[2], self.ft_chns[2], dropout_p=0.0)
+            self.ft_chns[3], self.ft_chns[2], self.ft_chns[2], dropout_p=0.0, bilinear=self.bilinear)
         self.up3 = UpBlock(
-            self.ft_chns[2], self.ft_chns[1], self.ft_chns[1], dropout_p=0.0)
+            self.ft_chns[2], self.ft_chns[1], self.ft_chns[1], dropout_p=0.0, bilinear=self.bilinear)
         self.up4 = UpBlock(
-            self.ft_chns[1], self.ft_chns[0], self.ft_chns[0], dropout_p=0.0)
+            self.ft_chns[1], self.ft_chns[0], self.ft_chns[0], dropout_p=0.0, bilinear=self.bilinear)
 
         self.out_conv = nn.Conv2d(self.ft_chns[0], self.n_class,
                                   kernel_size=3, padding=1)
@@ -291,7 +291,7 @@ class UNet(nn.Module):
                   'feature_chns': [16, 32, 64, 128, 256],
                   'dropout': [0.05, 0.1, 0.2, 0.3, 0.5],
                   'class_num': class_num,
-                  'bilinear': False,
+                  'bilinear': True,
                   'acti_func': 'relu'}
 
         self.encoder = Encoder(params)

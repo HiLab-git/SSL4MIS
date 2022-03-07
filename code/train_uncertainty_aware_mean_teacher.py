@@ -41,7 +41,7 @@ parser.add_argument('--batch_size', type=int, default=12,
 
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
-parser.add_argument('--base_lr', type=float,  default=0.01,
+parser.add_argument('--base_lr', type=float,  default=0.03,
                     help='segmentation network learning rate')
 parser.add_argument('--patch_size', type=list,  default=[256, 256],
                     help='patch size of network input')
@@ -66,6 +66,7 @@ args = parser.parse_args()
 def get_current_consistency_weight(epoch):
     # Consistency ramp-up from https://arxiv.org/abs/1610.02242
     return args.consistency * ramps.sigmoid_rampup(epoch, args.consistency_rampup)
+
 
 def update_ema_variables(model, ema_model, alpha, global_step):
     # Use the true average until the exponential average is more correct
@@ -100,13 +101,16 @@ def train(args, snapshot_path):
     db_train_unlabeled = BaseDataSets(base_dir=args.root_path, labeled_type="unlabeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
         RandomGenerator(args.patch_size)]))
 
-    trainloader_labeled = DataLoader(db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
-    trainloader_unlabeled = DataLoader(db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
+    trainloader_labeled = DataLoader(
+        db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
+    trainloader_unlabeled = DataLoader(
+        db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
 
     logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
     logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
-    db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold, split="val", labeled_ratio=args.labeled_ratio)
+    db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
+                          split="val", labeled_ratio=args.labeled_ratio)
     valloader = DataLoader(db_val, batch_size=1, shuffle=False)
     model.train()
 
@@ -147,22 +151,24 @@ def train(args, snapshot_path):
             preds = torch.zeros([stride * T, num_classes, w, h]).cuda()
             for i in range(T // 2):
                 ema_inputs = volume_batch_r + \
-                             torch.clamp(torch.randn_like(
-                                 volume_batch_r) * 0.1, -0.2, 0.2)
+                    torch.clamp(torch.randn_like(
+                        volume_batch_r) * 0.1, -0.2, 0.2)
                 with torch.no_grad():
                     preds[2 * stride * i:2 * stride *
-                                         (i + 1)] = ema_model(ema_inputs)
+                          (i + 1)] = ema_model(ema_inputs)
             preds = F.softmax(preds, dim=1)
             preds = preds.reshape(T, stride, num_classes, w, h)
             preds = torch.mean(preds, dim=0)
             uncertainty = -1.0 * \
-                          torch.sum(preds * torch.log(preds + 1e-6), dim=1, keepdim=True)
+                torch.sum(preds * torch.log(preds + 1e-6), dim=1, keepdim=True)
 
             loss_ce = ce_loss(outputs, label_batch[:].long())
             loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
-            consistency_weight = get_current_consistency_weight(iter_num // 150)
-            consistency_dist = losses.softmax_mse_loss(outputs_unlabeled, ema_output)  # (batch, 2, 112,112,80)
+            consistency_weight = get_current_consistency_weight(
+                iter_num // (args.max_iterations/args.consistency_rampup))
+            consistency_dist = losses.softmax_mse_loss(
+                outputs_unlabeled, ema_output)  # (batch, 2, 112,112,80)
             threshold = (0.75 + 0.25 * ramps.sigmoid_rampup(iter_num,
                                                             max_iterations)) * np.log(2)
             mask = (uncertainty < threshold).float()

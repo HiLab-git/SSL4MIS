@@ -42,7 +42,7 @@ parser.add_argument('--batch_size', type=int, default=16,
 
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
-parser.add_argument('--base_lr', type=float,  default=0.01,
+parser.add_argument('--base_lr', type=float,  default=0.03,
                     help='segmentation network learning rate')
 parser.add_argument('--patch_size', type=list,  default=[256, 256],
                     help='patch size of network input')
@@ -67,6 +67,7 @@ args = parser.parse_args()
 def get_current_consistency_weight(epoch):
     # Consistency ramp-up from https://arxiv.org/abs/1610.02242
     return args.consistency * ramps.sigmoid_rampup(epoch, args.consistency_rampup)
+
 
 def update_ema_variables(model, ema_model, alpha, global_step):
     # Use the true average until the exponential average is more correct
@@ -103,10 +104,13 @@ def train(args, snapshot_path):
     logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
     logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
-    trainloader_labeled = DataLoader(db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
-    trainloader_unlabeled = DataLoader(db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
+    trainloader_labeled = DataLoader(
+        db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
+    trainloader_unlabeled = DataLoader(
+        db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
 
-    db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold, split="val", labeled_ratio=args.labeled_ratio)
+    db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
+                          split="val", labeled_ratio=args.labeled_ratio)
     valloader = DataLoader(db_val, batch_size=1)
 
     model.train()
@@ -128,7 +132,7 @@ def train(args, snapshot_path):
             volume_batch, label_batch = sampled_batch_labeled['image'], sampled_batch_labeled['label']
             volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
             unlabeled_volume_batch = sampled_batch_unlabeled['image'].cuda()
-        
+
             noise = torch.clamp(torch.randn_like(
                 unlabeled_volume_batch) * 0.1, -0.2, 0.2)
             ema_inputs = unlabeled_volume_batch + noise
@@ -143,10 +147,14 @@ def train(args, snapshot_path):
                 ema_output = ema_model(ema_inputs)
                 ema_output_soft = torch.softmax(ema_output, dim=1)
 
-            supervised_loss = 0.5*(ce_loss(outputs, label_batch[:].long()) + dice_loss(outputs_soft, label_batch[:].unsqueeze(1)))
-            consistency_weight = get_current_consistency_weight(iter_num // 150)
+            supervised_loss = 0.5 * \
+                (ce_loss(outputs, label_batch[:].long(
+                )) + dice_loss(outputs_soft, label_batch[:].unsqueeze(1)))
+            consistency_weight = get_current_consistency_weight(
+                iter_num // (args.max_iterations/args.consistency_rampup))
 
-            consistency_loss = torch.mean((outputs_unlabeled_soft - ema_output_soft) ** 2)
+            consistency_loss = torch.mean(
+                (outputs_unlabeled_soft - ema_output_soft) ** 2)
             loss = supervised_loss + consistency_weight * consistency_loss
             optimizer.zero_grad()
             loss.backward()

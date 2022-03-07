@@ -1,2 +1,0 @@
-- Download the processed ACDC data from [BaiduDisk](https://pan.baidu.com/s/1d0cFhj3LU029oHajNni8KQ), the password is *code*, and decompress the zip file to [data/ACDC](https://github.com/Luoxd1996/SSL4MIS/edit/master/data/ACDC). More details of this dataset can be found at:  https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html.
-- If you want to use the [ACDC dataset](https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html) in your paper, please cite the original paper [TMI2018](https://ieeexplore.ieee.org/document/8360453).

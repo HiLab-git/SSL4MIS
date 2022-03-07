@@ -4,16 +4,17 @@ import re
 import shutil
 
 import h5py
-from matplotlib.pyplot import axis
 import nibabel as nib
 import numpy as np
 import SimpleITK as sitk
 import torch
+from matplotlib.pyplot import axis
 from medpy import metric
 from scipy.ndimage import zoom
 from scipy.ndimage.interpolation import zoom
 from sklearn.model_selection import KFold
 from tqdm import tqdm
+
 from networks.net_factory import net_factory
 
 parser = argparse.ArgumentParser()
@@ -26,7 +27,7 @@ parser.add_argument('--model', type=str,
 parser.add_argument('--labeled_ratio', type=int, default=8,
                     help='1/labeled_ratio data is provided mask')
 parser.add_argument('--fold', type=int,
-                    default=1, help='fold')
+                    default=3, help='fold')
 parser.add_argument('--patch_size', type=list,  default=[256, 256],
                     help='patch size of network input')
 parser.add_argument('--num_classes', type=int,  default=3,
@@ -59,27 +60,88 @@ def calculate_metric_percase(pred, gt, spacing):
     return dice, hd95, asd
 
 
-def test_single_volume(case, net, test_save_path, FLAGS):
+# def test_single_volume(case, net, test_save_path, FLAGS):
+#     h5f = h5py.File(FLAGS.root_path +
+#                     "/all_volumes/{}".format(case), 'r')
+#     image = h5f['image'][:]
+#     label = h5f['label'][:]
+#     spacing = h5f['spacing'][:]
+#     prediction = np.zeros_like(label)
+#     for ind in range(image.shape[0]):
+#         slice = image[ind, :, :]
+#         x, y = slice.shape[0], slice.shape[1]
+#         slice = zoom(slice, (FLAGS.patch_size / x, FLAGS.patch_size / y), order=0)
+#         input = torch.from_numpy(slice).unsqueeze(
+#             0).unsqueeze(0).float().cuda()
+#         net.eval()
+#         with torch.no_grad():
+#             out_main = net(input)
+#             out = torch.argmax(torch.softmax(
+#                 out_main, dim=1), dim=1).squeeze(0)
+#             out = out.cpu().detach().numpy()
+#             pred = zoom(out, (x / FLAGS.patch_size, y / FLAGS.patch_size), order=0)
+#             prediction[ind] = pred
+#     case = case.replace(".h5", "")
+
+#     metric_list = []
+#     for i in range(1, FLAGS.num_classes):
+#         metric_list.append(calculate_metric_percase(
+#             prediction == i, label == i, spacing=(spacing[2], spacing[0], spacing[1])))
+#     img_itk = sitk.GetImageFromArray(image.astype(np.float32))
+#     img_itk.SetSpacing(spacing)
+#     prd_itk = sitk.GetImageFromArray(prediction.astype(np.float32))
+#     prd_itk.SetSpacing(spacing)
+#     lab_itk = sitk.GetImageFromArray(label.astype(np.float32))
+#     lab_itk.SetSpacing(spacing)
+#     sitk.WriteImage(prd_itk, test_save_path + case + "_pred.nii.gz")
+#     sitk.WriteImage(img_itk, test_save_path + case + "_img.nii.gz")
+#     sitk.WriteImage(lab_itk, test_save_path + case + "_gt.nii.gz")
+#     return np.array(metric_list)
+
+
+def test_single_volume(case, net, test_save_path, FLAGS, batch_size=12):
     h5f = h5py.File(FLAGS.root_path +
                     "/all_volumes/{}".format(case), 'r')
     image = h5f['image'][:]
     label = h5f['label'][:]
     spacing = h5f['spacing'][:]
-    prediction = np.zeros_like(label)
-    for ind in range(image.shape[0]):
-        slice = image[ind, :, :]
-        x, y = slice.shape[0], slice.shape[1]
-        slice = zoom(slice, (FLAGS.patch_size / x, FLAGS.patch_size / y), order=0)
-        input = torch.from_numpy(slice).unsqueeze(
+    if len(image.shape) == 3:
+        prediction = np.zeros_like(label)
+        ind_x = np.array([i for i in range(image.shape[0])])
+        for ind in ind_x[::batch_size]:
+            if ind + batch_size < image.shape[0]:
+                slice = image[ind:ind + batch_size, ...]
+                thickness, x, y = slice.shape[0], slice.shape[1], slice.shape[2]
+                slice = zoom(slice, (1, FLAGS.patch_size[0] / x, FLAGS.patch_size[1] / y), order=0)
+                input = torch.from_numpy(slice).unsqueeze(1).float().cuda()
+                net.eval()
+                with torch.no_grad():
+                    out = torch.argmax(torch.softmax(
+                        net(input), dim=1), dim=1)
+                    out = out.cpu().detach().numpy()
+                    pred = zoom(out, (1, x / FLAGS.patch_size[0], y / FLAGS.patch_size[1]), order=0)
+                    prediction[ind:ind + batch_size, ...] = pred
+            else:
+                slice = image[ind:, ...]
+                thickness, x, y = slice.shape[0], slice.shape[1], slice.shape[2]
+                slice = zoom(slice, (1, FLAGS.patch_size[0] / x, FLAGS.patch_size[1] / y), order=0)
+                input = torch.from_numpy(slice).unsqueeze(1).float().cuda()
+                net.eval()
+                with torch.no_grad():
+                    out = torch.argmax(torch.softmax(
+                        net(input), dim=1), dim=1)
+                    out = out.cpu().detach().numpy()
+                    pred = zoom(out, (1, x / FLAGS.patch_size[0], y / FLAGS.patch_size[1]), order=0)
+                    prediction[ind:, ...] = pred
+    else:
+        input = torch.from_numpy(image).unsqueeze(
             0).unsqueeze(0).float().cuda()
         net.eval()
         with torch.no_grad():
-            out_main = net(input)
             out = torch.argmax(torch.softmax(
-                out_main, dim=1), dim=1).squeeze(0)
-            out = out.cpu().detach().numpy()
-            pred = zoom(out, (x / FLAGS.patch_size, y / FLAGS.patch_size), order=0)
-            prediction[ind] = pred
+                net(input), dim=1), dim=1).squeeze(0)
+            prediction = out.cpu().detach().numpy()
+
     case = case.replace(".h5", "")
 
     metric_list = []

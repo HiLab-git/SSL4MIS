@@ -28,16 +28,16 @@ from val_2D import test_single_volume
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
-                    default='../data/ACDC', help='Name of Experiment')
+                    default='../data/ProstateX', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='ACDC/ICT', help='experiment_name')
+                    default='ProstateX/Mean_Teacher', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet', help='model_name')
 parser.add_argument('--fold', type=int,
-                    default=2, help='cross validation')
+                    default=3, help='cross validation')
 parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
-parser.add_argument('--batch_size', type=int, default=12,
+parser.add_argument('--batch_size', type=int, default=16,
                     help='batch_size per gpu')
 
 parser.add_argument('--deterministic', type=int,  default=1,
@@ -47,11 +47,11 @@ parser.add_argument('--base_lr', type=float,  default=0.03,
 parser.add_argument('--patch_size', type=list,  default=[256, 256],
                     help='patch size of network input')
 parser.add_argument('--seed', type=int,  default=2022, help='random seed')
-parser.add_argument('--num_classes', type=int,  default=4,
+parser.add_argument('--num_classes', type=int,  default=3,
                     help='output channel of network')
 
 # label and unlabel
-parser.add_argument('--labeled_ratio', type=int, default=5,
+parser.add_argument('--labeled_ratio', type=int, default=8,
                     help='1/labeled_ratio data is provided mask')
 # costs
 parser.add_argument('--ema_decay', type=float,  default=0.99, help='ema_decay')
@@ -69,68 +69,47 @@ def get_current_consistency_weight(epoch):
     return args.consistency * ramps.sigmoid_rampup(epoch, args.consistency_rampup)
 
 
-def update_ema_variables(model, ema_model, alpha, global_step):
-    # Use the true average until the exponential average is more correct
-    alpha = min(1 - 1 / (global_step + 1), alpha)
-    for ema_param, param in zip(ema_model.parameters(), model.parameters()):
-        ema_param.data.mul_(alpha).add_(1 - alpha, param.data)
-
-
 def train(args, snapshot_path):
     writer = SummaryWriter(snapshot_path + '/log')
     base_lr = args.base_lr
     num_classes = args.num_classes
     max_iterations = args.max_iterations
 
-    def worker_init_fn(worker_id):
-        random.seed(args.seed + worker_id)
-
-    def create_model(ema=False):
-        # Network definition
-        model = net_factory(net_type=args.model, in_chns=1,
-                            class_num=num_classes)
-        if ema:
-            for param in model.parameters():
-                param.detach_()
-        return model
-
-    model = create_model()
-    ema_model = create_model(ema=True)
+    model = net_factory(net_type=args.model, in_chns=1,
+                        class_num=num_classes)
 
     db_train_labeled = BaseDataSets(base_dir=args.root_path, labeled_type="labeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
         RandomGenerator(args.patch_size)]))
     db_train_unlabeled = BaseDataSets(base_dir=args.root_path, labeled_type="unlabeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
         RandomGenerator(args.patch_size)]))
+    logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
+    logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
     trainloader_labeled = DataLoader(
         db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
     trainloader_unlabeled = DataLoader(
         db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
-    logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
-    logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
     db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
                           split="val", labeled_ratio=args.labeled_ratio)
-    valloader = DataLoader(db_val, batch_size=1, shuffle=False)
+    valloader = DataLoader(db_val, batch_size=1)
 
     model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
 
-    ce_loss = CrossEntropyLoss(ignore_index=4)
+    ce_loss = CrossEntropyLoss()
     dice_loss = losses.DiceLoss(num_classes)
 
     logging.info("{} iterations per epoch".format(len(trainloader_labeled)))
 
     iter_num = 0
-    max_epoch = max_iterations // len(trainloader_labeled) + 1
+    max_epoch = max_iterations // len(trainloader_unlabeled) + 1
     best_performance = 0.0
     iterator = tqdm(range(max_epoch), ncols=70)
     for epoch_num in iterator:
-        for i, data in enumerate(zip(cycle(trainloader_labeled), trainloader_unlabeled)):
-            sampled_batch_labeled, sampled_batch_unlabeled = data[0], data[1]
-
+        for i, (sampled_batch_labeled, sampled_batch_unlabeled) in enumerate(zip(cycle(trainloader_labeled), trainloader_unlabeled)):
             volume_batch, label_batch = sampled_batch_labeled['image'], sampled_batch_labeled['label']
             volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
             unlabeled_volume_batch = sampled_batch_unlabeled['image'].cuda()
@@ -138,54 +117,21 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
+            outputs_unlabeled = model(unlabeled_volume_batch)
+            outputs_unlabeled_soft = torch.softmax(outputs_unlabeled, dim=1)
+
             supervised_loss = 0.5 * \
                 (ce_loss(outputs, label_batch[:].long(
                 )) + dice_loss(outputs_soft, label_batch[:].unsqueeze(1)))
+            consistency_weight = get_current_consistency_weight(
+                iter_num // (args.max_iterations/args.consistency_rampup))
 
-            if unlabeled_volume_batch.shape[0] != args.batch_size // 2:
-                loss = supervised_loss
-                consistency_weight = 0.0
-                consistency_loss = 0.0
-            else:
-                # ICT mix factors
-                ict_alpha = 0.2
-                ict_mix_factors = np.random.beta(
-                    ict_alpha, ict_alpha, size=(args.batch_size // 4, 1, 1, 1))
-                ict_mix_factors = torch.tensor(
-                    ict_mix_factors, dtype=torch.float).cuda()
-                unlabeled_volume_batch_0 = unlabeled_volume_batch[0:args.batch_size // 4, ...]
-                unlabeled_volume_batch_1 = unlabeled_volume_batch[args.batch_size // 4:, ...]
-
-                # Mix images
-                batch_ux_mixed = unlabeled_volume_batch_0 * \
-                    (1.0 - ict_mix_factors) + \
-                    unlabeled_volume_batch_1 * ict_mix_factors
-                # input_volume_batch = torch.cat(
-                #     [volume_batch, batch_ux_mixed], dim=0)
-
-                outputs_unlabeled = model(batch_ux_mixed)
-                outputs_unlabeled_soft = torch.softmax(
-                    outputs_unlabeled, dim=1)
-
-                with torch.no_grad():
-                    ema_output_ux0 = torch.softmax(
-                        ema_model(unlabeled_volume_batch_0), dim=1)
-                    ema_output_ux1 = torch.softmax(
-                        ema_model(unlabeled_volume_batch_1), dim=1)
-                    batch_pred_mixed = ema_output_ux0 * \
-                        (1.0 - ict_mix_factors) + \
-                        ema_output_ux1 * ict_mix_factors
-
-                consistency_weight = get_current_consistency_weight(
-                    iter_num // (args.max_iterations/args.consistency_rampup))
-                consistency_loss = torch.mean(
-                    (outputs_unlabeled_soft - batch_pred_mixed) ** 2)
-                loss = supervised_loss + consistency_weight * consistency_loss
-
+            ent_loss = losses.entropy_loss(
+                outputs_unlabeled_soft, C=args.num_classes)
+            loss = supervised_loss + consistency_weight * ent_loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            update_ema_variables(model, ema_model, args.ema_decay, iter_num)
 
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
@@ -196,7 +142,7 @@ def train(args, snapshot_path):
             writer.add_scalar('info/total_loss', loss, iter_num)
             writer.add_scalar('info/loss_ce', supervised_loss, iter_num)
             writer.add_scalar('info/consistency_loss',
-                              consistency_loss, iter_num)
+                              ent_loss, iter_num)
             writer.add_scalar('info/consistency_weight',
                               consistency_weight, iter_num)
 
