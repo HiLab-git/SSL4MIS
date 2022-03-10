@@ -51,6 +51,8 @@ parser.add_argument('--patch_size', type=list,  default=[256, 256],
 parser.add_argument('--seed', type=int,  default=2022, help='random seed')
 parser.add_argument('--num_classes', type=int,  default=4,
                     help='output channel of network')
+parser.add_argument('--ema', type=int,  default=0,
+                    help='ema')
 
 # label and unlabel
 parser.add_argument('--labeled_ratio', type=int, default=10,
@@ -97,7 +99,8 @@ def train(args, snapshot_path):
         return model
 
     model = create_model()
-    ema_model = create_model(ema=True)
+    if args.ema:
+        ema_model = create_model(ema=args.ema)
 
     db_train_labeled = BaseDataSets(base_dir=args.root_path, labeled_type="labeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
         RandomGenerator_Strong_Weak(args.patch_size)]), cross_val=args.cross_val)
@@ -131,9 +134,12 @@ def train(args, snapshot_path):
     iterator = tqdm(range(max_epoch), ncols=70)
     for epoch_num in iterator:
         for i, (sampled_batch_labeled, sampled_batch_unlabeled) in enumerate(zip(cycle(trainloader_labeled), trainloader_unlabeled)):
-            volume_batch_sa, volume_batch_wa, label_batch = sampled_batch_labeled['image_s'], sampled_batch_labeled['image_w'], sampled_batch_labeled['label']
-            volume_batch_sa, volume_batch_wa, label_batch = volume_batch_sa.cuda(), volume_batch_wa.cuda(), label_batch.cuda()
-            unlabeled_volume_batch_sa, unlabeled_volume_batch_wa = sampled_batch_unlabeled['image_s'].cuda(), sampled_batch_unlabeled['image_w'].cuda()
+            volume_batch_sa, volume_batch_wa, label_batch = sampled_batch_labeled[
+                'image_s'], sampled_batch_labeled['image_w'], sampled_batch_labeled['label']
+            volume_batch_sa, volume_batch_wa, label_batch = volume_batch_sa.cuda(
+            ), volume_batch_wa.cuda(), label_batch.cuda()
+            unlabeled_volume_batch_sa, unlabeled_volume_batch_wa = sampled_batch_unlabeled['image_s'].cuda(
+            ), sampled_batch_unlabeled['image_w'].cuda()
 
             outputs = model(volume_batch_sa)
             outputs_soft = torch.softmax(outputs, dim=1)
@@ -143,10 +149,15 @@ def train(args, snapshot_path):
 
             T = 1
             threshold = 0.95
-
-            with torch.no_grad():
-                ema_output = ema_model(unlabeled_volume_batch_wa)
-                pseudo_label = torch.softmax(ema_output.detach()/T, dim=1)
+            if args.ema:
+                with torch.no_grad():
+                    ema_output = ema_model(unlabeled_volume_batch_wa)
+                    pseudo_label = torch.softmax(ema_output.detach()/T, dim=1)
+                    max_probs, targets_u = torch.max(pseudo_label, dim=1)
+                    mask = max_probs.ge(threshold).float()
+            else:
+                output_wa = model(unlabeled_volume_batch_wa)
+                pseudo_label = torch.softmax(output_wa.detach()/T, dim=1)
                 max_probs, targets_u = torch.max(pseudo_label, dim=1)
                 mask = max_probs.ge(threshold).float()
 
@@ -158,13 +169,16 @@ def train(args, snapshot_path):
                 iter_num // (args.max_iterations/args.consistency_rampup))
 
             unsupervised_loss = (F.cross_entropy(outputs_unlabeled, targets_u,
-                                    reduction='none') * mask).mean()
+                                                 reduction='none') * mask).mean()
 
             loss = supervised_loss + consistency_weight * unsupervised_loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            update_ema_variables(model, ema_model, args.ema_decay, iter_num)
+            if args.ema:
+                update_ema_variables(model, ema_model, args.ema_decay, iter_num)
+            else:
+                pass
 
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
@@ -235,7 +249,7 @@ def train(args, snapshot_path):
 
             if iter_num >= max_iterations:
                 break
-            
+
         save_latest = os.path.join(
             snapshot_path, '{}_latest_model.pth'.format(args.model))
         torch.save(model.state_dict(), save_latest)
@@ -261,11 +275,11 @@ if __name__ == "__main__":
     torch.cuda.manual_seed(args.seed)
 
     if args.cross_val:
-        snapshot_path = "../model/{}/1_of_{}_labeled/fold{}/{}".format(
-            args.exp, args.labeled_ratio, args.fold, args.model)
+        snapshot_path = "../model/{}_ema_{}/1_of_{}_labeled/fold{}/{}".format(
+            args.exp, args.ema, args.labeled_ratio, args.fold, args.model)
     else:
-        snapshot_path = "../model/{}/1_of_{}_labeled/{}".format(
-            args.exp, args.labeled_ratio, args.model)
+        snapshot_path = "../model/{}_ema_{}/1_of_{}_labeled/{}".format(
+            args.exp, args.ema, args.labeled_ratio, args.model)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
@@ -279,3 +293,4 @@ if __name__ == "__main__":
     logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
     logging.info(str(args))
     train(args, snapshot_path)
+
