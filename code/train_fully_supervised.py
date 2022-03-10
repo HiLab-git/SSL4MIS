@@ -40,7 +40,8 @@ parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
 parser.add_argument('--batch_size', type=int, default=12,
                     help='batch_size per gpu')
-
+parser.add_argument('--cross_val', type=int,
+                    default=0, help='5-fold cross validation or random split 7/1/2 for training/validation/testing')
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.03,
@@ -52,7 +53,7 @@ parser.add_argument('--num_classes', type=int,  default=4,
                     help='output channel of network')
 
 # label and unlabel
-parser.add_argument('--labeled_ratio', type=int, default=8,
+parser.add_argument('--labeled_ratio', type=int, default=10,
                     help='1/labeled_ratio data is provided mask')
 # costs
 parser.add_argument('--ema_decay', type=float,  default=0.99, help='ema_decay')
@@ -79,7 +80,7 @@ def train(args, snapshot_path):
     model = net_factory(net_type=args.model, in_chns=1,
                         class_num=num_classes)
     db_train_labeled = BaseDataSets(base_dir=args.root_path, labeled_type="labeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
-        RandomGenerator(args.patch_size)]))
+        RandomGenerator(args.patch_size)]), cross_val=args.cross_val)
 
     logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
 
@@ -87,7 +88,7 @@ def train(args, snapshot_path):
         db_train_labeled, batch_size=args.batch_size, shuffle=True)
 
     db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
-                          split="val", labeled_ratio=args.labeled_ratio)
+                          split="val", labeled_ratio=args.labeled_ratio, cross_val=args.cross_val)
     valloader = DataLoader(db_val, batch_size=1)
 
     model.train()
@@ -183,6 +184,11 @@ def train(args, snapshot_path):
 
             if iter_num >= max_iterations:
                 break
+        
+        save_latest = os.path.join(
+            snapshot_path, '{}_latest_model.pth'.format(args.model))
+        torch.save(model.state_dict(), save_latest)
+
         if iter_num >= max_iterations:
             iterator.close()
             break
@@ -203,8 +209,13 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
 
-    snapshot_path = "../model/{}/1_of_{}_labeled/fold{}".format(
-        args.exp, args.labeled_ratio, args.fold)
+    if args.cross_val:
+        snapshot_path = "../model/{}/1_of_{}_labeled/fold{}/{}".format(
+            args.exp, args.labeled_ratio, args.fold, args.model)
+    else:
+        snapshot_path = "../model/{}/1_of_{}_labeled/{}".format(
+            args.exp, args.labeled_ratio, args.model)
+
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
     if os.path.exists(snapshot_path + '/code'):

@@ -6,6 +6,7 @@ import shutil
 import sys
 import time
 from itertools import cycle
+
 import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
@@ -39,7 +40,8 @@ parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
 parser.add_argument('--batch_size', type=int, default=12,
                     help='batch_size per gpu')
-
+parser.add_argument('--cross_val', type=bool,
+                    default=True, help='5-fold cross validation or random split 7/1/2 for training/validation/testing')
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.03,
@@ -98,9 +100,9 @@ def train(args, snapshot_path):
     ema_model = create_model(ema=True)
 
     db_train_labeled = BaseDataSets(base_dir=args.root_path, labeled_type="labeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
-        RandomGenerator(args.patch_size)]))
+        RandomGenerator(args.patch_size)]), cross_val=args.cross_val)
     db_train_unlabeled = BaseDataSets(base_dir=args.root_path, labeled_type="unlabeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
-        RandomGenerator(args.patch_size)]))
+        RandomGenerator(args.patch_size)]), cross_val=args.cross_val)
 
     trainloader_labeled = DataLoader(
         db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
@@ -110,7 +112,7 @@ def train(args, snapshot_path):
     logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
     db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
-                          split="val", labeled_ratio=args.labeled_ratio)
+                          split="val", labeled_ratio=args.labeled_ratio, cross_val=args.cross_val)
     valloader = DataLoader(db_val, batch_size=1, shuffle=False)
 
     model.train()
@@ -256,6 +258,11 @@ def train(args, snapshot_path):
 
             if iter_num >= max_iterations:
                 break
+            
+        save_latest = os.path.join(
+            snapshot_path, '{}_latest_model.pth'.format(args.model))
+        torch.save(model.state_dict(), save_latest)
+
         if iter_num >= max_iterations:
             iterator.close()
             break
@@ -276,8 +283,13 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
 
-    snapshot_path = "../model/{}/1_of_{}_labeled/fold{}".format(
-        args.exp, args.labeled_ratio, args.fold)
+    if args.cross_val:
+        snapshot_path = "../model/{}/1_of_{}_labeled/fold{}/{}".format(
+            args.exp, args.labeled_ratio, args.fold, args.model)
+    else:
+        snapshot_path = "../model/{}/1_of_{}_labeled/{}".format(
+            args.exp, args.labeled_ratio, args.model)
+
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
     if os.path.exists(snapshot_path + '/code'):

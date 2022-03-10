@@ -21,7 +21,7 @@ from torchvision import transforms
 from torchvision.utils import make_grid
 from tqdm import tqdm
 
-from dataloaders.dataset import BaseDataSets, RandomGenerator
+from dataloaders.dataset import BaseDataSets, RandomGenerator_Strong_Weak
 from networks.discriminator import FCDiscriminator
 from networks.net_factory import net_factory
 from utils import losses, metrics, ramps
@@ -31,17 +31,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str,
                     default='../data/ACDC', help='Name of Experiment')
 parser.add_argument('--exp', type=str,
-                    default='ACDC/Uncertainty_Aware_Mean_Teacher', help='experiment_name')
+                    default='ACDC/FixMatch', help='experiment_name')
 parser.add_argument('--model', type=str,
                     default='unet', help='model_name')
 parser.add_argument('--fold', type=int,
-                    default=1, help='cross validation')
+                    default=3, help='cross validation')
 parser.add_argument('--max_iterations', type=int,
                     default=30000, help='maximum epoch number to train')
 parser.add_argument('--batch_size', type=int, default=12,
                     help='batch_size per gpu')
-parser.add_argument('--cross_val', type=bool,
-                    default=True, help='5-fold cross validation or random split 7/1/2 for training/validation/testing')
+parser.add_argument('--cross_val', type=int,
+                    default=0, help='5-fold cross validation or random split 7/1/2 for training/validation/testing')
 parser.add_argument('--deterministic', type=int,  default=1,
                     help='whether use deterministic training')
 parser.add_argument('--base_lr', type=float,  default=0.03,
@@ -53,7 +53,7 @@ parser.add_argument('--num_classes', type=int,  default=4,
                     help='output channel of network')
 
 # label and unlabel
-parser.add_argument('--labeled_ratio', type=int, default=5,
+parser.add_argument('--labeled_ratio', type=int, default=10,
                     help='1/labeled_ratio data is provided mask')
 # costs
 parser.add_argument('--ema_decay', type=float,  default=0.99, help='ema_decay')
@@ -100,85 +100,67 @@ def train(args, snapshot_path):
     ema_model = create_model(ema=True)
 
     db_train_labeled = BaseDataSets(base_dir=args.root_path, labeled_type="labeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
-        RandomGenerator(args.patch_size)]), cross_val=args.cross_val)
+        RandomGenerator_Strong_Weak(args.patch_size)]), cross_val=args.cross_val)
     db_train_unlabeled = BaseDataSets(base_dir=args.root_path, labeled_type="unlabeled", labeled_ratio=args.labeled_ratio, fold=args.fold, split="train", transform=transforms.Compose([
-        RandomGenerator(args.patch_size)]), cross_val=args.cross_val)
+        RandomGenerator_Strong_Weak(args.patch_size)]), cross_val=args.cross_val)
+    logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
+    logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
 
     trainloader_labeled = DataLoader(
         db_train_labeled, batch_size=args.batch_size//2, shuffle=True)
     trainloader_unlabeled = DataLoader(
         db_train_unlabeled, batch_size=args.batch_size//2, shuffle=True)
 
-    logging.info("Labeled slices: {} ".format(len(db_train_labeled)))
-    logging.info("Unlabeled slices: {} ".format(len(db_train_unlabeled)))
-
     db_val = BaseDataSets(base_dir=args.root_path, fold=args.fold,
                           split="val", labeled_ratio=args.labeled_ratio, cross_val=args.cross_val)
-    valloader = DataLoader(db_val, batch_size=1, shuffle=False)
+    valloader = DataLoader(db_val, batch_size=1)
+
     model.train()
 
     optimizer = optim.SGD(model.parameters(), lr=base_lr,
                           momentum=0.9, weight_decay=0.0001)
 
-    ce_loss = CrossEntropyLoss(ignore_index=4)
+    ce_loss = CrossEntropyLoss()
     dice_loss = losses.DiceLoss(num_classes)
 
+    logging.info("{} iterations per epoch".format(len(trainloader_labeled)))
+
     iter_num = 0
-    max_epoch = max_iterations // len(trainloader_labeled) + 1
+    max_epoch = max_iterations // len(trainloader_unlabeled) + 1
     best_performance = 0.0
     iterator = tqdm(range(max_epoch), ncols=70)
     for epoch_num in iterator:
-        for i, data in enumerate(zip(cycle(trainloader_labeled), trainloader_unlabeled)):
-            sampled_batch_labeled, sampled_batch_unlabeled = data[0], data[1]
+        for i, (sampled_batch_labeled, sampled_batch_unlabeled) in enumerate(zip(cycle(trainloader_labeled), trainloader_unlabeled)):
+            volume_batch_sa, volume_batch_wa, label_batch = sampled_batch_labeled['image_s'], sampled_batch_labeled['image_w'], sampled_batch_labeled['label']
+            volume_batch_sa, volume_batch_wa, label_batch = volume_batch_sa.cuda(), volume_batch_wa.cuda(), label_batch.cuda()
+            unlabeled_volume_batch_sa, unlabeled_volume_batch_wa = sampled_batch_unlabeled['image_s'].cuda(), sampled_batch_unlabeled['image_w'].cuda()
 
-            volume_batch, label_batch = sampled_batch_labeled['image'], sampled_batch_labeled['label']
-            volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
-            unlabeled_volume_batch = sampled_batch_unlabeled['image'].cuda()
-
-            noise = torch.clamp(torch.randn_like(
-                unlabeled_volume_batch) * 0.1, -0.2, 0.2)
-            ema_inputs = unlabeled_volume_batch + noise
-
-            outputs = model(volume_batch)
+            outputs = model(volume_batch_sa)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            outputs_unlabeled = model(unlabeled_volume_batch)
+            outputs_unlabeled = model(unlabeled_volume_batch_sa)
             outputs_unlabeled_soft = torch.softmax(outputs_unlabeled, dim=1)
 
-            with torch.no_grad():
-                ema_output = ema_model(ema_inputs)
-            T = 8
-            _, _, w, h = unlabeled_volume_batch.shape
-            volume_batch_r = unlabeled_volume_batch.repeat(2, 1, 1, 1)
-            stride = volume_batch_r.shape[0] // 2
-            preds = torch.zeros([stride * T, num_classes, w, h]).cuda()
-            for i in range(T // 2):
-                ema_inputs = volume_batch_r + \
-                    torch.clamp(torch.randn_like(
-                        volume_batch_r) * 0.1, -0.2, 0.2)
-                with torch.no_grad():
-                    preds[2 * stride * i:2 * stride *
-                          (i + 1)] = ema_model(ema_inputs)
-            preds = F.softmax(preds, dim=1)
-            preds = preds.reshape(T, stride, num_classes, w, h)
-            preds = torch.mean(preds, dim=0)
-            uncertainty = -1.0 * \
-                torch.sum(preds * torch.log(preds + 1e-6), dim=1, keepdim=True)
+            T = 1
+            threshold = 0.95
 
-            loss_ce = ce_loss(outputs, label_batch[:].long())
-            loss_dice = dice_loss(outputs_soft, label_batch.unsqueeze(1))
-            supervised_loss = 0.5 * (loss_dice + loss_ce)
+            with torch.no_grad():
+                ema_output = ema_model(unlabeled_volume_batch_wa)
+                pseudo_label = torch.softmax(ema_output.detach()/T, dim=1)
+                max_probs, targets_u = torch.max(pseudo_label, dim=1)
+                mask = max_probs.ge(threshold).float()
+
+            supervised_loss = 0.5 * \
+                (ce_loss(outputs, label_batch[:].long(
+                )) + dice_loss(outputs_soft, label_batch[:].unsqueeze(1)))
+
             consistency_weight = get_current_consistency_weight(
                 iter_num // (args.max_iterations/args.consistency_rampup))
-            consistency_dist = losses.softmax_mse_loss(
-                outputs_unlabeled, ema_output)  # (batch, 2, 112,112,80)
-            threshold = (0.75 + 0.25 * ramps.sigmoid_rampup(iter_num,
-                                                            max_iterations)) * np.log(2)
-            mask = (uncertainty < threshold).float()
-            consistency_loss = torch.sum(
-                mask * consistency_dist) / (2 * torch.sum(mask) + 1e-16)
 
-            loss = supervised_loss + consistency_weight * consistency_loss
+            unsupervised_loss = (F.cross_entropy(outputs_unlabeled, targets_u,
+                                    reduction='none') * mask).mean()
+
+            loss = supervised_loss + consistency_weight * unsupervised_loss
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
@@ -192,8 +174,8 @@ def train(args, snapshot_path):
             writer.add_scalar('info/lr', lr_, iter_num)
             writer.add_scalar('info/total_loss', loss, iter_num)
             writer.add_scalar('info/loss_ce', supervised_loss, iter_num)
-            writer.add_scalar('info/consistency_loss',
-                              consistency_loss, iter_num)
+            writer.add_scalar('info/unsupervised_loss',
+                              unsupervised_loss, iter_num)
             writer.add_scalar('info/consistency_weight',
                               consistency_weight, iter_num)
 
@@ -202,7 +184,7 @@ def train(args, snapshot_path):
                 (iter_num, loss.item(), supervised_loss.item()))
 
             if iter_num % 20 == 0:
-                image = volume_batch[0, 0:1, :, :]
+                image = volume_batch_sa[0, 0:1, :, :]
                 writer.add_image('train/Image', image, iter_num)
                 outputs = torch.argmax(torch.softmax(
                     outputs, dim=1), dim=1, keepdim=True)
@@ -253,6 +235,7 @@ def train(args, snapshot_path):
 
             if iter_num >= max_iterations:
                 break
+            
         save_latest = os.path.join(
             snapshot_path, '{}_latest_model.pth'.format(args.model))
         torch.save(model.state_dict(), save_latest)
@@ -286,9 +269,9 @@ if __name__ == "__main__":
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
-    if os.path.exists(snapshot_path + '/new_code'):
-        shutil.rmtree(snapshot_path + '/new_code')
-    shutil.copytree('.', snapshot_path + '/new_code',
+    if os.path.exists(snapshot_path + '/code'):
+        shutil.rmtree(snapshot_path + '/code')
+    shutil.copytree('.', snapshot_path + '/code',
                     shutil.ignore_patterns(['.git', '__pycache__']))
 
     logging.basicConfig(filename=snapshot_path + "/log.txt", level=logging.INFO,

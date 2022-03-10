@@ -64,7 +64,6 @@ def nuclear_norm_maximum(pr):
     return L_BNM / N
 
 
-
 def softmax_dice_loss(input_logits, target_logits):
     """Takes softmax on both sides and returns MSE loss
 
@@ -232,3 +231,34 @@ def entropy_map(p):
     ent_map = -1*torch.sum(p * torch.log(p + 1e-6), dim=1,
                            keepdim=True)
     return ent_map
+
+
+def js_loss(p1, p2):
+    # the Jensen-Shannon divergence between p1(x) and p2(x)
+    a1 = 0.5 * (p1 + p2)
+    loss1 = a1 * torch.log(a1)
+    loss1 = -torch.sum(loss1)
+    loss2 = p1 * torch.log(p1)
+    loss2 = -torch.sum(loss2)
+    loss3 = p2 * torch.log(p2)
+    loss3 = -torch.sum(loss3)
+    return (loss1 - 0.5 * (loss2 + loss3)) / p1.shape[0]
+
+
+# def loss_diff(logit_S1, logit_S2, perturbed_logit_S1, perturbed_logit_S2, logit_U1, logit_U2, perturbed_logit_U1, perturbed_logit_U2):
+#     S = nn.Softmax(dim=1)
+#     LS = nn.LogSoftmax(dim=1)
+
+#     a = S(logit_S2) * LS(perturbed_logit_S1)
+#     a = torch.sum(a)
+
+#     b = S(logit_S1) * LS(perturbed_logit_S2)
+#     b = torch.sum(b)
+
+#     c = S(logit_U2) * LS(perturbed_logit_U1)
+#     c = torch.sum(c)
+
+#     d = S(logit_U1) * LS(perturbed_logit_U2)
+#     d = torch.sum(d)
+
+#     return -(a+b+c+d)/batch_size
