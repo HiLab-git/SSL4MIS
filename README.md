@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-03|M. Waerebeke and J. Dole|On the pitfalls of entropy-based uncertainty for multi-class semi-supervised segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.03587.pdf)|
 |2022-03|W. Cui and R. M. Leahy|Semi-supervised Learning using Robust Loss|None|[Arxiv](https://arxiv.org/pdf/2203.01524.pdf)|
 |2022-03|Y. Wu and J. Cai|Exploring Smoothness and Class-Separation for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.01324.pdf)|
 |2022-02|Y. Hua and L. Zhang|Uncertainty-Guided Voxel-Level Supervised Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[IJNS2022](https://www.worldscientific.com/doi/epdf/10.1142/S0129065722500162)|
