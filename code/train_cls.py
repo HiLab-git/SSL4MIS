@@ -183,8 +183,8 @@ def train(args, snapshot_path):
     def worker_init_fn(worker_id):
         random.seed(args.seed + worker_id)
 
-    def get_comp_loss(weak, strong):
-        """Get complementary loss and other good info.
+    def get_nl_loss(weak, strong):
+        """Get loss for negative learning and related metrics.
         Compares least likely prediction (from strong augment) with argmin of weak augment (comp labels).
 
         Args:
@@ -192,12 +192,12 @@ def train(args, snapshot_path):
             strong (batch): strongly augmented batch
 
         Returns:
-            comp_loss, as_weight, min_preds, comp_labels
+            nl_loss, as_weight, min_preds, comp_labels
         """
         il_output = torch.reshape(
             strong,
             (
-                args.labeled_bs,
+                args.batch_size,
                 args.num_classes,
                 args.patch_size[0] * args.patch_size[1],
             ),
@@ -212,8 +212,8 @@ def train(args, snapshot_path):
         # complementary loss
         comp_labels = torch.argmin(weak.detach(), dim=1, keepdim=False)
         min_preds = torch.add(torch.negative(strong), 1)
-        comp_loss = ce_loss(min_preds, comp_labels)
-        return comp_loss, as_weight, min_preds, comp_labels
+        nl_loss = ce_loss(min_preds, comp_labels)
+        return nl_loss, as_weight, min_preds, comp_labels
 
     db_train = BaseDataSets(
         base_dir=args.root_path,
@@ -286,14 +286,11 @@ def train(args, snapshot_path):
     for epoch_num in iterator:
         for i_batch, sampled_batch in enumerate(trainloader):
 
-            volume_batch, label_batch = sampled_batch["image"], sampled_batch["label"]
-            volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
-
             volume_batch, weak_batch, strong_batch, label_batch = (
                 sampled_batch["image"],
                 sampled_batch["image_weak"],
                 sampled_batch["image_strong"],
-                sampled_batch["label"],
+                sampled_batch["label_aug"],
             )
 
             volume_batch, weak_batch, strong_batch, label_batch = (
@@ -355,25 +352,25 @@ def train(args, snapshot_path):
 
             ## Unsupervised
             ### Self-labelling losses
-            comp_loss1, as_weight1, min_preds1, comp_labels1 = get_comp_loss(
-                weak=outputs_weak_soft1[args.labeled_bs :],
-                strong=outputs_strong_soft1[args.labeled_bs :],
+            nl_loss1, as_weight1, min_preds1, comp_labels1 = get_nl_loss(
+                weak=outputs_weak_soft1,
+                strong=outputs_strong_soft1,
             )
             self_loss1 = (
                 ce_loss(outputs_strong1[args.labeled_bs :], pseudo_labels1)
-                + as_weight1 * comp_loss1
+                + as_weight1 * nl_loss1
             )
 
-            comp_loss2, as_weight2, min_preds2, comp_labels2 = get_comp_loss(
-                weak=outputs_weak_soft2[args.labeled_bs :],
-                strong=outputs_strong_soft2[args.labeled_bs],
+            nl_loss2, as_weight2, min_preds2, comp_labels2 = get_nl_loss(
+                weak=outputs_weak_soft2,
+                strong=outputs_strong_soft2,
             )
             self_loss2 = (
                 ce_loss(outputs_strong2[args.labeled_bs :], pseudo_labels2)
-                + as_weight2 * comp_loss2
+                + as_weight2 * nl_loss2
             )
 
-            ### Self-labelling losses
+            ### Co-labelling losses
             co_loss1_mask = (as_weight2 > args.conf_thresh).float()
             co_loss1 = co_loss1_mask * ce_loss(
                 outputs_strong1[args.labeled_bs :], pseudo_labels2
@@ -428,13 +425,13 @@ def train(args, snapshot_path):
                 image = volume_batch[1, 0:1, :, :]
                 writer.add_image("train/Image", image, iter_num)
                 outputs = torch.argmax(
-                    torch.softmax(outputs1, dim=1), dim=1, keepdim=True
+                    torch.softmax(outputs_weak1, dim=1), dim=1, keepdim=True
                 )
                 writer.add_image(
                     "train/model1_Prediction", outputs[1, ...] * 50, iter_num
                 )
                 outputs = torch.argmax(
-                    torch.softmax(outputs2, dim=1), dim=1, keepdim=True
+                    torch.softmax(outputs_weak2, dim=1), dim=1, keepdim=True
                 )
                 writer.add_image(
                     "train/model2_Prediction", outputs[1, ...] * 50, iter_num
@@ -577,7 +574,7 @@ if __name__ == "__main__":
     else:
         cudnn.benchmark = False
         cudnn.deterministic = True
-
+    torch.cuda.set_device(1)
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
