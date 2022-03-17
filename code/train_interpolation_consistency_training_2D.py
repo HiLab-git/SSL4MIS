@@ -85,6 +85,7 @@ def get_current_consistency_weight(epoch):
 
 
 def update_ema_variables(model, ema_model, alpha, global_step):
+    # update params of ema model with average of ema and model params, instead of ema gradient 
     # Use the true average until the exponential average is more correct
     alpha = min(1 - 1 / (global_step + 1), alpha)
     for ema_param, param in zip(ema_model.parameters(), model.parameters()):
@@ -98,18 +99,20 @@ def train(args, snapshot_path):
     max_iterations = args.max_iterations
 
     def create_model(ema=False):
-        # Network definition
+        # Network definition, using unet with default 4 classes
         model = net_factory(net_type=args.model, in_chns=1,
                             class_num=num_classes)
-        if ema:
+        if ema:  # detach all tensors so that model for pseudo labels isnt updated with gradient
             for param in model.parameters():
                 param.detach_()
         return model
 
     model = create_model()
+    # create a separate model for ema (concept similar to mean teacher?)
     ema_model = create_model(ema=True)
 
     def worker_init_fn(worker_id):
+        # worker init function for dataloading
         random.seed(args.seed + worker_id)
 
     db_train = BaseDataSets(base_dir=args.root_path, split="train", num=None, transform=transforms.Compose([
@@ -126,6 +129,7 @@ def train(args, snapshot_path):
     batch_sampler = TwoStreamBatchSampler(
         labeled_idxs, unlabeled_idxs, batch_size, batch_size-args.labeled_bs)
 
+    # load training data in parallel with worker function
     trainloader = DataLoader(db_train, batch_sampler=batch_sampler,
                              num_workers=4, pin_memory=True, worker_init_fn=worker_init_fn)
 
@@ -149,45 +153,61 @@ def train(args, snapshot_path):
     for epoch_num in iterator:
         for i_batch, sampled_batch in enumerate(trainloader):
 
+            # name for each current loaded batch
             volume_batch, label_batch = sampled_batch['image'], sampled_batch['label']
             volume_batch, label_batch = volume_batch.cuda(), label_batch.cuda()
-            unlabeled_volume_batch = volume_batch[args.labeled_bs:]
-            labeled_volume_batch = volume_batch[:args.labeled_bs]
+            unlabeled_volume_batch = volume_batch[args.labeled_bs:]  # first half is unlabeled
+            labeled_volume_batch = volume_batch[:args.labeled_bs]  # second half is labeled
 
             # ICT mix factors
             ict_mix_factors = np.random.beta(
                 args.ict_alpha, args.ict_alpha, size=(args.labeled_bs//2, 1, 1, 1))
             ict_mix_factors = torch.tensor(
                 ict_mix_factors, dtype=torch.float).cuda()
+            # first half of unlabeled batch
             unlabeled_volume_batch_0 = unlabeled_volume_batch[0:args.labeled_bs//2, ...]
+            # second half of unlabeled batch
             unlabeled_volume_batch_1 = unlabeled_volume_batch[args.labeled_bs//2:, ...]
 
             # Mix images
             batch_ux_mixed = unlabeled_volume_batch_0 * \
                 (1.0 - ict_mix_factors) + \
                 unlabeled_volume_batch_1 * ict_mix_factors
+            # input is labelled batch concat with mixed unlabelled images
             input_volume_batch = torch.cat(
                 [labeled_volume_batch, batch_ux_mixed], dim=0)
+            # train model on input
             outputs = model(input_volume_batch)
+            # convert to softmax output (one-hot encoded?)
             outputs_soft = torch.softmax(outputs, dim=1)
+            
+            # do these things without gradient calculation
             with torch.no_grad():
+                # linear interpolation of mixed outputs
                 ema_output_ux0 = torch.softmax(
                     ema_model(unlabeled_volume_batch_0), dim=1)
                 ema_output_ux1 = torch.softmax(
                     ema_model(unlabeled_volume_batch_1), dim=1)
                 batch_pred_mixed = ema_output_ux0 * \
                     (1.0 - ict_mix_factors) + ema_output_ux1 * ict_mix_factors
+                # pseudo labels handled by the ema model
 
-            loss_ce = ce_loss(outputs[:args.labeled_bs],
+            # cross entropy loss (sum of log losses, prob preds against labels)
+            loss_ce = ce_loss(outputs[:args.labeled_bs],  # second half of data is the labeled portion (line 159)
                               label_batch[:args.labeled_bs][:].long())
+            # dice loss function (predicted softmax outputs against labels)
             loss_dice = dice_loss(
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
             supervised_loss = 0.5 * (loss_dice + loss_ce)
+            
+            # consistency loss/weight is for unsupervised samples
             consistency_weight = get_current_consistency_weight(iter_num//150)
+            # loss between preds of unlabeled samples and pseudo labels 
             consistency_loss = torch.mean(
                 (outputs_soft[args.labeled_bs:] - batch_pred_mixed) ** 2)
             loss = supervised_loss + consistency_weight * consistency_loss
 
+            # optimize and backpropagate
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
