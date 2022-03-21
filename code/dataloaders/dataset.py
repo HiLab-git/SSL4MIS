@@ -129,7 +129,7 @@ class WeakStrongAugment(object):
         label = self.resize(label)
 
         # weak augmentation is rotation / flip
-        image_weak, label = random_rot_flip(image, label)
+        image_weak, label_aug = random_rot_flip(image, label)
         # image_weak = random_rot_flip(image)
 
         # strong augmentation is color jitter
@@ -139,12 +139,14 @@ class WeakStrongAugment(object):
         image = torch.from_numpy(image.astype(np.float32)).unsqueeze(0)
         image_weak = torch.from_numpy(image_weak.astype(np.float32)).unsqueeze(0)
         label = torch.from_numpy(label.astype(np.uint8))
+        label_aug = torch.from_numpy(label_aug.astype(np.uint8))
 
         sample = {
             "image": image,
             "image_weak": image_weak,
             "image_strong": image_strong,
-            "label_aug": label,
+            "label": label,
+            "label_aug": label_aug,
         }
         return sample
 
