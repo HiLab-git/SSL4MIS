@@ -42,7 +42,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "--root_path", type=str, default="../data/ACDC", help="Name of Experiment"
 )
-parser.add_argument("--exp", type=str, default="ACDC/CLS_1", help="experiment_name")
+parser.add_argument("--exp", type=str, default="ACDC/CLS", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument(
     "--max_iterations", type=int, default=30000, help="maximum epoch number to train"
@@ -382,10 +382,14 @@ def train(args, snapshot_path):
             ) + co_loss2_mask * as_weight1 * ce_loss(min_preds2, comp_labels1)
 
             model1_loss = (
-                sup_loss1 + args.self_coeff * self_loss1 + args.co_coeff * co_loss1
+                sup_loss1
+                + args.self_coeff * self_loss1
+                # + args.co_coeff * co_loss1
             )
             model2_loss = (
-                sup_loss2 + args.self_coeff * self_loss2 + args.co_coeff * co_loss2
+                sup_loss2
+                + args.self_coeff * self_loss2
+                # + args.co_coeff * co_loss2
             )
             loss = model1_loss + model2_loss
 
@@ -574,6 +578,7 @@ if __name__ == "__main__":
     else:
         cudnn.benchmark = False
         cudnn.deterministic = True
+    torch.cuda.set_device(1)
     random.seed(args.seed)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
