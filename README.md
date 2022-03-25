@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-03|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/document/9741294)|
 |2022-03|M. Huang and Q. Feng|Semi-Supervised Hybrid Spine Network for Segmentation of Spine MR Images|[Code](https://github.com/Meiyan88/SSHSNet)|[Arxiv](https://arxiv.org/pdf/2203.12151.pdf)|
 |2022-03|S. Adiga V and H. Lombaert|Leveraging Labeling Representations in Uncertainty-based Semi-supervised Segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.05682.pdf)|
 |2022-03|M. Tran and T. Peng|S5CL: Unifying Fully-Supervised, Self-Supervised, and Semi-Supervised Learning Through Hierarchical Contrastive Learning|[Code](https://github.com/manuel-tran/s5cl)|[Arxiv](https://arxiv.org/pdf/2203.07307.pdf)|
@@ -69,7 +70,6 @@
 |2021-10|M. Xu and J. Jacob|MisMatch: Learning to Change Predictive Confidences with Attention for Consistency-Based, Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2110.12179.pdf)|
 |2021-10|H. Wu and J. Qin|Collaborative and Adversarial Learning of Focused and Dispersive Representations for Semi-supervised Polyp Segmentation|None|[ICCV2021](https://openaccess.thecvf.com/content/ICCV2021/papers/Wu_Collaborative_and_Adversarial_Learning_of_Focused_and_Dispersive_Representations_for_ICCV_2021_paper.pdf)|
 |2021-10|Y. Shi and Y. Gao|Inconsistency-aware Uncertainty Estimation for Semi-supervised Medical Image Segmentation|[Code](https://github.com/koncle/CoraNet)|[TMI2021](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9558816)|
-|2021-09|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2109.13930.pdf)|
 |2021-09|G. Wang and S. Zhang|Semi-Supervised Segmentation of Radiation-Induced Pulmonary Fibrosis from Lung CT Scans with Multi-Scale Guided Dense Attention|[Code](https://github.com/HiLab-git/PF-Net)|[TMI2021](https://arxiv.org/pdf/2109.14172.pdf)|
 |2021-09|K. Wang and Y. Wang|Tripled-Uncertainty Guided Mean Teacher Model for Semi-supervised Medical Image Segmentation|[Code](https://github.com/DeepMedLab/Tri-U-MT)|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_42)|
 |2021-09|H. Huang and R. Tong|3D Graph-S2Net: Shape-Aware Self-ensembling Network for Semi-supervised Segmentation with Bilateral Graph Convolution|None|[MICCAI2021](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_39)|
