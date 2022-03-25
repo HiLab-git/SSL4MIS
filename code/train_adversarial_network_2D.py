@@ -148,7 +148,7 @@ def train(args, snapshot_path):
             outputs = model(volume_batch)
             outputs_soft = torch.softmax(outputs, dim=1)
 
-            loss_ce = ce_loss(outputs[:args.labeled_bs],
+            loss_ce = ce_loss(outputs_soft[:args.labeled_bs],
                               label_batch[:][:args.labeled_bs].long())
             loss_dice = dice_loss(
                 outputs_soft[:args.labeled_bs], label_batch[:args.labeled_bs].unsqueeze(1))
