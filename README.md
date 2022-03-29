@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-03|Y. Liu and G. Carneiro|Translation Consistent Semi-supervised Segmentation for 3D Medical Images|[Code](https://github.com/yyliu01/TraCoCo)|[Arxiv](https://arxiv.org/pdf/2203.14523.pdf)|
 |2022-03|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/document/9741294)|
 |2022-03|M. Huang and Q. Feng|Semi-Supervised Hybrid Spine Network for Segmentation of Spine MR Images|[Code](https://github.com/Meiyan88/SSHSNet)|[Arxiv](https://arxiv.org/pdf/2203.12151.pdf)|
 |2022-03|S. Adiga V and H. Lombaert|Leveraging Labeling Representations in Uncertainty-based Semi-supervised Segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.05682.pdf)|
