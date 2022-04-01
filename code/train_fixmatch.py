@@ -43,7 +43,7 @@ parser.add_argument(
     "--root_path", type=str, default="../data/ACDC", help="Name of Experiment"
 )
 parser.add_argument(
-    "--exp", type=str, default="ACDC/FixMatch_retry", help="experiment_name"
+    "--exp", type=str, default="ACDC/FixMatch+ema_extended+nl", help="experiment_name"
 )
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument(
@@ -159,7 +159,6 @@ def train(args, snapshot_path):
     max_iterations = args.max_iterations
 
     def create_model(ema=False):
-        # Network definition
         model = net_factory(net_type=args.model, in_chns=1, class_num=num_classes)
         if ema:
             for param in model.parameters():
@@ -198,8 +197,7 @@ def train(args, snapshot_path):
         # complementary loss
         comp_labels = torch.argmin(weak.detach(), dim=1, keepdim=False)
         comp_loss = as_weight * ce_loss(
-            torch.add(torch.negative(strong), 1),
-            comp_labels,
+            torch.add(torch.negative(strong), 1), comp_labels,
         )
         return comp_loss, as_weight
 
@@ -232,6 +230,9 @@ def train(args, snapshot_path):
     )
 
     model = create_model()
+    # create model for ema (this model produces pseudo-labels)
+    ema_model = create_model(ema=True)
+
     iter_num = 0
     start_epoch = 0
 
@@ -314,17 +315,22 @@ def train(args, snapshot_path):
             outputs_strong = model(strong_batch)
             outputs_strong_soft = torch.softmax(outputs_strong, dim=1)
 
-            # getting pseudo labels
-            # normalize preds
-            outputs_norm = normalize(outputs_weak_soft)
-            pseudo_mask = (outputs_norm > args.conf_thresh).float()
-            outputs_weak_masked = outputs_weak * pseudo_mask
-            outputs_weak_masked_soft = torch.softmax(outputs_weak_masked, dim=1)
+            # student model pseudo labels
+            pseudo_mask = (outputs_weak_soft > args.conf_thresh).float()
+            outputs_weak_masked = outputs_weak_soft * pseudo_mask
             pseudo_outputs = torch.argmax(
-                outputs_weak_masked_soft[args.labeled_bs :].detach(),
-                dim=1,
-                keepdim=False,
+                outputs_weak_masked[args.labeled_bs :].detach(), dim=1, keepdim=False
             )
+
+            # use mean teacher to get pseudo labels
+            with torch.no_grad():
+                ema_outputs = ema_model(weak_batch)
+                ema_outputs_soft = torch.softmax(ema_outputs, dim=1)
+                ema_pseudo_mask = (ema_outputs_soft > args.conf_thresh).float()
+                ema_outputs_masked = ema_outputs_soft * ema_pseudo_mask
+                ema_pseudo_outputs = torch.argmax(
+                    ema_outputs_masked[args.labeled_bs :].detach(), dim=1, keepdim=False
+                )
 
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
@@ -340,12 +346,11 @@ def train(args, snapshot_path):
             comp_loss, as_weight = get_comp_loss(
                 weak=outputs_weak_soft, strong=outputs_strong_soft
             )
+
             # unsupervised loss calculations
             unsup_loss = (
                 ce_loss(outputs_strong[args.labeled_bs :], pseudo_outputs)
-                + dice_loss(
-                    outputs_strong_soft[args.labeled_bs :], pseudo_outputs.unsqueeze(1)
-                )
+                + ce_loss(outputs_strong[args.labeled_bs :], ema_pseudo_outputs)
                 + as_weight * comp_loss
             )
 
@@ -360,11 +365,16 @@ def train(args, snapshot_path):
 
             # update weights for both models
             optimizer.step()
-            iter_num = iter_num + 1
 
+            # update ema model
+            update_ema_variables(model, ema_model, args.ema_decay, iter_num)
+
+            # update learning rate
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
                 param_group["lr"] = lr_
+
+            iter_num = iter_num + 1
 
             writer.add_scalar("lr", lr_, iter_num)
             writer.add_scalar(
