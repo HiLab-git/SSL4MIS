@@ -36,7 +36,7 @@
 |---|---|---|---|---|
 |2022-04|J. Yang and Q. Chen|Self-Supervised Sequence Recovery for SemiSupervised Retinal Layer Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9756342)|
 |2022-04|T. Cheng and C. Cheng|Feature-enhanced Adversarial Semi-supervised Semantic Segmentation Network for Pulmonary Embolism Annotation|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2204/2204.04217.pdf)|
-|2022-04|K. Wang and Y. Wang|Semi-supervised Medical Image Segmentation via a Tripled-uncertainty Guided Mean Teacher Model with Contrastive Learning|[None]|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522000925)|
+|2022-04|K. Wang and Y. Wang|Semi-supervised Medical Image Segmentation via a Tripled-uncertainty Guided Mean Teacher Model with Contrastive Learning|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522000925)|
 |2022-04|M. Liu and Q. He|CCAT-NET: A Novel Transformer Based Semi-supervised Framework for Covid-19 Lung Lesion Segmentation|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2204/2204.02839.pdf)|
 |2022-03|Y. Liu and G. Carneiro|Translation Consistent Semi-supervised Segmentation for 3D Medical Images|[Code](https://github.com/yyliu01/TraCoCo)|[Arxiv](https://arxiv.org/pdf/2203.14523.pdf)|
 |2022-03|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/document/9741294)|
