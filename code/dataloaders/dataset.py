@@ -11,15 +11,33 @@ from torchvision import transforms
 import itertools
 from scipy import ndimage
 from torch.utils.data.sampler import Sampler
+import augmentations
+from augmentations.ctaugment import OPS
 import matplotlib.pyplot as plt
+from PIL import Image
 
 
 class BaseDataSets(Dataset):
-    def __init__(self, base_dir=None, split="train", num=None, transform=None):
+    def __init__(
+        self,
+        base_dir=None,
+        split="train",
+        num=None,
+        transform=None,
+        ops_weak=None,
+        ops_strong=None,
+    ):
         self._base_dir = base_dir
         self.sample_list = []
         self.split = split
         self.transform = transform
+        self.ops_weak = ops_weak
+        self.ops_strong = ops_strong
+
+        assert bool(ops_weak) == bool(
+            ops_strong
+        ), "For using CTAugment learned policies, provide both weak and strong batch augmentation policy"
+
         if self.split == "train":
             with open(self._base_dir + "/train_slices.list", "r") as f1:
                 self.sample_list = f1.readlines()
@@ -46,7 +64,10 @@ class BaseDataSets(Dataset):
         label = h5f["label"][:]
         sample = {"image": image, "label": label}
         if self.split == "train":
-            sample = self.transform(sample)
+            if None not in (self.ops_weak, self.ops_strong):
+                sample = self.transform(sample, self.ops_weak, self.ops_strong)
+            else:
+                sample = self.transform(sample)
         sample["idx"] = idx
         return sample
 
@@ -91,6 +112,56 @@ def color_jitter(image):
     return jitter(image)
 
 
+class CTATransform(object):
+    def __init__(self, output_size, cta):
+        self.output_size = output_size
+        self.cta = cta
+
+    def __call__(self, sample, ops_weak, ops_strong):
+        image, label = sample["image"], sample["label"]
+        image = self.resize(image)
+        label = self.resize(label)
+        to_tensor = transforms.ToTensor()
+
+        # fix dimensions
+        image = torch.from_numpy(image.astype(np.float32)).unsqueeze(0)
+        label = torch.from_numpy(label.astype(np.uint8))
+
+        # apply augmentations
+        image_weak = augmentations.cta_apply(transforms.ToPILImage()(image), ops_weak)
+        image_strong = augmentations.cta_apply(image_weak, ops_strong)
+        label = augmentations.cta_apply(transforms.ToPILImage()(label), ops_weak)
+        label = to_tensor(label).squeeze(0)
+        label = torch.round(255 * label).int()
+
+        sample = {
+            "image": image,
+            "image_weak": to_tensor(image_weak),
+            "image_strong": to_tensor(image_strong),
+            "label_aug": label,
+        }
+        return sample
+
+    # def get_new_policies(self):
+    #     self.ops_weak = self.cta.policy(probe=False, weak=True)
+    #     self.ops_strong = self.cta.policy(probe=False, weak=False)
+    #     return self.ops_weak, self.ops_strong
+
+    # def get_current_policies(self):
+    #     return self.ops_weak, self.ops_strong
+
+    def cta_apply(self, pil_img, ops):
+        if ops is None:
+            return pil_img
+        for op, args in ops:
+            pil_img = OPS[op].f(pil_img, *args)
+        return pil_img
+
+    def resize(self, image):
+        x, y = image.shape
+        return zoom(image, (self.output_size[0] / x, self.output_size[1] / y), order=0)
+
+
 class RandomGenerator(object):
     def __init__(self, output_size):
         self.output_size = output_size
@@ -127,14 +198,10 @@ class WeakStrongAugment(object):
         image, label = sample["image"], sample["label"]
         image = self.resize(image)
         label = self.resize(label)
-
         # weak augmentation is rotation / flip
         image_weak, label = random_rot_flip(image, label)
-        # image_weak = random_rot_flip(image)
-
         # strong augmentation is color jitter
         image_strong = color_jitter(image_weak).type("torch.FloatTensor")
-
         # fix dimensions
         image = torch.from_numpy(image.astype(np.float32)).unsqueeze(0)
         image_weak = torch.from_numpy(image_weak.astype(np.float32)).unsqueeze(0)
