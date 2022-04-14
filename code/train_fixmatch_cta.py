@@ -7,6 +7,7 @@ import shutil
 import sys
 import time
 from xml.etree.ElementInclude import default_loader
+from more_itertools import sample
 
 import numpy as np
 import torch
@@ -24,9 +25,10 @@ from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from torch.distributions import Categorical
 from torchvision import transforms
-from torchvision.utils import make_grid
+from torchvision.utils import make_grid, save_image
 from tqdm import tqdm
 import augmentations
+from PIL import Image
 
 from dataloaders import utils
 from dataloaders.dataset import (
@@ -45,7 +47,7 @@ parser.add_argument(
     "--root_path", type=str, default="../data/ACDC", help="Name of Experiment"
 )
 parser.add_argument(
-    "--exp", type=str, default="ACDC/FixMatch+CTAupdated", help="experiment_name"
+    "--exp", type=str, default="ACDC/FixMatch+CTAema", help="experiment_name"
 )
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument(
@@ -208,6 +210,7 @@ def train(args, snapshot_path):
     )
 
     model = create_model()
+    ema_model = create_model(ema=True)
     iter_num = 0
     start_epoch = 0
 
@@ -288,6 +291,13 @@ def train(args, snapshot_path):
                 label_batch.cuda(),
             )
 
+            non_zero_ratio = torch.count_nonzero(label_batch) / (24 * 256 * 256)
+
+            if non_zero_ratio <= 0.02:
+                logging.info("Refreshing policy...")
+                refresh_policies(db_train, cta)
+                continue
+
             # outputs for model
             outputs_weak = model(weak_batch)
             outputs_weak_soft = torch.softmax(outputs_weak, dim=1)
@@ -297,9 +307,11 @@ def train(args, snapshot_path):
             # getting pseudo labels
             # pseudo_mask = (outputs_weak_soft > args.conf_thresh).float()
             # outputs_weak_masked_soft = outputs_weak_soft * pseudo_mask
-            pseudo_outputs = torch.argmax(
-                outputs_weak_soft.detach(), dim=1, keepdim=False,
-            )
+            with torch.no_grad():
+                ema_outputs_soft = torch.softmax(ema_model(weak_batch), dim=1)
+                pseudo_outputs = torch.argmax(
+                    ema_outputs_soft.detach(), dim=1, keepdim=False,
+                )
 
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
@@ -330,6 +342,7 @@ def train(args, snapshot_path):
 
             # update weights for both models
             optimizer.step()
+            update_ema_variables(model, ema_model, args.ema_decay, iter_num)
             iter_num = iter_num + 1
 
             # track batch-level error, used to update augmentation policy
@@ -368,16 +381,29 @@ def train(args, snapshot_path):
 
             if iter_num > 0 and iter_num % 200 == 0:
                 model.eval()
+                ema_model.eval()
                 metric_list = 0.0
-                for i_batch, sampled_batch in enumerate(valloader):
-                    metric_i = test_single_volume(
-                        sampled_batch["image"],
-                        sampled_batch["label"],
-                        model,
-                        classes=num_classes,
-                    )
-                    metric_list += np.array(metric_i)
-                metric_list = metric_list / len(db_val)
+                with torch.no_grad():
+                    for i_batch, sampled_batch in enumerate(valloader):
+                        metric_i = test_single_volume(
+                            sampled_batch["image"],
+                            sampled_batch["label"],
+                            ema_model,
+                            classes=num_classes,
+                        )
+                        metric_list += np.array(metric_i)
+
+                        ####################
+                        # label_batch = sampled_batch["label"][0, 0:1, :, :]
+                        # labs = label_batch * 50
+                        # writer.add_image("test/GroundTruth", labs, iter_num)
+
+                        # img_batch = sampled_batch["image"][0, 0:1, :, :]
+                        # img_test = img_batch * 50
+                        # writer.add_image("test/image", img_test, iter_num)
+                        ####################
+
+                    metric_list = metric_list / len(db_val)
                 for class_i in range(num_classes - 1):
                     writer.add_scalar(
                         "info/model_val_{}_dice".format(class_i + 1),
@@ -419,6 +445,7 @@ def train(args, snapshot_path):
                     % (iter_num, performance, mean_hd95)
                 )
             model.train()
+            ema_model.train()
 
             # change lr
             if iter_num % 2500 == 0:
