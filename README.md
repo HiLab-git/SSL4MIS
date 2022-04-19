@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-04|Z. Xiao and W. Zhang|Efficient Combination of CNN and Transformer for Dual-Teacher Uncertainty-Aware Guided Semi-Supervised Medical Image Segmentation|None|[SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4081789)|
 |2022-04|K. Han and Z. Liu|An Effective Semi-supervised Approach for Liver CT Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9757875)|
 |2022-04|J. Yang and Q. Chen|Self-Supervised Sequence Recovery for SemiSupervised Retinal Layer Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9756342)|
 |2022-04|T. Cheng and C. Cheng|Feature-enhanced Adversarial Semi-supervised Semantic Segmentation Network for Pulmonary Embolism Annotation|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2204/2204.04217.pdf)|
