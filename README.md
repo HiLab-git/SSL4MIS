@@ -183,6 +183,7 @@
 |2017-09|L. Gu and S. Aiso|Semi-supervised Learning for Biomedical Image Segmentation via Forest Oriented Super Pixels(Voxels)|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66182-7_80)|
 |2017-09|S. Sedai and R. Garnavi|Semi-supervised Segmentation of Optic Cup in Retinal Fundus Images Using Variational Autoencoder|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_9)|
 |2017-09|W. Bai and D. Rueckert|Semi-supervised Learning for Network-Based Cardiac MR Image Segmentation|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_29)|
+|2016-09|D. Mahapatra|Semi-supervised learning and graph cuts for consensus based medical image segmentation|None|[PR2016](https://www.sciencedirect.com/science/article/pii/S0031320316302904)|
 
 ## Code for semi-supervised medical image segmentation.
 Some implementations of semi-supervised learning methods can be found in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
