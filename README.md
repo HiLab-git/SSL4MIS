@@ -34,6 +34,9 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-04|H. He and V. Grau|Semi-Supervised Coronary Vessels Segmentation from Invasive Coronary Angiography with Connectivity-Preserving Loss Function|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761695)|
+|2022-04|B. Thompson and J. Voisey|Pseudo-Label Refinement Using Superpixels for Semi-Supervised Brain Tumour Segmentation|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761681)|
+|2022-04|Z li and X. Fan|Coupling Deep Deformable Registration with Contextual Refinement for Semi-Supervised Medical Image Segmentation|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761683)|
 |2022-04|A. Xu and X. Xia|Ca-Mt: A Self-Ensembling Model for Semi-Supervised Cardiac Segmentation with Elliptical Descriptor Based Contour-Aware|None|[ISBI2022](https://ieeexplore.ieee.org/abstract/document/9761666)|
 |2022-04|X. Wang and S. Chen|SSA-Net: Spatial Self-Attention Network for COVID-19 Pneumonia Infection Segmentation with Semi-supervised Few-shot Learning|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001062)|
 |2022-04|Z. Zhang and X. Tian|Discriminative Error Prediction Network for Semi-supervised Colon Gland Segmentation|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001050)|
