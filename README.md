@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-05|K. Zheng and J. Wei|Double Noise Mean Teacher Self-Ensembling Model for Semi-Supervised Tumor Segmentation|None|[ICASSP2022](https://ieeexplore.ieee.org/abstract/document/9746957)|
 |2022-04|Y. Xiao and G. Yang|Semi-Supervised Segmentation of Mitochondria from Electron Microscopy Images Using Spatial Continuity|[Code](https://github.com/cbmi-group/MPP)|[ISBI2022](https://ieeexplore.ieee.org/document/9761519)|
 |2022-04|H. He and V. Grau|Semi-Supervised Coronary Vessels Segmentation from Invasive Coronary Angiography with Connectivity-Preserving Loss Function|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761695)|
 |2022-04|B. Thompson and J. Voisey|Pseudo-Label Refinement Using Superpixels for Semi-Supervised Brain Tumour Segmentation|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761681)|
