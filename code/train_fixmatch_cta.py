@@ -43,12 +43,8 @@ from utils import losses, metrics, ramps, util
 from val_2D import test_single_volume
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--root_path", type=str, default="../data/ACDC", help="Name of Experiment"
-)
-parser.add_argument(
-    "--exp", type=str, default="ACDC/FixMatch+CTAema", help="experiment_name"
-)
+parser.add_argument("--root_path", type=str, default="../data/ACDC", help="Name of Experiment")
+parser.add_argument("--exp", type=str, default="ACDC/epochcta", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument(
     "--max_iterations", type=int, default=30000, help="maximum epoch number to train"
@@ -64,34 +60,23 @@ parser.add_argument(
     "--patch_size", type=list, default=[256, 256], help="patch size of network input"
 )
 parser.add_argument("--seed", type=int, default=1337, help="random seed")
-parser.add_argument(
-    "--num_classes", type=int, default=4, help="output channel of network"
-)
+parser.add_argument("--num_classes", type=int, default=4, help="output channel of network")
 parser.add_argument(
     "--load", default=False, action="store_true", help="restore previous checkpoint"
 )
 parser.add_argument(
-    "--conf_thresh",
-    type=float,
-    default=0.8,
-    help="confidence threshold for using pseudo-labels",
+    "--conf_thresh", type=float, default=0.8, help="confidence threshold for using pseudo-labels",
 )
 
 # label and unlabel
-parser.add_argument(
-    "--labeled_bs", type=int, default=12, help="labeled_batch_size per gpu"
-)
+parser.add_argument("--labeled_bs", type=int, default=12, help="labeled_batch_size per gpu")
 # parser.add_argument('--labeled_num', type=int, default=136,
 parser.add_argument("--labeled_num", type=int, default=7, help="labeled data")
 # costs
 parser.add_argument("--ema_decay", type=float, default=0.99, help="ema_decay")
-parser.add_argument(
-    "--consistency_type", type=str, default="mse", help="consistency_type"
-)
+parser.add_argument("--consistency_type", type=str, default="mse", help="consistency_type")
 parser.add_argument("--consistency", type=float, default=0.1, help="consistency")
-parser.add_argument(
-    "--consistency_rampup", type=float, default=200.0, help="consistency_rampup"
-)
+parser.add_argument("--consistency_rampup", type=float, default=200.0, help="consistency_rampup")
 args = parser.parse_args()
 
 
@@ -198,11 +183,7 @@ def train(args, snapshot_path):
 
     total_slices = len(db_train)
     labeled_slice = patients_to_slices(args.root_path, args.labeled_num)
-    print(
-        "Total silices is: {}, labeled slices is: {}".format(
-            total_slices, labeled_slice
-        )
-    )
+    print("Total silices is: {}, labeled slices is: {}".format(total_slices, labeled_slice))
     labeled_idxs = list(range(0, labeled_slice))
     unlabeled_idxs = list(range(labeled_slice, total_slices))
     batch_sampler = TwoStreamBatchSampler(
@@ -215,9 +196,7 @@ def train(args, snapshot_path):
     start_epoch = 0
 
     # instantiate optimizers
-    optimizer = optim.SGD(
-        model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001
-    )
+    optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
 
     # if restoring previous models:
     if args.load:
@@ -309,19 +288,15 @@ def train(args, snapshot_path):
             # outputs_weak_masked_soft = outputs_weak_soft * pseudo_mask
             with torch.no_grad():
                 ema_outputs_soft = torch.softmax(ema_model(weak_batch), dim=1)
-                pseudo_outputs = torch.argmax(
-                    ema_outputs_soft.detach(), dim=1, keepdim=False,
-                )
+                pseudo_outputs = torch.argmax(ema_outputs_soft.detach(), dim=1, keepdim=False,)
 
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
             # supervised loss calculations
             sup_loss = ce_loss(
-                outputs_weak[: args.labeled_bs],
-                label_batch[:][: args.labeled_bs].long(),
+                outputs_weak[: args.labeled_bs], label_batch[:][: args.labeled_bs].long(),
             ) + dice_loss(
-                outputs_weak_soft[: args.labeled_bs],
-                label_batch[: args.labeled_bs].unsqueeze(1),
+                outputs_weak_soft[: args.labeled_bs], label_batch[: args.labeled_bs].unsqueeze(1),
             )
             # unsupervised loss calculations
             unsup_loss = ce_loss(
@@ -353,25 +328,19 @@ def train(args, snapshot_path):
                 param_group["lr"] = lr_
 
             writer.add_scalar("lr", lr_, iter_num)
-            writer.add_scalar(
-                "consistency_weight/consistency_weight", consistency_weight, iter_num
-            )
+            writer.add_scalar("consistency_weight/consistency_weight", consistency_weight, iter_num)
             writer.add_scalar("loss/model_loss", loss, iter_num)
             logging.info("iteration %d : model loss : %f" % (iter_num, loss.item()))
             if iter_num % 50 == 0:
                 # show weakly augmented image
                 image = weak_batch[1, 0:1, :, :]
                 writer.add_image("train/Image", image, iter_num)
-                outputs_weak = torch.argmax(
-                    torch.softmax(outputs_weak, dim=1), dim=1, keepdim=True
-                )
+                outputs_weak = torch.argmax(torch.softmax(outputs_weak, dim=1), dim=1, keepdim=True)
                 # show strongly augmented image
                 image_strong = strong_batch[1, 0:1, :, :]
                 writer.add_image("train/StrongImage", image_strong, iter_num)
                 # show model prediction (strong augment)
-                writer.add_image(
-                    "train/model_Prediction", outputs_strong[1, ...] * 50, iter_num
-                )
+                writer.add_image("train/model_Prediction", outputs_strong[1, ...] * 50, iter_num)
                 # show ground truth label
                 labs = label_batch[1, ...].unsqueeze(0) * 50
                 writer.add_image("train/GroundTruth", labs, iter_num)
@@ -426,18 +395,12 @@ def train(args, snapshot_path):
                     best_performance = performance
                     save_mode_path = os.path.join(
                         snapshot_path,
-                        "model_iter_{}_dice_{}.pth".format(
-                            iter_num, round(best_performance, 4)
-                        ),
+                        "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
                     )
-                    save_best = os.path.join(
-                        snapshot_path, "{}_best_model.pth".format(args.model)
-                    )
+                    save_best = os.path.join(snapshot_path, "{}_best_model.pth".format(args.model))
                     # torch.save(model.state_dict(), save_mode_path)
                     # torch.save(model.state_dict(), save_best)
-                    util.save_checkpoint(
-                        epoch_num, model, optimizer, loss, save_mode_path
-                    )
+                    util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                     util.save_checkpoint(epoch_num, model, optimizer, loss, save_best)
 
                 logging.info(
@@ -453,9 +416,7 @@ def train(args, snapshot_path):
                 for param_group in optimizer.param_groups:
                     param_group["lr"] = lr_
             if iter_num % 3000 == 0:
-                save_mode_path = os.path.join(
-                    snapshot_path, "model_iter_" + str(iter_num) + ".pth"
-                )
+                save_mode_path = os.path.join(snapshot_path, "model_iter_" + str(iter_num) + ".pth")
                 # torch.save(model.state_dict(), save_mode_path)
                 util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                 logging.info("save model to {}".format(save_mode_path))
@@ -494,9 +455,7 @@ if __name__ == "__main__":
         os.makedirs(snapshot_path)
     if os.path.exists(snapshot_path + "/code"):
         shutil.rmtree(snapshot_path + "/code")
-    shutil.copytree(
-        ".", snapshot_path + "/code", shutil.ignore_patterns([".git", "__pycache__"])
-    )
+    shutil.copytree(".", snapshot_path + "/code", shutil.ignore_patterns([".git", "__pycache__"]))
 
     logging.basicConfig(
         filename=snapshot_path + "/log.txt",
