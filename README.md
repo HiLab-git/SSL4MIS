@@ -34,11 +34,21 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-05|Y. Lin and X. Li|Calibrating Label Distribution for Class-Imbalanced Barely-Supervised Knee Segmentation|[Code](https://github.com/xmed-lab/CLD-Semi)|[MICCAI2022](https://arxiv.org/pdf/2205.03644.pdf)|
+|2022-05|K. Zheng and J. Wei|Double Noise Mean Teacher Self-Ensembling Model for Semi-Supervised Tumor Segmentation|None|[ICASSP2022](https://ieeexplore.ieee.org/abstract/document/9746957)|
+|2022-04|Y. Xiao and G. Yang|Semi-Supervised Segmentation of Mitochondria from Electron Microscopy Images Using Spatial Continuity|[Code](https://github.com/cbmi-group/MPP)|[ISBI2022](https://ieeexplore.ieee.org/document/9761519)|
+|2022-04|H. He and V. Grau|Semi-Supervised Coronary Vessels Segmentation from Invasive Coronary Angiography with Connectivity-Preserving Loss Function|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761695)|
+|2022-04|B. Thompson and J. Voisey|Pseudo-Label Refinement Using Superpixels for Semi-Supervised Brain Tumour Segmentation|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761681)|
+|2022-04|Z li and X. Fan|Coupling Deep Deformable Registration with Contextual Refinement for Semi-Supervised Medical Image Segmentation|None|[ISBI2022](https://ieeexplore.ieee.org/document/9761683)|
+|2022-04|A. Xu and X. Xia|Ca-Mt: A Self-Ensembling Model for Semi-Supervised Cardiac Segmentation with Elliptical Descriptor Based Contour-Aware|None|[ISBI2022](https://ieeexplore.ieee.org/abstract/document/9761666)|
+|2022-04|X. Wang and S. Chen|SSA-Net: Spatial Self-Attention Network for COVID-19 Pneumonia Infection Segmentation with Semi-supervised Few-shot Learning|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001062)|
+|2022-04|Z. Zhang and X. Tian|Discriminative Error Prediction Network for Semi-supervised Colon Gland Segmentation|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001050)|
+|2022-04|Z. Xiao and W. Zhang|Efficient Combination of CNN and Transformer for Dual-Teacher Uncertainty-Aware Guided Semi-Supervised Medical Image Segmentation|None|[SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4081789)|
 |2022-04|K. Han and Z. Liu|An Effective Semi-supervised Approach for Liver CT Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9757875)|
 |2022-04|J. Yang and Q. Chen|Self-Supervised Sequence Recovery for SemiSupervised Retinal Layer Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9756342)|
 |2022-04|T. Cheng and C. Cheng|Feature-enhanced Adversarial Semi-supervised Semantic Segmentation Network for Pulmonary Embolism Annotation|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2204/2204.04217.pdf)|
 |2022-04|K. Wang and Y. Wang|Semi-supervised Medical Image Segmentation via a Tripled-uncertainty Guided Mean Teacher Model with Contrastive Learning|None|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522000925)|
-|2022-04|M. Liu and Q. He|CCAT-NET: A Novel Transformer Based Semi-supervised Framework for Covid-19 Lung Lesion Segmentation|None|[Arxiv](https://arxiv.org/ftp/arxiv/papers/2204/2204.02839.pdf)|
+|2022-04|M. Liu and Q. He|CCAT-NET: A Novel Transformer Based Semi-supervised Framework for Covid-19 Lung Lesion Segmentation|None|[ISBI2022](https://arxiv.org/ftp/arxiv/papers/2204/2204.02839.pdf)|
 |2022-03|Y. Liu and G. Carneiro|Translation Consistent Semi-supervised Segmentation for 3D Medical Images|[Code](https://github.com/yyliu01/TraCoCo)|[Arxiv](https://arxiv.org/pdf/2203.14523.pdf)|
 |2022-03|Z. Xu and R. Tong|All-Around Real Label Supervision: Cyclic Prototype Consistency Learning for Semi-supervised Medical Image Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/document/9741294)|
 |2022-03|M. Huang and Q. Feng|Semi-Supervised Hybrid Spine Network for Segmentation of Spine MR Images|[Code](https://github.com/Meiyan88/SSHSNet)|[Arxiv](https://arxiv.org/pdf/2203.12151.pdf)|
@@ -181,6 +191,7 @@
 |2017-09|L. Gu and S. Aiso|Semi-supervised Learning for Biomedical Image Segmentation via Forest Oriented Super Pixels(Voxels)|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66182-7_80)|
 |2017-09|S. Sedai and R. Garnavi|Semi-supervised Segmentation of Optic Cup in Retinal Fundus Images Using Variational Autoencoder|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_9)|
 |2017-09|W. Bai and D. Rueckert|Semi-supervised Learning for Network-Based Cardiac MR Image Segmentation|None|[MICCAI2017](https://link.springer.com/chapter/10.1007/978-3-319-66185-8_29)|
+|2016-09|D. Mahapatra|Semi-supervised learning and graph cuts for consensus based medical image segmentation|None|[PR2016](https://www.sciencedirect.com/science/article/pii/S0031320316302904)|
 
 ## Code for semi-supervised medical image segmentation.
 Some implementations of semi-supervised learning methods can be found in this [Link](https://github.com/Luoxd1996/SSL4MIS/tree/master/code).
