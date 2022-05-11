@@ -46,24 +46,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--root_path", type=str, default="../data/ACDC", help="Name of Experiment")
 parser.add_argument("--exp", type=str, default="ACDC/epochcta", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
-parser.add_argument(
-    "--max_iterations", type=int, default=30000, help="maximum epoch number to train"
-)
+parser.add_argument("--max_iterations", type=int, default=30000, help="maximum epoch number to train")
 parser.add_argument("--batch_size", type=int, default=24, help="batch_size per gpu")
-parser.add_argument(
-    "--deterministic", type=int, default=1, help="whether use deterministic training"
-)
-parser.add_argument(
-    "--base_lr", type=float, default=0.01, help="segmentation network learning rate"
-)
-parser.add_argument(
-    "--patch_size", type=list, default=[256, 256], help="patch size of network input"
-)
+parser.add_argument("--deterministic", type=int, default=1, help="whether use deterministic training")
+parser.add_argument("--base_lr", type=float, default=0.01, help="segmentation network learning rate")
+parser.add_argument("--patch_size", type=list, default=[256, 256], help="patch size of network input")
 parser.add_argument("--seed", type=int, default=1337, help="random seed")
 parser.add_argument("--num_classes", type=int, default=4, help="output channel of network")
-parser.add_argument(
-    "--load", default=False, action="store_true", help="restore previous checkpoint"
-)
+parser.add_argument("--load", default=False, action="store_true", help="restore previous checkpoint")
 parser.add_argument(
     "--conf_thresh", type=float, default=0.8, help="confidence threshold for using pseudo-labels",
 )
@@ -186,9 +176,7 @@ def train(args, snapshot_path):
     print("Total silices is: {}, labeled slices is: {}".format(total_slices, labeled_slice))
     labeled_idxs = list(range(0, labeled_slice))
     unlabeled_idxs = list(range(labeled_slice, total_slices))
-    batch_sampler = TwoStreamBatchSampler(
-        labeled_idxs, unlabeled_idxs, batch_size, batch_size - args.labeled_bs
-    )
+    batch_sampler = TwoStreamBatchSampler(labeled_idxs, unlabeled_idxs, batch_size, batch_size - args.labeled_bs)
 
     model = create_model()
     ema_model = create_model(ema=True)
@@ -225,16 +213,11 @@ def train(args, snapshot_path):
             logging.warning(f"Unable to restore model checkpoint: {e}, using new model")
 
     trainloader = DataLoader(
-        db_train,
-        batch_sampler=batch_sampler,
-        num_workers=4,
-        pin_memory=True,
-        worker_init_fn=worker_init_fn,
+        db_train, batch_sampler=batch_sampler, num_workers=4, pin_memory=True, worker_init_fn=worker_init_fn,
     )
 
     valloader = DataLoader(db_val, batch_size=1, shuffle=False, num_workers=1)
 
-    # set to train
     model.train()
 
     ce_loss = CrossEntropyLoss()
@@ -250,7 +233,6 @@ def train(args, snapshot_path):
 
     # nice progress bar, begin training
     iterator = tqdm(range(start_epoch, max_epoch), ncols=70)
-    current_iter = 0
 
     for epoch_num in iterator:
         # track mean error for entire epoch
@@ -259,33 +241,39 @@ def train(args, snapshot_path):
         refresh_policies(db_train, cta)
 
         for i_batch, sampled_batch in enumerate(trainloader):
-            weak_batch, strong_batch, label_batch = (
+            image_batch, weak_batch, strong_batch, label_batch, label_sup = (
+                sampled_batch["image"],
                 sampled_batch["image_weak"],
                 sampled_batch["image_strong"],
                 sampled_batch["label_aug"],
+                sampled_batch["label"],
             )
-            weak_batch, strong_batch, label_batch = (
+            image_batch, weak_batch, strong_batch, label_batch, label_sup = (
+                image_batch.cuda(),
                 weak_batch.cuda(),
                 strong_batch.cuda(),
                 label_batch.cuda(),
+                label_sup.cuda(),
             )
 
+            # handle unfavorable cropping
             non_zero_ratio = torch.count_nonzero(label_batch) / (24 * 256 * 256)
-
             if non_zero_ratio <= 0.02:
                 logging.info("Refreshing policy...")
                 refresh_policies(db_train, cta)
                 continue
 
-            # outputs for model
-            outputs_weak = model(weak_batch)
-            outputs_weak_soft = torch.softmax(outputs_weak, dim=1)
+            # supervised outputs
+            outputs_sup = model(image_batch)
+            outputs_sup_soft = torch.softmax(outputs_sup, dim=1)
+
+            # unsupervised outputs
+            # outputs_weak = model(weak_batch)
+            # outputs_weak_soft = torch.softmax(outputs_weak, dim=1)
             outputs_strong = model(strong_batch)
             outputs_strong_soft = torch.softmax(outputs_strong, dim=1)
 
             # getting pseudo labels
-            # pseudo_mask = (outputs_weak_soft > args.conf_thresh).float()
-            # outputs_weak_masked_soft = outputs_weak_soft * pseudo_mask
             with torch.no_grad():
                 ema_outputs_soft = torch.softmax(ema_model(weak_batch), dim=1)
                 pseudo_outputs = torch.argmax(ema_outputs_soft.detach(), dim=1, keepdim=False,)
@@ -293,17 +281,12 @@ def train(args, snapshot_path):
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
             # supervised loss calculations
-            sup_loss = ce_loss(
-                outputs_weak[: args.labeled_bs], label_batch[:][: args.labeled_bs].long(),
-            ) + dice_loss(
-                outputs_weak_soft[: args.labeled_bs], label_batch[: args.labeled_bs].unsqueeze(1),
+            sup_loss = ce_loss(outputs_sup[: args.labeled_bs], label_sup[:][: args.labeled_bs].long(),) + dice_loss(
+                outputs_sup_soft[: args.labeled_bs], label_sup[: args.labeled_bs].unsqueeze(1),
             )
             # unsupervised loss calculations
-            unsup_loss = ce_loss(
-                outputs_strong[args.labeled_bs :], pseudo_outputs[args.labeled_bs :]
-            ) + dice_loss(
-                outputs_strong_soft[args.labeled_bs :],
-                pseudo_outputs[args.labeled_bs :].unsqueeze(1),
+            unsup_loss = ce_loss(outputs_strong[args.labeled_bs :], pseudo_outputs[args.labeled_bs :]) + dice_loss(
+                outputs_strong_soft[args.labeled_bs :], pseudo_outputs[args.labeled_bs :].unsqueeze(1),
             )
 
             # loss = sup_loss + weighted unsup_loss
@@ -321,7 +304,7 @@ def train(args, snapshot_path):
             iter_num = iter_num + 1
 
             # track batch-level error, used to update augmentation policy
-            epoch_errors.append(0.5 * sup_loss.item())
+            epoch_errors.append(0.5 * unsup_loss.item())
 
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
@@ -355,10 +338,7 @@ def train(args, snapshot_path):
                 with torch.no_grad():
                     for i_batch, sampled_batch in enumerate(valloader):
                         metric_i = test_single_volume(
-                            sampled_batch["image"],
-                            sampled_batch["label"],
-                            ema_model,
-                            classes=num_classes,
+                            sampled_batch["image"], sampled_batch["label"], ema_model, classes=num_classes,
                         )
                         metric_list += np.array(metric_i)
 
@@ -375,14 +355,10 @@ def train(args, snapshot_path):
                     metric_list = metric_list / len(db_val)
                 for class_i in range(num_classes - 1):
                     writer.add_scalar(
-                        "info/model_val_{}_dice".format(class_i + 1),
-                        metric_list[class_i, 0],
-                        iter_num,
+                        "info/model_val_{}_dice".format(class_i + 1), metric_list[class_i, 0], iter_num,
                     )
                     writer.add_scalar(
-                        "info/model_val_{}_hd95".format(class_i + 1),
-                        metric_list[class_i, 1],
-                        iter_num,
+                        "info/model_val_{}_hd95".format(class_i + 1), metric_list[class_i, 1], iter_num,
                     )
 
                 performance = np.mean(metric_list, axis=0)[0]
@@ -394,18 +370,14 @@ def train(args, snapshot_path):
                 if performance > best_performance:
                     best_performance = performance
                     save_mode_path = os.path.join(
-                        snapshot_path,
-                        "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
+                        snapshot_path, "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
                     )
                     save_best = os.path.join(snapshot_path, "{}_best_model.pth".format(args.model))
-                    # torch.save(model.state_dict(), save_mode_path)
-                    # torch.save(model.state_dict(), save_best)
                     util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                     util.save_checkpoint(epoch_num, model, optimizer, loss, save_best)
 
                 logging.info(
-                    "iteration %d : model_mean_dice : %f model_mean_hd95 : %f"
-                    % (iter_num, performance, mean_hd95)
+                    "iteration %d : model_mean_dice : %f model_mean_hd95 : %f" % (iter_num, performance, mean_hd95)
                 )
             model.train()
             ema_model.train()
@@ -430,7 +402,6 @@ def train(args, snapshot_path):
 
         # update policy hyperparams
         mean_epoch_error = np.mean(epoch_errors)
-        # TODO: make sure that interpretation of error is correct (here is using 1-performance)
         cta.update_rates(db_train.ops_weak, 1.0 - 0.5 * mean_epoch_error)
         cta.update_rates(db_train.ops_strong, 1.0 - 0.5 * mean_epoch_error)
     writer.close()

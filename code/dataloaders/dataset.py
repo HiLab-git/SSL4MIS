@@ -19,13 +19,7 @@ from PIL import Image
 
 class BaseDataSets(Dataset):
     def __init__(
-        self,
-        base_dir=None,
-        split="train",
-        num=None,
-        transform=None,
-        ops_weak=None,
-        ops_strong=None,
+        self, base_dir=None, split="train", num=None, transform=None, ops_weak=None, ops_strong=None,
     ):
         self._base_dir = base_dir
         self.sample_list = []
@@ -130,15 +124,16 @@ class CTATransform(object):
         # apply augmentations
         image_weak = augmentations.cta_apply(transforms.ToPILImage()(image), ops_weak)
         image_strong = augmentations.cta_apply(image_weak, ops_strong)
-        label = augmentations.cta_apply(transforms.ToPILImage()(label), ops_weak)
-        label = to_tensor(label).squeeze(0)
-        label = torch.round(255 * label).int()
+        label_aug = augmentations.cta_apply(transforms.ToPILImage()(label), ops_weak)
+        label_aug = to_tensor(label_aug).squeeze(0)
+        label_aug = torch.round(255 * label_aug).int()
 
         sample = {
             "image": image,
             "image_weak": to_tensor(image_weak),
             "image_strong": to_tensor(image_strong),
-            "label_aug": label,
+            "label_aug": label_aug,
+            "label": label,
         }
         return sample
 
@@ -228,9 +223,7 @@ class TwoStreamBatchSampler(Sampler):
     as many times as needed.
     """
 
-    def __init__(
-        self, primary_indices, secondary_indices, batch_size, secondary_batch_size
-    ):
+    def __init__(self, primary_indices, secondary_indices, batch_size, secondary_batch_size):
         self.primary_indices = primary_indices
         self.secondary_indices = secondary_indices
         self.secondary_batch_size = secondary_batch_size
@@ -245,8 +238,7 @@ class TwoStreamBatchSampler(Sampler):
         return (
             primary_batch + secondary_batch
             for (primary_batch, secondary_batch) in zip(
-                grouper(primary_iter, self.primary_batch_size),
-                grouper(secondary_iter, self.secondary_batch_size),
+                grouper(primary_iter, self.primary_batch_size), grouper(secondary_iter, self.secondary_batch_size),
             )
         )
 
