@@ -44,7 +44,7 @@ from val_2D import test_single_volume
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--root_path", type=str, default="../data/ACDC", help="Name of Experiment")
-parser.add_argument("--exp", type=str, default="ACDC/epochcta", help="experiment_name")
+parser.add_argument("--exp", type=str, default="ACDC/FixMatch+CTAema", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument("--max_iterations", type=int, default=30000, help="maximum epoch number to train")
 parser.add_argument("--batch_size", type=int, default=24, help="batch_size per gpu")
@@ -241,19 +241,15 @@ def train(args, snapshot_path):
         refresh_policies(db_train, cta)
 
         for i_batch, sampled_batch in enumerate(trainloader):
-            image_batch, weak_batch, strong_batch, label_batch, label_sup = (
-                sampled_batch["image"],
+            weak_batch, strong_batch, label_batch = (
                 sampled_batch["image_weak"],
                 sampled_batch["image_strong"],
                 sampled_batch["label_aug"],
-                sampled_batch["label"],
             )
-            image_batch, weak_batch, strong_batch, label_batch, label_sup = (
-                image_batch.cuda(),
+            weak_batch, strong_batch, label_batch = (
                 weak_batch.cuda(),
                 strong_batch.cuda(),
                 label_batch.cuda(),
-                label_sup.cuda(),
             )
 
             # handle unfavorable cropping
@@ -263,13 +259,9 @@ def train(args, snapshot_path):
                 refresh_policies(db_train, cta)
                 continue
 
-            # supervised outputs
-            outputs_sup = model(image_batch)
-            outputs_sup_soft = torch.softmax(outputs_sup, dim=1)
-
-            # unsupervised outputs
-            # outputs_weak = model(weak_batch)
-            # outputs_weak_soft = torch.softmax(outputs_weak, dim=1)
+            # model preds
+            outputs_weak = model(weak_batch)
+            outputs_weak_soft = torch.softmax(outputs_weak, dim=1)
             outputs_strong = model(strong_batch)
             outputs_strong_soft = torch.softmax(outputs_strong, dim=1)
 
@@ -281,8 +273,8 @@ def train(args, snapshot_path):
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
             # supervised loss calculations
-            sup_loss = ce_loss(outputs_sup[: args.labeled_bs], label_sup[:][: args.labeled_bs].long(),) + dice_loss(
-                outputs_sup_soft[: args.labeled_bs], label_sup[: args.labeled_bs].unsqueeze(1),
+            sup_loss = ce_loss(outputs_weak[: args.labeled_bs], label_batch[:][: args.labeled_bs].long(),) + dice_loss(
+                outputs_weak_soft[: args.labeled_bs], label_batch[: args.labeled_bs].unsqueeze(1),
             )
             # unsupervised loss calculations
             unsup_loss = ce_loss(outputs_strong[args.labeled_bs :], pseudo_outputs[args.labeled_bs :]) + dice_loss(

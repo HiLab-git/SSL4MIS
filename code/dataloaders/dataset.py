@@ -129,11 +129,9 @@ class CTATransform(object):
         label_aug = torch.round(255 * label_aug).int()
 
         sample = {
-            "image": image,
             "image_weak": to_tensor(image_weak),
             "image_strong": to_tensor(image_strong),
             "label_aug": label_aug,
-            "label": label,
         }
         return sample
 
