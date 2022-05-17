@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-05|C. Lee and M. Chung|Voxel-wise Adversarial Semi-supervised Learning for Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2205.06987.pdf)|
 |2022-05|Y. Lin and X. Li|Calibrating Label Distribution for Class-Imbalanced Barely-Supervised Knee Segmentation|[Code](https://github.com/xmed-lab/CLD-Semi)|[MICCAI2022](https://arxiv.org/pdf/2205.03644.pdf)|
 |2022-05|K. Zheng and J. Wei|Double Noise Mean Teacher Self-Ensembling Model for Semi-Supervised Tumor Segmentation|None|[ICASSP2022](https://ieeexplore.ieee.org/abstract/document/9746957)|
 |2022-04|Y. Xiao and G. Yang|Semi-Supervised Segmentation of Mitochondria from Electron Microscopy Images Using Spatial Continuity|[Code](https://github.com/cbmi-group/MPP)|[ISBI2022](https://ieeexplore.ieee.org/document/9761519)|
