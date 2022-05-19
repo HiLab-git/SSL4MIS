@@ -19,7 +19,13 @@ from PIL import Image
 
 class BaseDataSets(Dataset):
     def __init__(
-        self, base_dir=None, split="train", num=None, transform=None, ops_weak=None, ops_strong=None,
+        self,
+        base_dir=None,
+        split="train",
+        num=None,
+        transform=None,
+        ops_weak=None,
+        ops_strong=None,
     ):
         self._base_dir = base_dir
         self.sample_list = []
@@ -87,15 +93,6 @@ def random_rotate(image, label):
 
 
 def color_jitter(image):
-    """Applies a color jitter as a strong augmentation on input image.
-    First converts image to tensor if it is not one already.
-
-    Args:
-        image (torch tensor or np array): input image
-
-    Returns:
-        tensor: augmented image
-    """
     if not torch.is_tensor(image):
         np_to_tensor = transforms.ToTensor()
         image = np_to_tensor(image)
@@ -134,14 +131,6 @@ class CTATransform(object):
             "label_aug": label_aug,
         }
         return sample
-
-    # def get_new_policies(self):
-    #     self.ops_weak = self.cta.policy(probe=False, weak=True)
-    #     self.ops_strong = self.cta.policy(probe=False, weak=False)
-    #     return self.ops_weak, self.ops_strong
-
-    # def get_current_policies(self):
-    #     return self.ops_weak, self.ops_strong
 
     def cta_apply(self, pil_img, ops):
         if ops is None:
@@ -236,7 +225,8 @@ class TwoStreamBatchSampler(Sampler):
         return (
             primary_batch + secondary_batch
             for (primary_batch, secondary_batch) in zip(
-                grouper(primary_iter, self.primary_batch_size), grouper(secondary_iter, self.secondary_batch_size),
+                grouper(primary_iter, self.primary_batch_size),
+                grouper(secondary_iter, self.secondary_batch_size),
             )
         )
 
