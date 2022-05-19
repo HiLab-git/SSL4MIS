@@ -44,7 +44,7 @@ from val_2D import test_single_volume
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--root_path", type=str, default="../data/ACDC", help="Name of Experiment")
-parser.add_argument("--exp", type=str, default="ACDC/FixMatch+CTAema", help="experiment_name")
+parser.add_argument("--exp", type=str, default="ACDC/FixMatch", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
 parser.add_argument("--max_iterations", type=int, default=30000, help="maximum epoch number to train")
 parser.add_argument("--batch_size", type=int, default=24, help="batch_size per gpu")
@@ -55,10 +55,12 @@ parser.add_argument("--seed", type=int, default=1337, help="random seed")
 parser.add_argument("--num_classes", type=int, default=4, help="output channel of network")
 parser.add_argument("--load", default=False, action="store_true", help="restore previous checkpoint")
 parser.add_argument(
-    "--conf_thresh", type=float, default=0.8, help="confidence threshold for using pseudo-labels",
+    "--conf_thresh",
+    type=float,
+    default=0.8,
+    help="confidence threshold for using pseudo-labels",
 )
 
-# label and unlabel
 parser.add_argument("--labeled_bs", type=int, default=12, help="labeled_batch_size per gpu")
 # parser.add_argument('--labeled_num', type=int, default=136,
 parser.add_argument("--labeled_num", type=int, default=7, help="labeled data")
@@ -213,7 +215,11 @@ def train(args, snapshot_path):
             logging.warning(f"Unable to restore model checkpoint: {e}, using new model")
 
     trainloader = DataLoader(
-        db_train, batch_sampler=batch_sampler, num_workers=4, pin_memory=True, worker_init_fn=worker_init_fn,
+        db_train,
+        batch_sampler=batch_sampler,
+        num_workers=4,
+        pin_memory=True,
+        worker_init_fn=worker_init_fn,
     )
 
     valloader = DataLoader(db_val, batch_size=1, shuffle=False, num_workers=1)
@@ -231,7 +237,6 @@ def train(args, snapshot_path):
 
     iter_num = int(iter_num)
 
-    # nice progress bar, begin training
     iterator = tqdm(range(start_epoch, max_epoch), ncols=70)
 
     for epoch_num in iterator:
@@ -268,35 +273,34 @@ def train(args, snapshot_path):
             # getting pseudo labels
             with torch.no_grad():
                 ema_outputs_soft = torch.softmax(ema_model(weak_batch), dim=1)
-                pseudo_outputs = torch.argmax(ema_outputs_soft.detach(), dim=1, keepdim=False,)
+                pseudo_outputs = torch.argmax(
+                    ema_outputs_soft.detach(),
+                    dim=1,
+                    keepdim=False,
+                )
 
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
-            # supervised loss calculations
+            # supervised loss (weak preds against ground truth)
             sup_loss = ce_loss(outputs_weak[: args.labeled_bs], label_batch[:][: args.labeled_bs].long(),) + dice_loss(
-                outputs_weak_soft[: args.labeled_bs], label_batch[: args.labeled_bs].unsqueeze(1),
+                outputs_weak_soft[: args.labeled_bs],
+                label_batch[: args.labeled_bs].unsqueeze(1),
             )
-            # unsupervised loss calculations
+            # unsupervised loss (strong preds against pseudo label)
             unsup_loss = ce_loss(outputs_strong[args.labeled_bs :], pseudo_outputs[args.labeled_bs :]) + dice_loss(
-                outputs_strong_soft[args.labeled_bs :], pseudo_outputs[args.labeled_bs :].unsqueeze(1),
+                outputs_strong_soft[args.labeled_bs :],
+                pseudo_outputs[args.labeled_bs :].unsqueeze(1),
             )
 
-            # loss = sup_loss + weighted unsup_loss
             loss = sup_loss + consistency_weight * unsup_loss
-
-            # set gradients to zero
             optimizer.zero_grad()
-
-            # backpropagate loss, remember that this accounts for both models
             loss.backward()
-
-            # update weights for both models
             optimizer.step()
             update_ema_variables(model, ema_model, args.ema_decay, iter_num)
             iter_num = iter_num + 1
 
             # track batch-level error, used to update augmentation policy
-            epoch_errors.append(0.5 * unsup_loss.item())
+            epoch_errors.append(0.5 * loss.item())
 
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
@@ -330,27 +334,23 @@ def train(args, snapshot_path):
                 with torch.no_grad():
                     for i_batch, sampled_batch in enumerate(valloader):
                         metric_i = test_single_volume(
-                            sampled_batch["image"], sampled_batch["label"], ema_model, classes=num_classes,
+                            sampled_batch["image"],
+                            sampled_batch["label"],
+                            ema_model,
+                            classes=num_classes,
                         )
                         metric_list += np.array(metric_i)
-
-                        ####################
-                        # label_batch = sampled_batch["label"][0, 0:1, :, :]
-                        # labs = label_batch * 50
-                        # writer.add_image("test/GroundTruth", labs, iter_num)
-
-                        # img_batch = sampled_batch["image"][0, 0:1, :, :]
-                        # img_test = img_batch * 50
-                        # writer.add_image("test/image", img_test, iter_num)
-                        ####################
-
                     metric_list = metric_list / len(db_val)
                 for class_i in range(num_classes - 1):
                     writer.add_scalar(
-                        "info/model_val_{}_dice".format(class_i + 1), metric_list[class_i, 0], iter_num,
+                        "info/model_val_{}_dice".format(class_i + 1),
+                        metric_list[class_i, 0],
+                        iter_num,
                     )
                     writer.add_scalar(
-                        "info/model_val_{}_hd95".format(class_i + 1), metric_list[class_i, 1], iter_num,
+                        "info/model_val_{}_hd95".format(class_i + 1),
+                        metric_list[class_i, 1],
+                        iter_num,
                     )
 
                 performance = np.mean(metric_list, axis=0)[0]
@@ -362,7 +362,8 @@ def train(args, snapshot_path):
                 if performance > best_performance:
                     best_performance = performance
                     save_mode_path = os.path.join(
-                        snapshot_path, "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
+                        snapshot_path,
+                        "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
                     )
                     save_best = os.path.join(snapshot_path, "{}_best_model.pth".format(args.model))
                     util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
@@ -381,18 +382,16 @@ def train(args, snapshot_path):
                     param_group["lr"] = lr_
             if iter_num % 3000 == 0:
                 save_mode_path = os.path.join(snapshot_path, "model_iter_" + str(iter_num) + ".pth")
-                # torch.save(model.state_dict(), save_mode_path)
                 util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                 logging.info("save model to {}".format(save_mode_path))
 
             if iter_num >= max_iterations:
                 break
-            time1 = time.time()
         if iter_num >= max_iterations:
             iterator.close()
             break
 
-        # update policy hyperparams
+        # update policy parameter bins for sampling
         mean_epoch_error = np.mean(epoch_errors)
         cta.update_rates(db_train.ops_weak, 1.0 - 0.5 * mean_epoch_error)
         cta.update_rates(db_train.ops_strong, 1.0 - 0.5 * mean_epoch_error)
@@ -406,7 +405,6 @@ if __name__ == "__main__":
     else:
         cudnn.benchmark = False
         cudnn.deterministic = True
-    torch.cuda.set_device(0)
 
     random.seed(args.seed)
     np.random.seed(args.seed)

@@ -39,33 +39,17 @@ from utils import losses, metrics, ramps, util
 from val_2D import test_single_volume
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--root_path", type=str, default="../data/ACDC", help="Name of Experiment"
-)
-parser.add_argument(
-    "--exp", type=str, default="ACDC/FixMatch+ema_extended+nl", help="experiment_name"
-)
+parser.add_argument("--root_path", type=str, default="../data/ACDC", help="Name of Experiment")
+parser.add_argument("--exp", type=str, default="ACDC/FixMatch_standard_augs", help="experiment_name")
 parser.add_argument("--model", type=str, default="unet", help="model_name")
-parser.add_argument(
-    "--max_iterations", type=int, default=30000, help="maximum epoch number to train"
-)
+parser.add_argument("--max_iterations", type=int, default=30000, help="maximum epoch number to train")
 parser.add_argument("--batch_size", type=int, default=24, help="batch_size per gpu")
-parser.add_argument(
-    "--deterministic", type=int, default=1, help="whether use deterministic training"
-)
-parser.add_argument(
-    "--base_lr", type=float, default=0.01, help="segmentation network learning rate"
-)
-parser.add_argument(
-    "--patch_size", type=list, default=[256, 256], help="patch size of network input"
-)
+parser.add_argument("--deterministic", type=int, default=1, help="whether use deterministic training")
+parser.add_argument("--base_lr", type=float, default=0.01, help="segmentation network learning rate")
+parser.add_argument("--patch_size", type=list, default=[256, 256], help="patch size of network input")
 parser.add_argument("--seed", type=int, default=1337, help="random seed")
-parser.add_argument(
-    "--num_classes", type=int, default=4, help="output channel of network"
-)
-parser.add_argument(
-    "--load", default=False, action="store_true", help="restore previous checkpoint"
-)
+parser.add_argument("--num_classes", type=int, default=4, help="output channel of network")
+parser.add_argument("--load", default=False, action="store_true", help="restore previous checkpoint")
 parser.add_argument(
     "--conf_thresh",
     type=float,
@@ -73,21 +57,14 @@ parser.add_argument(
     help="confidence threshold for using pseudo-labels",
 )
 
-# label and unlabel
-parser.add_argument(
-    "--labeled_bs", type=int, default=12, help="labeled_batch_size per gpu"
-)
+parser.add_argument("--labeled_bs", type=int, default=12, help="labeled_batch_size per gpu")
 # parser.add_argument('--labeled_num', type=int, default=136,
 parser.add_argument("--labeled_num", type=int, default=7, help="labeled data")
 # costs
 parser.add_argument("--ema_decay", type=float, default=0.99, help="ema_decay")
-parser.add_argument(
-    "--consistency_type", type=str, default="mse", help="consistency_type"
-)
+parser.add_argument("--consistency_type", type=str, default="mse", help="consistency_type")
 parser.add_argument("--consistency", type=float, default=0.1, help="consistency")
-parser.add_argument(
-    "--consistency_rampup", type=float, default=200.0, help="consistency_rampup"
-)
+parser.add_argument("--consistency_rampup", type=float, default=200.0, help="consistency_rampup")
 args = parser.parse_args()
 
 
@@ -188,16 +165,14 @@ def train(args, snapshot_path):
             ),
         )
         # calculate entropy for image-level preds (tensor of length labeled_bs)
-        as_weight = 1 - (
-            Categorical(probs=il_output).entropy()
-            / np.log(args.patch_size[0] * args.patch_size[1])
-        )
+        as_weight = 1 - (Categorical(probs=il_output).entropy() / np.log(args.patch_size[0] * args.patch_size[1]))
         # batch level average of entropy
         as_weight = torch.mean(as_weight)
         # complementary loss
         comp_labels = torch.argmin(weak.detach(), dim=1, keepdim=False)
         comp_loss = as_weight * ce_loss(
-            torch.add(torch.negative(strong), 1), comp_labels,
+            torch.add(torch.negative(strong), 1),
+            comp_labels,
         )
         return comp_loss, as_weight
 
@@ -218,16 +193,10 @@ def train(args, snapshot_path):
 
     total_slices = len(db_train)
     labeled_slice = patients_to_slices(args.root_path, args.labeled_num)
-    print(
-        "Total silices is: {}, labeled slices is: {}".format(
-            total_slices, labeled_slice
-        )
-    )
+    print("Total silices is: {}, labeled slices is: {}".format(total_slices, labeled_slice))
     labeled_idxs = list(range(0, labeled_slice))
     unlabeled_idxs = list(range(labeled_slice, total_slices))
-    batch_sampler = TwoStreamBatchSampler(
-        labeled_idxs, unlabeled_idxs, batch_size, batch_size - args.labeled_bs
-    )
+    batch_sampler = TwoStreamBatchSampler(labeled_idxs, unlabeled_idxs, batch_size, batch_size - args.labeled_bs)
 
     model = create_model()
     # create model for ema (this model produces pseudo-labels)
@@ -237,9 +206,7 @@ def train(args, snapshot_path):
     start_epoch = 0
 
     # instantiate optimizers
-    optimizer = optim.SGD(
-        model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001
-    )
+    optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
 
     # if restoring previous models:
     if args.load:
@@ -291,9 +258,7 @@ def train(args, snapshot_path):
 
     iter_num = int(iter_num)
 
-    # nice progress bar, begin training
     iterator = tqdm(range(start_epoch, max_epoch), ncols=70)
-    current_iter = 0
 
     for epoch_num in iterator:
 
@@ -315,55 +280,32 @@ def train(args, snapshot_path):
             outputs_strong = model(strong_batch)
             outputs_strong_soft = torch.softmax(outputs_strong, dim=1)
 
-            # student model pseudo labels
-            pseudo_mask = (outputs_weak_soft > args.conf_thresh).float()
+            # minmax normalization for softmax outputs before applying mask
+            pseudo_mask = (normalize(outputs_weak_soft) > args.conf_thresh).float()
             outputs_weak_masked = outputs_weak_soft * pseudo_mask
-            pseudo_outputs = torch.argmax(
-                outputs_weak_masked[args.labeled_bs :].detach(), dim=1, keepdim=False
-            )
-
-            # use mean teacher to get pseudo labels
-            with torch.no_grad():
-                ema_outputs = ema_model(weak_batch)
-                ema_outputs_soft = torch.softmax(ema_outputs, dim=1)
-                ema_pseudo_mask = (ema_outputs_soft > args.conf_thresh).float()
-                ema_outputs_masked = ema_outputs_soft * ema_pseudo_mask
-                ema_pseudo_outputs = torch.argmax(
-                    ema_outputs_masked[args.labeled_bs :].detach(), dim=1, keepdim=False
-                )
+            pseudo_outputs = torch.argmax(outputs_weak_masked[args.labeled_bs :].detach(), dim=1, keepdim=False)
 
             consistency_weight = get_current_consistency_weight(iter_num // 150)
 
-            # supervised loss calculations
-            sup_loss = ce_loss(
-                outputs_weak[: args.labeled_bs],
-                label_batch[:][: args.labeled_bs].long(),
-            ) + dice_loss(
+            # supervised loss
+            sup_loss = ce_loss(outputs_weak[: args.labeled_bs], label_batch[:][: args.labeled_bs].long(),) + dice_loss(
                 outputs_weak_soft[: args.labeled_bs],
                 label_batch[: args.labeled_bs].unsqueeze(1),
             )
 
-            comp_loss, as_weight = get_comp_loss(
-                weak=outputs_weak_soft, strong=outputs_strong_soft
-            )
+            # complementary loss and adaptive sample weight for negative learning
+            comp_loss, as_weight = get_comp_loss(weak=outputs_weak_soft, strong=outputs_strong_soft)
 
-            # unsupervised loss calculations
+            # unsupervised loss
             unsup_loss = (
                 ce_loss(outputs_strong[args.labeled_bs :], pseudo_outputs)
-                + ce_loss(outputs_strong[args.labeled_bs :], ema_pseudo_outputs)
+                + dice_loss(outputs_strong_soft[args.labeled_bs :], pseudo_outputs.unsqueeze(1))
                 + as_weight * comp_loss
             )
 
-            # loss = sup_loss + weighted unsup_loss
             loss = sup_loss + consistency_weight * unsup_loss
-
-            # set gradients to zero
             optimizer.zero_grad()
-
-            # backpropagate loss, remember that this accounts for both models
             loss.backward()
-
-            # update weights for both models
             optimizer.step()
 
             # update ema model
@@ -377,20 +319,14 @@ def train(args, snapshot_path):
             iter_num = iter_num + 1
 
             writer.add_scalar("lr", lr_, iter_num)
-            writer.add_scalar(
-                "consistency_weight/consistency_weight", consistency_weight, iter_num
-            )
+            writer.add_scalar("consistency_weight/consistency_weight", consistency_weight, iter_num)
             writer.add_scalar("loss/model_loss", loss, iter_num)
             logging.info("iteration %d : model loss : %f" % (iter_num, loss.item()))
             if iter_num % 50 == 0:
                 image = weak_batch[1, 0:1, :, :]
                 writer.add_image("train/Image", image, iter_num)
-                outputs_weak = torch.argmax(
-                    torch.softmax(outputs_weak, dim=1), dim=1, keepdim=True
-                )
-                writer.add_image(
-                    "train/model_Prediction", outputs_weak[1, ...] * 50, iter_num
-                )
+                outputs_weak = torch.argmax(torch.softmax(outputs_weak, dim=1), dim=1, keepdim=True)
+                writer.add_image("train/model_Prediction", outputs_weak[1, ...] * 50, iter_num)
 
                 labs = label_batch[1, ...].unsqueeze(0) * 50
                 writer.add_image("train/GroundTruth", labs, iter_num)
@@ -429,23 +365,14 @@ def train(args, snapshot_path):
                     best_performance = performance
                     save_mode_path = os.path.join(
                         snapshot_path,
-                        "model_iter_{}_dice_{}.pth".format(
-                            iter_num, round(best_performance, 4)
-                        ),
+                        "model_iter_{}_dice_{}.pth".format(iter_num, round(best_performance, 4)),
                     )
-                    save_best = os.path.join(
-                        snapshot_path, "{}_best_model.pth".format(args.model)
-                    )
-                    # torch.save(model.state_dict(), save_mode_path)
-                    # torch.save(model.state_dict(), save_best)
-                    util.save_checkpoint(
-                        epoch_num, model, optimizer, loss, save_mode_path
-                    )
+                    save_best = os.path.join(snapshot_path, "{}_best_model.pth".format(args.model))
+                    util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                     util.save_checkpoint(epoch_num, model, optimizer, loss, save_best)
 
                 logging.info(
-                    "iteration %d : model_mean_dice : %f model_mean_hd95 : %f"
-                    % (iter_num, performance, mean_hd95)
+                    "iteration %d : model_mean_dice : %f model_mean_hd95 : %f" % (iter_num, performance, mean_hd95)
                 )
                 model.train()
 
@@ -455,10 +382,7 @@ def train(args, snapshot_path):
                 for param_group in optimizer.param_groups:
                     param_group["lr"] = lr_
             if iter_num % 3000 == 0:
-                save_mode_path = os.path.join(
-                    snapshot_path, "model_iter_" + str(iter_num) + ".pth"
-                )
-                # torch.save(model.state_dict(), save_mode_path)
+                save_mode_path = os.path.join(snapshot_path, "model_iter_" + str(iter_num) + ".pth")
                 util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
                 logging.info("save model to {}".format(save_mode_path))
 
@@ -472,7 +396,6 @@ def train(args, snapshot_path):
 
 
 if __name__ == "__main__":
-    torch.cuda.set_device(0)
     if not args.deterministic:
         cudnn.benchmark = True
         cudnn.deterministic = False
@@ -490,9 +413,7 @@ if __name__ == "__main__":
         os.makedirs(snapshot_path)
     if os.path.exists(snapshot_path + "/code"):
         shutil.rmtree(snapshot_path + "/code")
-    shutil.copytree(
-        ".", snapshot_path + "/code", shutil.ignore_patterns([".git", "__pycache__"])
-    )
+    shutil.copytree(".", snapshot_path + "/code", shutil.ignore_patterns([".git", "__pycache__"]))
 
     logging.basicConfig(
         filename=snapshot_path + "/log.txt",
