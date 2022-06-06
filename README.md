@@ -34,6 +34,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-06|X. Chen and Y. Yu|MASS: Modality-collaborative semi-supervised segmentation by exploiting cross-modal consistency from unpaired CT and MRI images|[Code](https://github.com/xy123chen/MASS)|[MedIA](https://www.sciencedirect.com/science/article/pii/S1361841522001530)|
 |2022-05|W. Huang and F. Wu|Semi-Supervised Neuron Segmentation via Reinforced Consistency Learning|[Code](https://github.com/weih527/SSNS-Net)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9777694)|
 |2022-05|C. Lee and M. Chung|Voxel-wise Adversarial Semi-supervised Learning for Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2205.06987.pdf)|
 |2022-05|Y. Lin and X. Li|Calibrating Label Distribution for Class-Imbalanced Barely-Supervised Knee Segmentation|[Code](https://github.com/xmed-lab/CLD-Semi)|[MICCAI2022](https://arxiv.org/pdf/2205.03644.pdf)|
