@@ -34,6 +34,8 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-06|J. Wang and T. Lukasiewicz|Rethinking Bayesian Deep Learning Methods for Semi-Supervised Volumetric Medical Image Segmentation|[Code](https://github.com/Jianf-Wang/GBDL)|[CVPR2022](https://openaccess.thecvf.com/content/CVPR2022/papers/Wang_Rethinking_Bayesian_Deep_Learning_Methods_for_Semi-Supervised_Volumetric_Medical_Image_CVPR_2022_paper.pdf)|
+|2022-06|H. Wu and J. Qin|Cross-patch Dense Contrastive Learning for Semi-supervised Segmentation of Cellular Nuclei in Histopathologic Images|[Code](https://github.com/zzw-szu/CDCL)|[CVPR2022](https://openaccess.thecvf.com/content/CVPR2022/papers/Wu_Cross-Patch_Dense_Contrastive_Learning_for_Semi-Supervised_Segmentation_of_Cellular_Nuclei_CVPR_2022_paper.pdf)|
 |2022-06|Y. Xiao and G. Yang|Semi-Supervised Segmentation of Mitochondria from Electron Microscopy Images Using Spatial Continuity|[Code](https://github.com/cbmi-group/MPP)|[ISBI2022](https://arxiv.org/ftp/arxiv/papers/2206/2206.02392.pdf)|
 |2022-06|X. Liu and J. Woo|ACT: Semi-supervised Domain-adaptive Medical Image Segmentation with Asymmetric Co-Training|None|[MICCAI2022](https://arxiv.org/pdf/2206.02288.pdf)|
 |2022-06|C. You and J. Duncan|Bootstrapping Semi-supervised Medical Image Segmentation with Anatomical-aware Contrastive Distillation|None|[Arxiv](https://arxiv.org/pdf/2206.02307.pdf)|
