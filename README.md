@@ -6,7 +6,7 @@
 * This project was originally developed for our previous works. Now and future, we are still working on extending it to be more user-friendly and support more approaches to further boost and ease this topic research. **If you use this codebase in your research, please cite the following works**:
 
 		@article{media2022urpc,
-		title={MIDeepSeg: Minimally interactive segmentation of unseen objects from medical images using deep learning},
+		title={Semi-Supervised Medical Image Segmentation via Uncertainty Rectified Pyramid Consistency},
 		author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
 		journal={Medical Image Analysis},
 		volume={},
