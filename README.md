@@ -7,9 +7,9 @@
 
 		@article{media2022urpc,
 		title={MIDeepSeg: Minimally interactive segmentation of unseen objects from medical images using deep learning},
-            	author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
-            	journal={Medical Image Analysis},
-            	volume={},
+		author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
+		journal={Medical Image Analysis},
+		volume={},
             	pages={},
             	year={2022},
             	publisher={Elsevier}}
