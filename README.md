@@ -10,9 +10,9 @@
 		author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
 		journal={Medical Image Analysis},
 		volume={},
-            	pages={},
-            	year={2022},
-            	publisher={Elsevier}}
+		pages={},
+		year={2022},
+		publisher={Elsevier}}
 
 		@article{luo2021ctbct,
   		title={Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer},
