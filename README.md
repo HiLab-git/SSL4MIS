@@ -10,7 +10,7 @@
 		author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
 		journal={Medical Image Analysis},
 		volume={},
-		pages={},
+		pages={102517},
 		year={2022},
 		publisher={Elsevier}}
 
