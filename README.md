@@ -5,6 +5,15 @@
 
 * This project was originally developed for our previous works [URPC](https://link.springer.com/chapter/10.1007/978-3-030-87196-3_30) ([MICCAI2021](https://miccai2021.org/en/) early accept). Now and future, we are still working on extending it to be more user-friendly and support more approaches to further boost and ease this topic research. **If you use this codebase in your research, please cite the following works**:
 
+		@article{media2022urpc,
+            	title={MIDeepSeg: Minimally interactive segmentation of unseen objects from medical images using deep learning},
+            	author={Luo, Xiangde and Wang, Guotai and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan, Dimitris N. Metaxas, and Zhang, Shaoting},
+            	journal={Medical Image Analysis},
+            	volume={},
+            	pages={},
+            	year={2022},
+            	publisher={Elsevier}}
+
 		@article{luo2021ctbct,
   		title={Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer},
   		author={Luo, Xiangde and Hu, Minhao and Song, Tao and Wang, Guotai and Zhang, Shaoting},
@@ -34,6 +43,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-06|X. Luo and S. Zhang|Semi-Supervised Medical Image Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001645)|
 |2022-06|J. Wang and T. Lukasiewicz|Rethinking Bayesian Deep Learning Methods for Semi-Supervised Volumetric Medical Image Segmentation|[Code](https://github.com/Jianf-Wang/GBDL)|[CVPR2022](https://openaccess.thecvf.com/content/CVPR2022/papers/Wang_Rethinking_Bayesian_Deep_Learning_Methods_for_Semi-Supervised_Volumetric_Medical_Image_CVPR_2022_paper.pdf)|
 |2022-06|H. Wu and J. Qin|Cross-patch Dense Contrastive Learning for Semi-supervised Segmentation of Cellular Nuclei in Histopathologic Images|[Code](https://github.com/zzw-szu/CDCL)|[CVPR2022](https://openaccess.thecvf.com/content/CVPR2022/papers/Wu_Cross-Patch_Dense_Contrastive_Learning_for_Semi-Supervised_Segmentation_of_Cellular_Nuclei_CVPR_2022_paper.pdf)|
 |2022-06|Y. Xiao and G. Yang|Semi-Supervised Segmentation of Mitochondria from Electron Microscopy Images Using Spatial Continuity|[Code](https://github.com/cbmi-group/MPP)|[ISBI2022](https://arxiv.org/ftp/arxiv/papers/2206/2206.02392.pdf)|
