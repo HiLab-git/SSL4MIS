@@ -76,6 +76,7 @@
 |2022-03|M. Tran and T. Peng|S5CL: Unifying Fully-Supervised, Self-Supervised, and Semi-Supervised Learning Through Hierarchical Contrastive Learning|[Code](https://github.com/manuel-tran/s5cl)|[Arxiv](https://arxiv.org/pdf/2203.07307.pdf)|
 |2022-03|M. Waerebeke and J. Dole|On the pitfalls of entropy-based uncertainty for multi-class semi-supervised segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.03587.pdf)|
 |2022-03|W. Cui and R. M. Leahy|Semi-supervised Learning using Robust Loss|None|[Arxiv](https://arxiv.org/pdf/2203.01524.pdf)|
+|2022-02|Z. Fang and Y. Yin|Annotation-Efficient COVID-19 Pneumonia Lesion Segmentation using Error-Aware Unified Semi-supervised and Active Learning|None|[TAI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9699409)|
 |2022-03|Y. Wu and J. Cai|Exploring Smoothness and Class-Separation for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2203.01324.pdf)|
 |2022-02|Y. Hua and L. Zhang|Uncertainty-Guided Voxel-Level Supervised Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[IJNS2022](https://www.worldscientific.com/doi/epdf/10.1142/S0129065722500162)|
 |2022-02|Y. Shu and W. Li|Cross-Mix Monitoring for Medical Image Segmentation with Limited Supervision|None|[TMM2022](https://ieeexplore.ieee.org/abstract/document/9721091)|
