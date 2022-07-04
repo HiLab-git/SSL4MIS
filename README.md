@@ -43,6 +43,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-07|B. Fazekas and H. Bogunovi´c|SD-LayerNet: Semi-supervised retinal layer segmentation in OCT using disentangled representation with anatomical priors|[Code](https://github.com/ABotond/SD-LayerNet)|[MICCAI2022](https://arxiv.org/pdf/2207.00458.pdf)|
 |2022-06|C. Chen and R. Xiao|Generative Consistency for Semi-Supervised Cerebrovascular Segmentation from TOF-MRA|[Code](https://github.com/MontaEllis/SSL-For-Medical-Segmentation)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9801867)|
 |2022-06|X. Luo and S. Zhang|Semi-Supervised Medical Image Segmentation via Uncertainty Rectified Pyramid Consistency|[Code](https://github.com/HiLab-git/SSL4MIS)|[MedIA2022](https://www.sciencedirect.com/science/article/pii/S1361841522001645)|
 |2022-06|Y. Liu and S. Li|A Contrastive Consistency Semi-supervised Left Atrium Segmentation Model|[Code](https://github.com/PerceptionComputingLab/SCC)|[CMIG2022](https://www.sciencedirect.com/science/article/pii/S0895611122000659?via%3Dihub)|
