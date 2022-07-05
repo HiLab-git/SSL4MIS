@@ -211,7 +211,7 @@ def compute_kl_loss(p, q):
     q_loss = F.kl_div(F.log_softmax(q, dim=-1),
                       F.softmax(p, dim=-1), reduction='none')
 
-    # You can choose whether to use function "sum" and "mean" depending on your task
+    # Using function "sum" and "mean" are depending on your task
     p_loss = p_loss.mean()
     q_loss = q_loss.mean()
 
