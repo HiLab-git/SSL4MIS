@@ -14,11 +14,12 @@
 		year={2022},
 		publisher={Elsevier}}
 
-		@article{luo2021ctbct,
+		@inproceedings{luo2021ctbct,
   		title={Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer},
   		author={Luo, Xiangde and Hu, Minhao and Song, Tao and Wang, Guotai and Zhang, Shaoting},
   		booktitle={Medical Imaging with Deep Learning},
-  		year={2022}}
+  		year={2022},
+		url={https://openreview.net/forum?id=KUmlnqHrAbE}}
 
 		@InProceedings{luo2021urpc,
 		author={Luo, Xiangde and Liao, Wenjun and Chen, Jieneng and Song, Tao and Chen, Yinan and Zhang, Shichuan and Chen, Nianyong and Wang, Guotai and Zhang, Shaoting},
