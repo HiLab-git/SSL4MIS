@@ -44,7 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2022-07|Z. Yang and S. Tang|VoxSeP: semi-positive voxels assist self-supervised 3D medical segmentation|None|[Multimedia Systems2022](https://link.springer.com/article/10.1007/s00530-022-00977-9)|
+|2022-07|Z. Yang and S. Tang|VoxSeP: semi-positive voxels assist self-supervised 3D medical segmentation|None|[MMSystems2022](https://link.springer.com/article/10.1007/s00530-022-00977-9)|
 |2022-07|Z. Xu and T. Lukasiewicz|PCA: Semi-supervised Segmentation with Patch Confidence Adversarial Training|None|[Arxiv2022](https://arxiv.org/pdf/2207.11683.pdf)|
 |2022-07|N. Shen and J. Li|SCANet: A Unified Semi-supervised Learning Framework for Vessel Segmentation|[Code](https://github.com/shennbit/VESSEL-NIR)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9837087)|
 |2022-07|Z. Zhao and C. Guan|MMGL: Multi-Scale Multi-View Global-Local Contrastive learning for Semi-supervised Cardiac Image Segmentation|None|[ICIP2022](https://arxiv.org/pdf/2207.01883.pdf)|
