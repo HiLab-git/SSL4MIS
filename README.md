@@ -44,6 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-08|M. Xu and J. Jacob|Bayesian Pseudo Labels: Expectation Maximization for Robust and Efficient Semi-Supervised Segmentation|[Code](https://github.com/moucheng2017/EMSSL/)|[MICCAI2022](https://arxiv.org/pdf/2208.04435.pdf)|
 |2022-07|X. Li and S. Gao|TCCNet: Temporally Consistent Context-Free Network for Semi-supervised Video Polyp Segmentation|[Code](https://github.com/wener-yung/TCCNet)|[IJCAI2022](https://www.ijcai.org/proceedings/2022/0155.pdf)|
 |2022-07|T. Wang and H. Kong|Uncertainty-Guided Pixel Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[IJCAI2022](https://www.ijcai.org/proceedings/2022/0201.pdf)|
 |2022-07|R. Jiao and J. Zhang|Learning with Limited Annotations: A Survey on Deep Semi-Supervised Learning for Medical Image Segmentation|None|[Arxiv2022](https://arxiv.org/pdf/2207.14191.pdf)|
