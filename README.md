@@ -44,7 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2022-08|Z. Wang and B. Huang|When CNN Meet with ViT: Towards Semi-Supervised Learning for Multi-Class Medical Image Semantic Segmentation|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[Arxiv](https://arxiv.org/pdf/2208.06449.pdf)|
+|2022-08|Z. Wang and B. Huang|When CNN Meet with ViT: Towards Semi-Supervised Learning for Multi-Class Medical Image Semantic Segmentation|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[Arxiv2022](https://arxiv.org/pdf/2208.06449.pdf)|
 |2022-08|Z. Wang and I. Voiculescu|Triple-View Feature Learning for Medical Image Segmentation|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[Arxiv2022](https://arxiv.org/pdf/2208.06303.pdf)|
 |2022-08|Z. Zhang and Z. Jiao|Dynamic Prototypical Feature Representation Learning Framework for Semi-supervised Skin Lesion Segmentation|None|[NeuCom2022](https://www.sciencedirect.com/science/article/pii/S092523122201013X?via%3Dihub)|
 |2022-08|M. Xu and J. Jacob|Bayesian Pseudo Labels: Expectation Maximization for Robust and Efficient Semi-Supervised Segmentation|[Code](https://github.com/moucheng2017/EMSSL/)|[MICCAI2022](https://arxiv.org/pdf/2208.04435.pdf)|
