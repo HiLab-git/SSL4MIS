@@ -45,6 +45,7 @@
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2022-09|H. Basak and R. Sarkar|Addressing Class Imbalance in Semi-supervised Image Segmentation: A Study on Cardiac MRI|None|[MICCAI2022](https://arxiv.org/pdf/2209.00123.pdf)|
+|2022-08|Y. Meng and Y. Zheng|Dual Consistency Enabled Weakly and Semi-Supervised Optic Disc and Cup Segmentation with Dual Adaptive Graph Convolutional Networks|[Code](https://github.com/smallmax00/Dual_Adaptive_Graph_Reasoning)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9870838)|
 |2022-08|T. Lei and B. Lu|Semi-Supervised 3D Medical Image Segmentation Using Shape-Guided Dual Consistency Learning|None|[ICME2022](https://www.computer.org/csdl/proceedings-article/icme/2022/09859611/1G9ERIbVbOg)|
 |2022-08|J. Chen and C. Sham|Uncertainty teacher with dense focal loss for semi-supervised medical image segmentation|None|[CBM2022](https://www.sciencedirect.com/science/article/pii/S001048252200751X#!)|
 |2022-08|L. Xie and Y. Feng|Semi-supervised region-connectivity-based cerebrovascular segmentation for time-of-flight magnetic resonance angiography image|[Code](https://github.com/IPIS-XieLei/RC-MT)|[CBM2022](https://www.sciencedirect.com/science/article/pii/S0010482522007004#!)|
