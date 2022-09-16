@@ -163,7 +163,7 @@
 |2021-06|C. Li and Y. Yu|Hierarchical Deep Network with Uncertainty-aware Semi-supervised Learning for Vessel Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.14732.pdf)|
 |2021-05|J. Xiang and S. Zhang|Self-Ensembling Contrastive Learning for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.12924.pdf)|
 |2021-05|S. Li and C. Guan|Hierarchical Consistency Regularized Mean Teacher for Semi-supervised 3D Left Atrium Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.10369.pdf)|
-|2021-05|C. You and J. Duncan|Momentum Contrastive Voxel-wise Representation Learning for Semi-supervised Volumetric Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2105.07059.pdf)|
+|2021-05|C. You and J. Duncan|Momentum Contrastive Voxel-wise Representation Learning for Semi-supervised Volumetric Medical Image Segmentation|None|[MICCAI2022](https://arxiv.org/pdf/2105.07059.pdf)|
 |2021-05|Z. Xie and J. Yang|Semi-Supervised Skin Lesion Segmentation with Learning Model Confidence|None|[ICASSP2021](https://ieeexplore.ieee.org/document/9414297)|
 |2021-04|S. Reiß and R. Stiefelhagen|Every Annotation Counts: Multi-label Deep Supervision for Medical Image Segmentation|None|[CVPR2021](https://arxiv.org/pdf/2104.13243.pdf)|
 |2021-04|S. Chatterjee and A. Nurnberger|DS6, Deformation-aware Semi-supervised Learning: Application to Small Vessel Segmentation with Noisy Training Data|[Code](https://github.com/soumickmj/DS6)|[MIDL](https://openreview.net/pdf?id=2t0_AxD1otB)|
