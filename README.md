@@ -44,6 +44,13 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-09|Q. Jin and R. Su|Semi-supervised Histological Image Segmentation via Hierarchical Consistency Enforcement|None|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16434-7_1)|
+|2022-09|J. Xiang and Y. Yang|FUSSNet: Fusing Two Sources of Uncertainty for Semi-supervised Medical Image Segmentation|[Code](https://github.com/grant-jpg/FUSSNet)|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16452-1_46)|
+|2022-09|V. Nath and D. Xu|Warm Start Active Learning with Proxy Labels and Selection via Semi-supervised Fine-Tuning|None|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16452-1_29)|
+|2022-09|J. Liu and Y. Zhou|Semi-supervised Medical Image Segmentation Using Cross-Model Pseudo-Supervision with Shape Awareness and Local Context Constraints|[Code](https://github.com/igip-liu/SLC-Net)|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16452-1_14)|
+|2022-09|Y. Meng and Y. Zheng|Shape-Aware Weakly/Semi-Supervised Optic Disc and Cup Segmentation with Regional/Marginal Consistency|[Code](https://github.com/smallmax00/Share_aware_Weakly-Semi_ODOC_seg)|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16440-8_50#auth-Yanda-Meng)|
+|2022-09|X. Zhao and G. Li|Semi-supervised Spatial Temporal Attention Network for Video Polyp Segmentation|[Code](https://github.com/ShinkaiZ/SSTAN)|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16440-8_44)|
+|2022-09|J. Wu and D. Ding|Semi-supervised Learning for Nerve Segmentation in Corneal Confocal Microscope Photography|None|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16440-8_5)|
 |2022-09|H. Basak and R. Sarkar|Addressing Class Imbalance in Semi-supervised Image Segmentation: A Study on Cardiac MRI|None|[MICCAI2022](https://arxiv.org/pdf/2209.00123.pdf)|
 |2022-08|Q. Wang and J. Chen|A regularization-driven Mean Teacher model based on semi-supervised learning for medical image segmentation|[Code](https://github.com/qingwang-usc/RMT_VAT)|[PMB2022](https://iopscience.iop.org/article/10.1088/1361-6560/ac89c8)|
 |2022-08|Y. Meng and Y. Zheng|Dual Consistency Enabled Weakly and Semi-Supervised Optic Disc and Cup Segmentation with Dual Adaptive Graph Convolutional Networks|[Code](https://github.com/smallmax00/Dual_Adaptive_Graph_Reasoning)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9870838)|
