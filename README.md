@@ -44,6 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2022-09|H. Huang and Y. Zou|Complementary consistency semi-supervised learning for 3D left atrial image segmentation|[Code](https://github.com/Cuthbert-Huang/CC-Net)|[Arxiv](https://arxiv.org/pdf/2210.01438.pdf)|
 |2022-09|R. Gu and S. Zhang|Contrastive Semi-supervised Learning for Domain Adaptive Segmentation Across Similar Anatomical Structures|[Code](https://github.com/HiLab-git/DAG4MIA)|[TMI2022](https://ieeexplore.ieee.org/document/9903480)|
 |2022-09|Q. Jin and R. Su|Semi-supervised Histological Image Segmentation via Hierarchical Consistency Enforcement|None|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16434-7_1)|
 |2022-09|J. Xiang and Y. Yang|FUSSNet: Fusing Two Sources of Uncertainty for Semi-supervised Medical Image Segmentation|[Code](https://github.com/grant-jpg/FUSSNet)|[MICCAI2022](https://link.springer.com/chapter/10.1007/978-3-031-16452-1_46)|
