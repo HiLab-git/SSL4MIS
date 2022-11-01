@@ -103,7 +103,7 @@ def test_all_case(net, base_dir, method="unet_3D", test_list="full_test.list", n
             label = h5f['label'][:]
             prediction = test_single_case(
                 net, image, stride_xy, stride_z, patch_size, num_classes=num_classes)
-            metric = calculate_metric_percase(label == 1, prediction == 1)
+            metric = calculate_metric_percase(prediction == 1, label == 1)
             total_metric[0, :] += metric
             f.writelines("{},{},{},{},{}\n".format(
                 ids, metric[0], metric[1], metric[2], metric[3]))
