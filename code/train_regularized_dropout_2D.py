@@ -296,7 +296,6 @@ def train(args, snapshot_path):
                     'iteration %d : model2_mean_dice : %f model2_mean_hd95 : %f' % (iter_num, performance2, mean_hd952))
                 model2.train()
 
-            # change lr
             if iter_num % 3000 == 0:
                 save_mode_path = os.path.join(
                     snapshot_path, 'model1_iter_' + str(iter_num) + '.pth')

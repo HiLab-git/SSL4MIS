@@ -300,13 +300,6 @@ def train(args, snapshot_path):
                     'iteration %d : model2_mean_dice : %f model2_mean_hd95 : %f' % (iter_num, performance2, mean_hd952))
                 model2.train()
 
-            # change lr
-            if iter_num % 2500 == 0:
-                lr_ = base_lr * 0.1 ** (iter_num // 2500)
-                for param_group in optimizer1.param_groups:
-                    param_group['lr'] = lr_
-                for param_group in optimizer2.param_groups:
-                    param_group['lr'] = lr_
             if iter_num % 3000 == 0:
                 save_mode_path = os.path.join(
                     snapshot_path, 'model1_iter_' + str(iter_num) + '.pth')

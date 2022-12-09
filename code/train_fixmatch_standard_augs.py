@@ -376,11 +376,6 @@ def train(args, snapshot_path):
                 )
                 model.train()
 
-            # change lr
-            if iter_num % 2500 == 0:
-                lr_ = base_lr * 0.1 ** (iter_num // 2500)
-                for param_group in optimizer.param_groups:
-                    param_group["lr"] = lr_
             if iter_num % 3000 == 0:
                 save_mode_path = os.path.join(snapshot_path, "model_iter_" + str(iter_num) + ".pth")
                 util.save_checkpoint(epoch_num, model, optimizer, loss, save_mode_path)
