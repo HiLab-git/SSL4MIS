@@ -44,6 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|Z. Wang and Z. Ni|Adversarial Vision Transformer for Medical Image Semantic Segmentation with Limited Annotations|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[BMVC2022](https://bmvc2022.mpi-inf.mpg.de/1002.pdf)|
 |2022-12|T. Lei and A. Nandi|Semi-supervised medical image segmentation using adversarial consistency learning and dynamic convolution network|[Code](https://github.com/SUST-reynole/ASE-Net)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9966841)|
 |2022-11|L. Wang and P. Heng|Dual Multi-scale Mean Teacher Network for Semi-supervised Infection Segmentation in Chest CT Volume for COVID-19|[Code](https://github.com/jcwang123/DM2TNet)|[TCYB2022](https://arxiv.org/pdf/2211.05548.pdf)|
 |2022-10|F. Fyu and P. Yuen|Pseudo-Label Guided Image Synthesis for Semi-Supervised COVID-19 Pneumonia Infection Segmentation|[Code](https://github.com/FeiLyu/SASSL)|[TMI2022](https://ieeexplore.ieee.org/document/9931157)|
