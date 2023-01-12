@@ -44,6 +44,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-01|Z. Shen and O. Zaiane|Co-training with High-Confidence Pseudo Labels for Semi-supervised Medical Image Segmentation|[Arxiv](https://arxiv.org/pdf/2301.04465.pdf)|[Code](https://github.com/Senyh/UCMT)|
 |2023-01|D. Chen and Y. Wang|MagicNet: Semi-Supervised Multi-Organ Segmentation via Magic-Cube Partition and Recovery|None|[Arxiv](https://arxiv.org/pdf/2212.14310.pdf)|
 |2022-12|P. Qiao and J. Chen|Semi-supervised CT Lesion Segmentation Using Uncertainty-based Data Pairing and SwapMix|None|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10002838)|
 |2022-12|Z. Wang and Z. Ni|Adversarial Vision Transformer for Medical Image Semantic Segmentation with Limited Annotations|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[BMVC2022](https://bmvc2022.mpi-inf.mpg.de/1002.pdf)|
