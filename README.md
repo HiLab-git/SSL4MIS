@@ -44,6 +44,9 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|None|
+|2023-02|L. Zeng and W. Wang|SS-TBN: A Semi-Supervised Tri-Branch Network for COVID-19 Screening and Lesion Segmentation|[TPAMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10032636)|None|
+|2023-01|X. Zhao and L. Zhang|RCPS: Rectified Contrastive Pseudo Supervision for Semi-Supervised Medical Image Segmentation|[Arxiv](https://arxiv.org/abs/2301.05500)|[Code](https://github.com/hsiangyuzhao/RCPS)|
 |2023-01|Z. Shen and O. Zaiane|Co-training with High-Confidence Pseudo Labels for Semi-supervised Medical Image Segmentation|[Arxiv](https://arxiv.org/pdf/2301.04465.pdf)|[Code](https://github.com/Senyh/UCMT)|
 |2023-01|D. Chen and Y. Wang|MagicNet: Semi-Supervised Multi-Organ Segmentation via Magic-Cube Partition and Recovery|None|[Arxiv](https://arxiv.org/pdf/2212.14310.pdf)|
 |2022-12|P. Qiao and J. Chen|Semi-supervised CT Lesion Segmentation Using Uncertainty-based Data Pairing and SwapMix|None|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10002838)|
