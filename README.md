@@ -45,10 +45,10 @@
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
 |2023-02|P. Wang and C. Desrosiers|CAT: Constrained Adversarial Training for Anatomically-plausible Semi-supervised Segmentation|[Code](https://github.com/WangPing521/constraint_aware_vat_semi_supervised_segmentation)|[TMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10038734)|
-|2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|None|
-|2023-02|L. Zeng and W. Wang|SS-TBN: A Semi-Supervised Tri-Branch Network for COVID-19 Screening and Lesion Segmentation|[TPAMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10032636)|None|
-|2023-01|X. Zhao and L. Zhang|RCPS: Rectified Contrastive Pseudo Supervision for Semi-Supervised Medical Image Segmentation|[Arxiv](https://arxiv.org/abs/2301.05500)|[Code](https://github.com/hsiangyuzhao/RCPS)|
-|2023-01|Z. Shen and O. Zaiane|Co-training with High-Confidence Pseudo Labels for Semi-supervised Medical Image Segmentation|[Arxiv](https://arxiv.org/pdf/2301.04465.pdf)|[Code](https://github.com/Senyh/UCMT)|
+|2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|None|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|
+|2023-02|L. Zeng and W. Wang|SS-TBN: A Semi-Supervised Tri-Branch Network for COVID-19 Screening and Lesion Segmentation|None|[TPAMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10032636)|
+|2023-01|X. Zhao and L. Zhang|RCPS: Rectified Contrastive Pseudo Supervision for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hsiangyuzhao/RCPS)|[Arxiv](https://arxiv.org/abs/2301.05500)|
+|2023-01|Z. Shen and O. Zaiane|Co-training with High-Confidence Pseudo Labels for Semi-supervised Medical Image Segmentation|[Code](https://github.com/Senyh/UCMT)|[Arxiv](https://arxiv.org/pdf/2301.04465.pdf)|
 |2023-01|D. Chen and Y. Wang|MagicNet: Semi-Supervised Multi-Organ Segmentation via Magic-Cube Partition and Recovery|None|[Arxiv](https://arxiv.org/pdf/2212.14310.pdf)|
 |2022-12|P. Qiao and J. Chen|Semi-supervised CT Lesion Segmentation Using Uncertainty-based Data Pairing and SwapMix|None|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10002838)|
 |2022-12|Z. Wang and Z. Ni|Adversarial Vision Transformer for Medical Image Semantic Segmentation with Limited Annotations|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[BMVC2022](https://bmvc2022.mpi-inf.mpg.de/1002.pdf)|
