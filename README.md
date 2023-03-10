@@ -45,6 +45,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-03|J. Zhu and E. Meijering|Hybrid Dual Mean-Teacher Network With Double-Uncertainty Guidance for Semi-Supervised Segmentation of MRI Scans|[Code](https://github.com/ThisGame42/Hybrid-Teacher)|[Arxiv](https://arxiv.org/pdf/2303.05126.pdf)|
 |2023-02|P. Wang and C. Desrosiers|CAT: Constrained Adversarial Training for Anatomically-plausible Semi-supervised Segmentation|[Code](https://github.com/WangPing521/constraint_aware_vat_semi_supervised_segmentation)|[TMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10038734)|
 |2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|None|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|
 |2023-02|L. Zeng and W. Wang|SS-TBN: A Semi-Supervised Tri-Branch Network for COVID-19 Screening and Lesion Segmentation|None|[TPAMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10032636)|
