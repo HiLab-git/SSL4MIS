@@ -45,6 +45,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2021-12|K. Chaitanya and E. Konukoglu|Local contrastive loss with pseudo-label based self-training for semi-supervised medical image segmentation|[Code](https://github.com/krishnabits001/pseudo_label_contrastive_training)|[MedIA2023](https://www.sciencedirect.com/science/article/pii/S1361841523000531?via%3Dihub)|
 |2023-03|J. Zhu and E. Meijering|Hybrid Dual Mean-Teacher Network With Double-Uncertainty Guidance for Semi-Supervised Segmentation of MRI Scans|[Code](https://github.com/ThisGame42/Hybrid-Teacher)|[Arxiv](https://arxiv.org/pdf/2303.05126.pdf)|
 |2023-02|P. Wang and C. Desrosiers|CAT: Constrained Adversarial Training for Anatomically-plausible Semi-supervised Segmentation|[Code](https://github.com/WangPing521/constraint_aware_vat_semi_supervised_segmentation)|[TMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10038734)|
 |2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|None|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|
@@ -147,7 +148,6 @@
 |2021-12|L. Hu and Y. Wang|Semi-supervised NPC segmentation with uncertainty and attention guided consistency|None|[KBS2021](https://www.sciencedirect.com/science/article/abs/pii/S0950705121011205)|
 |2021-12|J. Peng and M. Pedersoli|Self-Paced Contrastive Learning for Semi-supervised Medical Image Segmentation with Meta-labels|[Code](https://github.com/jizongFox/Self-paced-Contrastive-Learning)|[NeurIPS2021](https://proceedings.neurips.cc/paper/2021/file/8b5c8441a8ff8e151b191c53c1842a38-Paper.pdf)|
 |2021-12|Y. Xie and Y. Xia|Intra- and Inter-pair Consistency for Semi-supervised Gland Segmentation|None|[TIP2021](https://ieeexplore.ieee.org/document/9662661)|
-|2021-12|K. Chaitanya and E. Konukoglu|Local contrastive loss with pseudo-label based self-training for semi-supervised medical image segmentation|[Code](https://github.com/krishnabits001/pseudo_label_contrastive_training)|[Arxiv](https://arxiv.org/pdf/2112.09645.pdf)|
 2021-12|M. Xu and J. Jacob|Learning Morphological Feature Perturbations for Semi-Supervised Segmentation|[Code](https://github.com/moucheng2017/Morphological_Feature_Perturbation_SSL)|[MIDL2022](https://openreview.net/pdf?id=OL6tAasXCmi)|
 |2021-12|X. Luo and S. Zhang|Semi-Supervised Medical Image Segmentation via Cross Teaching between CNN and Transformer|[Code](https://github.com/HiLab-git/SSL4MIS)|[MIDL2022](https://arxiv.org/pdf/2112.04894.pdf)|
 |2021-12|Y. Zhang and J. Zhang|Uncertainty-Guided Mutual Consistency Learning for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2112.02508.pdf)|
