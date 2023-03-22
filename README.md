@@ -36,9 +36,7 @@
 		year={2021},
 		pages={8801-8809}}
 		
-	Dual Uncertainty-guided Mixing Consistency for
-Semi-Supervised 3D Medical Image
-Segmentation	@misc{ssl4mis2020,
+                @misc{ssl4mis2020,
 		title={{SSL4MIS}},
 		author={Luo, Xiangde},
 		howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
