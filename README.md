@@ -36,7 +36,9 @@
 		year={2021},
 		pages={8801-8809}}
 		
-		@misc{ssl4mis2020,
+	Dual Uncertainty-guided Mixing Consistency for
+Semi-Supervised 3D Medical Image
+Segmentation	@misc{ssl4mis2020,
 		title={{SSL4MIS}},
 		author={Luo, Xiangde},
 		howpublished={\url{https://github.com/HiLab-git/SSL4MIS}},
@@ -45,7 +47,8 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
-|2021-12|K. Chaitanya and E. Konukoglu|Local contrastive loss with pseudo-label based self-training for semi-supervised medical image segmentation|[Code](https://github.com/krishnabits001/pseudo_label_contrastive_training)|[MedIA2023](https://www.sciencedirect.com/science/article/pii/S1361841523000531?via%3Dihub)|
+|2023-03|C. Xu and S. Zhao|Dual Uncertainty-guided Mixing Consistency for Semi-Supervised 3D Medical Image Segmentation|[Code](https://github.com/yang6277/DUMC)|[TBD2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10075508)|
+|2023-03|K. Chaitanya and E. Konukoglu|Local contrastive loss with pseudo-label based self-training for semi-supervised medical image segmentation|[Code](https://github.com/krishnabits001/pseudo_label_contrastive_training)|[MedIA2023](https://www.sciencedirect.com/science/article/pii/S1361841523000531?via%3Dihub)|
 |2023-03|J. Zhu and E. Meijering|Hybrid Dual Mean-Teacher Network With Double-Uncertainty Guidance for Semi-Supervised Segmentation of MRI Scans|[Code](https://github.com/ThisGame42/Hybrid-Teacher)|[Arxiv](https://arxiv.org/pdf/2303.05126.pdf)|
 |2023-02|P. Wang and C. Desrosiers|CAT: Constrained Adversarial Training for Anatomically-plausible Semi-supervised Segmentation|[Code](https://github.com/WangPing521/constraint_aware_vat_semi_supervised_segmentation)|[TMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10038734)|
 |2023-02|C. You and J. Duncan|Rethinking Semi-Supervised Medical Image Segmentation: A Variance-Reduction Perspective|None|[Arxiv](https://arxiv.org/pdf/2302.01735.pdf)|
