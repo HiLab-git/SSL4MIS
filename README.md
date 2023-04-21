@@ -61,6 +61,7 @@
 |2022-12|Z. Wang and Z. Ni|Adversarial Vision Transformer for Medical Image Semantic Segmentation with Limited Annotations|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[BMVC2022](https://bmvc2022.mpi-inf.mpg.de/1002.pdf)|
 |2022-12|T. Lei and A. Nandi|Semi-supervised medical image segmentation using adversarial consistency learning and dynamic convolution network|[Code](https://github.com/SUST-reynole/ASE-Net)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9966841)|
 |2022-11|L. Wang and P. Heng|Dual Multi-scale Mean Teacher Network for Semi-supervised Infection Segmentation in Chest CT Volume for COVID-19|[Code](https://github.com/jcwang123/DM2TNet)|[TCYB2022](https://arxiv.org/pdf/2211.05548.pdf)|
+|2022-10|H. Ni and X. Huang|Semi-supervised Body Parsing and Pose Estimation for Enhancing Infant General Movement Assessment|None|[MedIA2023](https://arxiv.org/abs/2210.08054)|
 |2022-10|F. Fyu and P. Yuen|Pseudo-Label Guided Image Synthesis for Semi-Supervised COVID-19 Pneumonia Infection Segmentation|[Code](https://github.com/FeiLyu/SASSL)|[TMI2022](https://ieeexplore.ieee.org/document/9931157)|
 |2022-10|J. Shi and C. Li|Semi-Supervised Pixel Contrastive Learning Framework for Tissue Segmentation in Histopathological Image|None|[JBHI2022](https://ieeexplore.ieee.org/document/9926096)|
 |2022-10|C. Xu and S. Li|BMAnet: Boundary Mining with Adversarial Learning for Semi-supervised 2D Myocardial Infarction Segmentation|None|[JBHI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9924606)|
@@ -228,6 +229,7 @@
 |2020-08|X. Huo and Q. Tian|ATSO: Asynchronous Teacher-Student Optimization for Semi-Supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2006.13461.pdf)|
 |2020-08|Y. Xie and Y. Xia|Pairwise Relation Learning for Semi-supervised Gland Segmentation|None|[MICCAI2020](https://arxiv.org/pdf/2008.02699.pdf)|
 |2020-07|K. Chaitanya and E. Konukoglu|Semi-supervised Task-driven Data Augmentation for Medical Image Segmentation|[Code](https://github.com/krishnabits001/task_driven_data_augmentation)|[Arxiv](https://arxiv.org/pdf/2007.05363.pdf)|
+|2020-07|H. Ni and X. Huang|SiamParseNet: Joint Body Parsing and Label Propagation in Infant Movement Videos|[Code](https://github.com/nihaomiao/MICCAI20_SiamParseNet)|[MICCAI2020](https://arxiv.org/abs/2007.08646)|
 |2020-07|S. Li and X. He|Shape-aware Semi-supervised 3D Semantic Segmentation for Medical Images|[Code](https://github.com/kleinzcy/SASSnet)|[MICCAI2020](https://arxiv.org/pdf/2007.10732.pdf)|
 |2020-07|Y. Li and Y. Zheng |Self-Loop Uncertainty: A Novel Pseudo-Label for Semi-Supervised Medical Image Segmentation|None|[MICCAI2020](https://arxiv.org/abs/2007.09854)|
 |2020-07|Z. Zhao and P. Heng|Learning Motion Flows for Semi-supervised Instrument Segmentation from Robotic Surgical Video|[Code](https://github.com/zxzhaoeric/Semi-InstruSeg/)|[MICCAI2020](https://arxiv.org/abs/2007.02501)|
