@@ -45,6 +45,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-05|L. Qiu and H. Ren|Federated Semi-Supervised Learning for Medical Image Segmentation via Pseudo-Label Denoising|None|[JBHI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10121665)|
 |2023-05|R. Aralikatti and J. Rajan|A Dual-Stage Semi-Supervised Pre-Training Approach for Medical Image Segmentation|[Code](https://github.com/RajathCA/Dual-Stage-Semi-Supervised-Pre-Training)|[TAI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10114995)|
 |2023-05|Y. Zhao and J. Lu|Semi-Supervised Medical Image Segmentation With Voxel Stability and Reliability Constraints|[Code](https://github.com/zyvcks/JBHI-VSRC)|[JBHI2023](https://ieeexplore.ieee.org/abstract/document/10120761)|
 |2023-05|M. Xu and J. Jacob|Expectation Maximization Pseudo Labelling for Segmentation with Limited Annotations|[Code](https://github.com/moucheng2017/EMSSL)|[Arxiv](https://arxiv.org/pdf/2305.01747.pdf)|
