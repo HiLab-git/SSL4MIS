@@ -45,6 +45,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-05|H. Cai and Y. Gao|Orthogonal Annotation Benefits Barely-supervised Medical Image Segmentation|[Code](https://github.com/HengCai-NJU/DeSCO)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Cai_Orthogonal_Annotation_Benefits_Barely-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
 |2023-05|H. Basak and Z. yin|Pseudo-Label Guided Contrastive Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/PatchCL-MedSeg)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Basak_Pseudo-Label_Guided_Contrastive_Learning_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
 |2023-05|Y. Wang and X. Gao|MCF: Mutual Correction Framework for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/WYC-321/MCF)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_MCF_Mutual_Correction_Framework_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
 |2023-05|L. Zhong and G. Wang|Semi-supervised Pathological Image Segmentation via Cross Distillation of Multiple Attentions|[Code](https://github.com/HiLab-git/CDMA)|[MICCAI2023](https://arxiv.org/pdf/2305.18830.pdf)|
@@ -65,7 +66,7 @@
 |2023-02|L. Zeng and W. Wang|SS-TBN: A Semi-Supervised Tri-Branch Network for COVID-19 Screening and Lesion Segmentation|None|[TPAMI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10032636)|
 |2023-01|X. Zhao and L. Zhang|RCPS: Rectified Contrastive Pseudo Supervision for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hsiangyuzhao/RCPS)|[Arxiv](https://arxiv.org/abs/2301.05500)|
 |2023-01|Z. Shen and O. Zaiane|Co-training with High-Confidence Pseudo Labels for Semi-supervised Medical Image Segmentation|[Code](https://github.com/Senyh/UCMT)|[Arxiv](https://arxiv.org/pdf/2301.04465.pdf)|
-|2023-01|D. Chen and Y. Wang|MagicNet: Semi-Supervised Multi-Organ Segmentation via Magic-Cube Partition and Recovery|None|[Arxiv](https://arxiv.org/pdf/2212.14310.pdf)|
+|2023-01|D. Chen and Y. Wang|MagicNet: Semi-Supervised Multi-Organ Segmentation via Magic-Cube Partition and Recovery|None|[CVPR2023](https://arxiv.org/pdf/2212.14310.pdf)|
 |2022-12|P. Qiao and J. Chen|Semi-supervised CT Lesion Segmentation Using Uncertainty-based Data Pairing and SwapMix|None|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10002838)|
 |2022-12|Z. Wang and Z. Ni|Adversarial Vision Transformer for Medical Image Semantic Segmentation with Limited Annotations|[Code](https://github.com/ziyangwang007/CV-SSL-MIS)|[BMVC2022](https://bmvc2022.mpi-inf.mpg.de/1002.pdf)|
 |2022-12|T. Lei and A. Nandi|Semi-supervised medical image segmentation using adversarial consistency learning and dynamic convolution network|[Code](https://github.com/SUST-reynole/ASE-Net)|[TMI2022](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9966841)|
