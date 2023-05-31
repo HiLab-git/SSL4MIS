@@ -45,6 +45,9 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|H. Basak and Z. yin|Pseudo-Label Guided Contrastive Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/PatchCL-MedSeg)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Basak_Pseudo-Label_Guided_Contrastive_Learning_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
+|Y. Wang and X. Gao|MCF: Mutual Correction Framework for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/WYC-321/MCF)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_MCF_Mutual_Correction_Framework_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
+|2023-05|L. Zhong and G. Wang|Semi-supervised Pathological Image Segmentation via Cross Distillation of Multiple Attentions|[Code](https://github.com/HiLab-git/CDMA)|[MICCAI2023](https://arxiv.org/pdf/2305.18830.pdf)|
 |2023-05|J. Du and T. Wang|Coarse-Refined Consistency Learning using Pixel-level Features for Semi-supervised Medical Image Segmentation|None|[JBHI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10131969)|
 |2023-05|L. Qiu and H. Ren|Federated Semi-Supervised Learning for Medical Image Segmentation via Pseudo-Label Denoising|None|[JBHI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10121665)|
 |2023-05|R. Aralikatti and J. Rajan|A Dual-Stage Semi-Supervised Pre-Training Approach for Medical Image Segmentation|[Code](https://github.com/RajathCA/Dual-Stage-Semi-Supervised-Pre-Training)|[TAI2023](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10114995)|
