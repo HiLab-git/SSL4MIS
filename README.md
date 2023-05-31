@@ -45,6 +45,8 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-05|Z. Zhang and Z. Jiao|Cross-supervised Dual Classifiers for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2305.16216.pdf)|
+|2023-05|Z. Zhang and Z. Jiao|Self-aware and Cross-sample Prototypical Learning for Semi-supervised Medical Image Segmentation|None|[MICCAI2023](https://arxiv.org/pdf/2305.16214.pdf)|
 |2023-05|H. Cai and Y. Gao|Orthogonal Annotation Benefits Barely-supervised Medical Image Segmentation|[Code](https://github.com/HengCai-NJU/DeSCO)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Cai_Orthogonal_Annotation_Benefits_Barely-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
 |2023-05|H. Basak and Z. yin|Pseudo-Label Guided Contrastive Learning for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/hritam-98/PatchCL-MedSeg)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Basak_Pseudo-Label_Guided_Contrastive_Learning_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
 |2023-05|Y. Wang and X. Gao|MCF: Mutual Correction Framework for Semi-Supervised Medical Image Segmentation|[Code](https://github.com/WYC-321/MCF)|[CVPR2023](https://openaccess.thecvf.com/content/CVPR2023/papers/Wang_MCF_Mutual_Correction_Framework_for_Semi-Supervised_Medical_Image_Segmentation_CVPR_2023_paper.pdf)|
