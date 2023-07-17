@@ -45,6 +45,7 @@
 ## Literature reviews of semi-supervised learning approach for medical image segmentation (**SSL4MIS**).
 |Date|The First and Last Authors|Title|Code|Reference|
 |---|---|---|---|---|
+|2023-07|H. Peiris and M. Harandi|Uncertainty-guided dual-views for semi-supervised volumetric medical image segmentation|[Code](https://github.com/himashi92/Co-BioNet)|[Nature Machine Intelligence](https://www.nature.com/articles/s42256-023-00682-w)|
 |2023-07|S. Gao and S. Zhang|Correlation-Aware Mutual Learning for Semi-supervised Medical Image Segmentation|[Code](https://github.com/Herschel555/CAML)|[MICCAI2023](https://arxiv.org/pdf/2307.06312.pdf)|
 |2023-07|Z. Xu and R. Tong|Ambiguity-selective consistency regularization for mean-teacher semi-supervised medical image segmentation|[Code](https://github.com/lemoshu/AC-MT)|[MedIA2023](https://www.sciencedirect.com/science/article/pii/S1361841523001408)|
 |2023-06|P. Liu and G. Zheng|C3PS: Context-aware Conditional Cross Pseudo Supervision for Semi-supervised Medical Image Segmentation|None|[Arxiv](https://arxiv.org/pdf/2306.08275.pdf)|
