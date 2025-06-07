@@ -153,9 +153,10 @@ class RandomGenerator(object):
         # ind = random.randrange(0, img.shape[0])
         # image = img[ind, ...]
         # label = lab[ind, ...]
-        if random.random() > 0.5:
+        rand_value = random.random()
+        if rand_value < 0.5:
             image, label = random_rot_flip(image, label)
-        elif random.random() > 0.5:
+        else:
             image, label = random_rotate(image, label)
         x, y = image.shape
         image = zoom(image, (self.output_size[0] / x, self.output_size[1] / y), order=0)
